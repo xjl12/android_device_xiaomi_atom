@@ -30,6 +30,7 @@
 #define LOG_TAG "QTI PowerHAL"
 
 #include <android/log.h>
+#include <linux/input.h>
 #include <utils/Log.h>
 #include "Power.h"
 #include "power-common.h"
@@ -64,7 +65,26 @@ Return<void> Power::powerHint(PowerHint_1_0 hint, int32_t data) {
     return Void();
 }
 
+void set_feature(feature_t feature, int state) {
+    switch (feature) {
+#ifdef TAP_TO_WAKE_NODE
+        case POWER_FEATURE_DOUBLE_TAP_TO_WAKE: {
+            int fd = open(TAP_TO_WAKE_NODE, O_RDWR);
+            struct input_event ev;
+            ev.type = EV_SYN;
+            ev.code = SYN_CONFIG;
+            ev.value = state ? INPUT_EVENT_WAKUP_MODE_ON : INPUT_EVENT_WAKUP_MODE_OFF;
+            write(fd, &ev, sizeof(ev));
+            close(fd);
+        } break;
+#endif
+        default:
+            break;
+    }
+}
+
 Return<void> Power::setFeature(Feature feature, bool activate)  {
+    set_feature(static_cast<feature_t>(feature), activate ? 1 : 0);
     return Void();
 }
 

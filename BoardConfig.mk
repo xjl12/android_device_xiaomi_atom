@@ -77,6 +77,9 @@ ifeq ($(HOST_OS),linux)
     endif
 endif
 
+# DT2W
+TARGET_TAP_TO_WAKE_NODE := "/dev/input/event3"
+
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
 
