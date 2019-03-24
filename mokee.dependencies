@@ -1,9 +1,5 @@
 [
   {
-    "repository": "android_hardware_xiaomi",
-    "target_path": "hardware/xiaomi"
-  },
-  {
     "repository": "android_vendor_xiaomi_lmi",
     "target_path": "vendor/xiaomi/lmi"
   }
