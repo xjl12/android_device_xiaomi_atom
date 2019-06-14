@@ -45,6 +45,10 @@
                  android:permission="XiaomiDozeService">
         </service>
 
+        <service android:name=".popupcamera.PopupCameraService"
+                 android:permission="PopupCameraService">
+        </service>
+
         <activity
             android:name=".doze.DozeSettingsActivity"
             android:label="@string/ambient_display_title"
