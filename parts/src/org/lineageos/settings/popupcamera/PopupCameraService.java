@@ -137,17 +137,29 @@ public class PopupCameraService extends Service implements Handler.Callback {
         try {
             if (cameraState.equals(Constants.OPEN_CAMERA_STATE)
                     && mMotor.getMotorStatus() == Constants.MOTOR_STATUS_TAKEBACK) {
+                lightUp();
                 mMotor.popupMotor(1);
                 mSensorManager.registerListener(mFreeFallListener, mFreeFallSensor,
                         SensorManager.SENSOR_DELAY_NORMAL);
             } else if (cameraState.equals(Constants.CLOSE_CAMERA_STATE)
                     && mMotor.getMotorStatus() == Constants.MOTOR_STATUS_POPUP) {
+                lightUp();
                 mMotor.takebackMotor(1);
                 mSensorManager.unregisterListener(mFreeFallListener, mFreeFallSensor);
             }
         } catch (RemoteException e) {
             // Do nothing
         }
+    }
+
+    private void lightUp() {
+        FileUtils.writeLine(Constants.GREEN_LED_PATH, "255");
+        FileUtils.writeLine(Constants.BLUE_LED_PATH, "255");
+
+        mHandler.postDelayed(() -> {
+            FileUtils.writeLine(Constants.GREEN_LED_PATH, "0");
+            FileUtils.writeLine(Constants.BLUE_LED_PATH, "0");
+        }, 1200);
     }
 
     public void goBackHome() {
