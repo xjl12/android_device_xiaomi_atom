@@ -1,3 +1,9 @@
+service citsensor-hal-1-1 /vendor/bin/hw/vendor.xiaomi.hardware.citsensorservice@1.1-service
+    override
+    class late_start
+    user system
+    group system input
+
 on property:init.svc.cnss_diag=running
     stop cnss_diag
 
