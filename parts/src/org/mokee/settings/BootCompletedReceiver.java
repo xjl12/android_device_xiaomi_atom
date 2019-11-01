@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import org.mokee.settings.doze.DozeUtils;
+import org.mokee.settings.fod.FodUtils;
 import org.mokee.settings.popupcamera.PopupCameraUtils;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
@@ -34,6 +35,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
         if (DEBUG) Log.d(TAG, "Received boot completed intent");
         DozeUtils.checkDozeService(context);
+        FodUtils.startService(context);
         PopupCameraUtils.startService(context);
     }
 }
