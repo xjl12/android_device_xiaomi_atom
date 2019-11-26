@@ -56,6 +56,20 @@ etc/permissions/qti_permissions.xml
 etc/sysconfig/qti_whitelist.xml
 product/etc/permissions/telephony_product_privapp-permissions-qti.xml
 
+# Popup Camera Sound Effects
+media/audio/ui/popup_cangmen_down.ogg
+media/audio/ui/popup_cangmen_up.ogg
+media/audio/ui/popup_chilun_down.ogg
+media/audio/ui/popup_chilun_up.ogg
+media/audio/ui/popup_jijia_down.ogg
+media/audio/ui/popup_jijia_up.ogg
+media/audio/ui/popup_mofa_down.ogg
+media/audio/ui/popup_mofa_up.ogg
+media/audio/ui/popup_muqin_down.ogg
+media/audio/ui/popup_muqin_up.ogg
+media/audio/ui/popup_yingyan_down.ogg
+media/audio/ui/popup_yingyan_up.ogg
+
 # Postprocessing
 product/lib64/vendor.display.color@1.0.so
 

@@ -24,6 +24,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.hardware.camera2.CameraManager;
+import android.media.AudioAttributes;
+import android.media.SoundPool;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -42,13 +44,16 @@ public class PopupCameraService extends Service implements Handler.Callback {
     private static final String TAG = "PopupCameraService";
     private static final boolean DEBUG = false;
 
+    private int[] mSounds;
     private long mClosedEvent;
     private long mOpenEvent;
 
     private Handler mHandler = new Handler(this);
     private IMotor mMotor = null;
+    private PopupCameraPreferences mPopupCameraPreferences;
     private SensorManager mSensorManager;
     private Sensor mFreeFallSensor;
+    private SoundPool mSoundPool;
 
     private CameraManager.AvailabilityCallback availabilityCallback =
             new CameraManager.AvailabilityCallback() {
@@ -103,6 +108,19 @@ public class PopupCameraService extends Service implements Handler.Callback {
         cameraManager.registerAvailabilityCallback(availabilityCallback, null);
         mSensorManager = getSystemService(SensorManager.class);
         mFreeFallSensor = mSensorManager.getDefaultSensor(Constants.FREE_FALL_SENSOR_ID);
+        mPopupCameraPreferences = new PopupCameraPreferences(this);
+        mSoundPool = new SoundPool.Builder().setMaxStreams(1)
+                .setAudioAttributes(new AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED)
+                        .build()).build();
+        String[] soundNames = getResources().getStringArray(R.array.popupcamera_effects_names);
+        mSounds = new int[soundNames.length];
+        for (int i = 0; i < soundNames.length; i++) {
+            mSounds[i] = mSoundPool.load(Constants.POPUP_SOUND_PATH + soundNames[i], 1);
+        }
+
         try {
             mMotor = IMotor.getService();
             int status = mMotor.getMotorStatus();
@@ -138,12 +156,14 @@ public class PopupCameraService extends Service implements Handler.Callback {
             if (cameraState.equals(Constants.OPEN_CAMERA_STATE)
                     && mMotor.getMotorStatus() == Constants.MOTOR_STATUS_TAKEBACK) {
                 lightUp();
+                playSoundEffect(Constants.OPEN_CAMERA_STATE);
                 mMotor.popupMotor(1);
                 mSensorManager.registerListener(mFreeFallListener, mFreeFallSensor,
                         SensorManager.SENSOR_DELAY_NORMAL);
             } else if (cameraState.equals(Constants.CLOSE_CAMERA_STATE)
                     && mMotor.getMotorStatus() == Constants.MOTOR_STATUS_POPUP) {
                 lightUp();
+                playSoundEffect(Constants.CLOSE_CAMERA_STATE);
                 mMotor.takebackMotor(1);
                 mSensorManager.unregisterListener(mFreeFallListener, mFreeFallSensor);
             }
@@ -153,13 +173,26 @@ public class PopupCameraService extends Service implements Handler.Callback {
     }
 
     private void lightUp() {
-        FileUtils.writeLine(Constants.GREEN_LED_PATH, "255");
-        FileUtils.writeLine(Constants.BLUE_LED_PATH, "255");
+        if (mPopupCameraPreferences.isLedAllowed()) {
+            FileUtils.writeLine(Constants.GREEN_LED_PATH, "255");
+            FileUtils.writeLine(Constants.BLUE_LED_PATH, "255");
 
-        mHandler.postDelayed(() -> {
-            FileUtils.writeLine(Constants.GREEN_LED_PATH, "0");
-            FileUtils.writeLine(Constants.BLUE_LED_PATH, "0");
-        }, 1200);
+            mHandler.postDelayed(() -> {
+                FileUtils.writeLine(Constants.GREEN_LED_PATH, "0");
+                FileUtils.writeLine(Constants.BLUE_LED_PATH, "0");
+            }, 1200);
+        }
+    }
+
+    private void playSoundEffect(String state) {
+        int soundEffect = Integer.parseInt(mPopupCameraPreferences.getSoundEffect());
+        if (soundEffect != -1) {
+            if (state.equals(Constants.CLOSE_CAMERA_STATE)) {
+                soundEffect++;
+            }
+            mSoundPool.play(mSounds[soundEffect], 1.0f, 1.0f, 0,
+                    0, 1.0f);
+        }
     }
 
     public void goBackHome() {

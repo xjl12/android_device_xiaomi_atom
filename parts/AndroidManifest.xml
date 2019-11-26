@@ -59,5 +59,27 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".popupcamera.PopupCameraSettingsActivity"
+            android:label="@string/popup_title"
+            android:theme="@style/Theme.Main">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.system" />
+            <meta-data
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_settings_popup" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:resource="@string/summary_empty" />
+            <meta-data
+                android:name="com.android.settings.order"
+                android:value="-255" />
+        </activity>
+
     </application>
 </manifest>
