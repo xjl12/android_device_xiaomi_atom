@@ -53,6 +53,7 @@ void vendor_load_properties() {
     std::string region = GetProperty("ro.boot.hwc", "");
     std::string product = GetProperty("ro.boot.product.hardware.sku", "");
 
+    property_override("ro.oem_unlock_supported", "0");
     if (region.find("CN") != std::string::npos) {
         property_override("ro.product.brand", "Xiaomi");
         if (product.find("pro") != std::string::npos) {
