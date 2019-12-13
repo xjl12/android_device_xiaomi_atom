@@ -55,7 +55,7 @@ PRODUCT_BUILD_PRODUCT_IMAGE := true
 
 # ANT+
 PRODUCT_PACKAGES += \
-    AntHalService
+    AntHalService-Soong
 
 # Audio
 PRODUCT_PACKAGES += \
