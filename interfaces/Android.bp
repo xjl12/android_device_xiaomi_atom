@@ -2,3 +2,8 @@ hidl_package_root {
     name: "vendor.xiaomi",
     path: "device/xiaomi/lmi/interfaces",
 }
+
+hidl_package_root {
+    name: "vendor.goodix",
+    path: "device/xiaomi/lmi/interfaces",
+}
