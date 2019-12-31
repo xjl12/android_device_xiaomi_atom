@@ -135,8 +135,7 @@ Return<bool> FingerprintInscreen::shouldBoostBrightness() {
     return false;
 }
 
-Return<void> FingerprintInscreen::setCallback(const sp<::vendor::mokee::biometrics::fingerprint::inscreen::V1_0::IFingerprintInscreenCallback>& callback) {
-    (void) callback;
+Return<void> FingerprintInscreen::setCallback(const sp<IFingerprintInscreenCallback>&) {
     return Void();
 }
 
