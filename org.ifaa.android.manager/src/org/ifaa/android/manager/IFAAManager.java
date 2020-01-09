@@ -1,5 +1,6 @@
 package org.ifaa.android.manager;
 
+import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.SystemProperties;
@@ -15,6 +16,7 @@ public abstract class IFAAManager {
     /**
      * 返回手机系统上支持的校验方式，目前IFAF协议1.0版本指纹为0x01、虹膜为0x02
      */
+    @UnsupportedAppUsage
     public abstract int getSupportBIOTypes(Context context);
 
     /**
@@ -24,6 +26,7 @@ public abstract class IFAAManager {
      * @param authType 生物特征识别类型，指纹为1，虹膜为2
      * @return 0，成功启动指纹管理应用；-1，启动指纹管理应用失败。
      */
+    @UnsupportedAppUsage
     public abstract int startBIOManager(Context context, int authType);
 
     /**
@@ -32,16 +35,19 @@ public abstract class IFAAManager {
      * @param param 用于传输到IFAA TA的数据buffer
      * @return IFAA TA返回给REE数据buffer
      */
+    @UnsupportedAppUsage
     public native byte[] processCmd(Context context, byte[] param);
 
     /**
      * 获取设备型号，同一款机型型号需要保持一致
      */
+    @UnsupportedAppUsage
     public abstract String getDeviceModel();
 
     /**
      * 获取IFAAManager接口定义版本，目前为1
      */
+    @UnsupportedAppUsage
     public abstract int getVersion();
 
     /**
