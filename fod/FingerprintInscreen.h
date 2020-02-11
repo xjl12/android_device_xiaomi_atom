@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 
 #include <vendor/lineage/biometrics/fingerprint/inscreen/1.0/IFingerprintInscreen.h>
 #include <vendor/xiaomi/hardware/fingerprintextension/1.0/IXiaomiFingerprint.h>
+#include <vendor/xiaomi/hardware/touchfeature/1.0/ITouchFeature.h>
 
 namespace vendor {
 namespace lineage {
@@ -32,6 +33,7 @@ using ::android::sp;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::vendor::xiaomi::hardware::fingerprintextension::V1_0::IXiaomiFingerprint;
+using ::vendor::xiaomi::hardware::touchfeature::V1_0::ITouchFeature;
 
 class FingerprintInscreen : public IFingerprintInscreen {
 public:
@@ -53,6 +55,7 @@ public:
     Return<void> setCallback(const sp<::vendor::lineage::biometrics::fingerprint::inscreen::V1_0::IFingerprintInscreenCallback>& callback) override;
 
 private:
+    sp<ITouchFeature> touchFeatureService;
     sp<IXiaomiFingerprint> xiaomiFingerprintService;
 };
 
