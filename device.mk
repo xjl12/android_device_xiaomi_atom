@@ -25,6 +25,13 @@ DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
     $(LOCAL_PATH)/overlay-mokee
 
+# Overlays -- Override vendor ones
+PRODUCT_PACKAGES += \
+    FrameworksResCommon \
+    FrameworksResTarget \
+    DevicesOverlay \
+    DevicesAndroidOverlay
+
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     device/xiaomi/lmi \
