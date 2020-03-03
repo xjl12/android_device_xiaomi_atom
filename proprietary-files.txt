@@ -77,6 +77,10 @@ product/framework/qti-telephony-common.jar|b4d187700f279cdbd40e74b4c3be4504f10d8
 # SDM
 product/lib64/libsdm-disp-apis.qti.so
 
+# Soundfx - from guacamole QKQ1.190716.003
+vendor/lib/soundfx/libvolumelistener.so:product/vendor_overlay/29/lib/soundfx/libvolumelistener.so|e6c1f1bfb7bd5cfb36131aaff0d4e8c74833865d
+vendor/lib64/soundfx/libvolumelistener.so:product/vendor_overlay/29/lib64/soundfx/libvolumelistener.so|1b16cd00fd2144e860f99c0869c2db1489c789a2
+
 # WiFi Display
 bin/wfdservice
 etc/init/wfdservice.rc
