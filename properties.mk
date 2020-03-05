@@ -6,6 +6,10 @@ PRODUCT_PRODUCT_PROPERTIES += \
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.bluetooth.library_name=libbluetooth_qti.so
 
+# Camera
+PRODUCT_PRODUCT_PROPERTIES += \
+    vendor.camera.aux.packagelist=org.lineageos.snap,org.codeaurora.snapcam
+
 # CNE
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     persist.vendor.cne.feature=1
