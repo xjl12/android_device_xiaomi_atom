@@ -6,5 +6,5 @@ service fingerprint-inscreen-1-0 /system/bin/hw/mokee.biometrics.fingerprint.ins
     interface vendor.mokee.biometrics.fingerprint.inscreen@1.0::IFingerprintInscreen default
     class hal
     user system
-    group system
+    group system wakelock
     shutdown critical

@@ -25,6 +25,7 @@ cc_binary {
     shared_libs: [
         "libbase",
         "libhardware",
+        "libhardware_legacy",
         "libhidlbase",
         "libhidltransport",
         "liblog",
