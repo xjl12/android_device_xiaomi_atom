@@ -19,12 +19,14 @@ package org.mokee.settings.popupcamera;
 import android.annotation.NonNull;
 import android.app.Service;
 import android.content.Intent;
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.hardware.camera2.CameraManager;
 import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Handler;
 import android.os.IBinder;
@@ -215,6 +217,10 @@ public class PopupCameraService extends Service implements Handler.Callback {
     }
 
     private void playSoundEffect(String state) {
+        AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
+            return;
+        }
         int soundEffect = Integer.parseInt(mPopupCameraPreferences.getSoundEffect());
         if (soundEffect != -1) {
             if (state.equals(Constants.CLOSE_CAMERA_STATE)) {
