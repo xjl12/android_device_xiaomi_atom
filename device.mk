@@ -27,7 +27,8 @@ DEVICE_PACKAGE_OVERLAYS += \
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
-    device/xiaomi/lmi
+    device/xiaomi/lmi \
+    hardware/xiaomi
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 2400
