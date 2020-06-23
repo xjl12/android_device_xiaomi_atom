@@ -215,7 +215,7 @@ void interaction(int duration, int num_args, int opt_list[])
 #ifdef INTERACTION_BOOST
     static int lock_handle = 0;
 
-    if (duration < 0 || num_args < 1 || opt_list[0] == NULL)
+    if (duration < 0 || num_args < 1 || opt_list[0] == 0)
         return;
 
     if (qcopt_handle) {
@@ -230,7 +230,7 @@ void interaction(int duration, int num_args, int opt_list[])
 
 int interaction_with_handle(int lock_handle, int duration, int num_args, int opt_list[])
 {
-    if (duration < 0 || num_args < 1 || opt_list[0] == NULL)
+    if (duration < 0 || num_args < 1 || opt_list[0] == 0)
         return 0;
 
     if (qcopt_handle) {
