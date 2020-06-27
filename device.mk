@@ -129,6 +129,7 @@ PRODUCT_PACKAGES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     init.qcom.post_boot.sh \
+    init.qcom.rc \
     init.recovery.qcom.rc
 
 # Telephony

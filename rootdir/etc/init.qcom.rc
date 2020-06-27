@@ -1,0 +1,5 @@
+on property:init.svc.cnss_diag=running
+    stop cnss_diag
+
+on property:init.svc.vendor.ipacm-diag=running
+    stop vendor.ipacm-diag
