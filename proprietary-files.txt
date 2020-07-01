@@ -110,9 +110,11 @@ etc/permissions/qti_permissions.xml
 product/etc/permissions/qcrilhook.xml
 product/etc/permissions/telephonyservice.xml
 product/framework/qcrilhook.jar
-product/framework/qti-telephony-common.jar
 product/framework/QtiTelephonyServicelibrary.jar
 -product/priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
+
+# RIL (qti-telephony-common) - from DRG QKQ1.190828.002
+product/framework/qti-telephony-common.jar|b4d187700f279cdbd40e74b4c3be4504f10d8b29
 
 # SDM
 product/lib64/libsdm-disp-apis.qti.so
