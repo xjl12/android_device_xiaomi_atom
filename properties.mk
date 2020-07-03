@@ -2,6 +2,10 @@
 PRODUCT_PRODUCT_PROPERTIES += \
     audio.offload.min.duration.secs=30
 
+# Bluetooth
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    persist.vendor.bt.a2dp.aac_whitelist=false
+
 # Camera
 PRODUCT_PRODUCT_PROPERTIES += \
     vendor.camera.aux.packagelist=org.mokee.snap,org.codeaurora.snapcam
