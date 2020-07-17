@@ -91,6 +91,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="rtt_always_enabled_bool" value="false" />
         <int name="default_rtt_mode_int" value="0" />
 
+        <!-- Config to show LTE+ icon if available -->
+        <boolean name="hide_lte_plus_data_icon_bool" value="false"/>
+
         <!-- HD/VOLTE icon support -->
         <boolean name="config_update_service_status" value="false"/>
         <boolean name="config_update_volte_icon" value="false"/>
