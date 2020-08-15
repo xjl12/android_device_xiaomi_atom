@@ -1,0 +1,6 @@
+[
+  {
+    "repository": "android_kernel_xiaomi_sm8250",
+    "target_path": "kernel/xiaomi/sm8250"
+  }
+]
