@@ -150,6 +150,7 @@ PRODUCT_PACKAGES += \
 
 # WiFi
 PRODUCT_PACKAGES += \
+    TetheringConfigOverlay \
     WifiResCommon
 
 # WiFi Display
