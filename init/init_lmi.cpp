@@ -37,7 +37,17 @@
 #include "property_service.h"
 
 using android::base::GetProperty;
-using android::init::property_set;
+
+void property_override(char const prop[], char const value[], bool add = true)
+{
+    auto pi = (prop_info *) __system_property_find(prop);
+
+    if (pi != nullptr) {
+        __system_property_update(pi, value, strlen(value));
+    } else if (add) {
+        __system_property_add(prop, strlen(prop), value, strlen(value));
+    }
+}
 
 void vendor_load_properties() {
     std::string region = GetProperty("ro.boot.hwc", "");
@@ -45,12 +55,12 @@ void vendor_load_properties() {
 
     if (region.find("CN") != std::string::npos) {
         if (product.find("pro") != std::string::npos) {
-            property_set("ro.product.model", "Redmi K30 Pro Zoom Edition");
-            property_set("ro.product.device", "lmipro");
+            property_override("ro.product.model", "Redmi K30 Pro Zoom Edition");
+            property_override("ro.product.device", "lmipro");
         } else {
-            property_set("ro.product.model", "Redmi K30 Pro");
+            property_override("ro.product.model", "Redmi K30 Pro");
         }
     } else if (region.find("GLOBAL") != std::string::npos) {
-        property_set("ro.product.model", "POCO F2 Pro");
+        property_override("ro.product.model", "POCO F2 Pro");
     }
 }
