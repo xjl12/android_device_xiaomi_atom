@@ -36,7 +36,8 @@ PRODUCT_PACKAGES += \
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     device/xiaomi/lmi \
-    hardware/xiaomi
+    hardware/xiaomi \
+    vendor/qcom/opensource/commonsys/packages/apps/Bluetooth
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 2400
