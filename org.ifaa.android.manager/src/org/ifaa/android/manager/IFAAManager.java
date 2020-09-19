@@ -1,6 +1,6 @@
 package org.ifaa.android.manager;
 
-import android.annotation.UnsupportedAppUsage;
+import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.SystemProperties;

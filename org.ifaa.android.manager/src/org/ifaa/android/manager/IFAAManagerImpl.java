@@ -4,7 +4,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.net.wifi.WifiEnterpriseConfig;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.HwBinder;
@@ -35,6 +34,8 @@ public class IFAAManagerImpl extends IFAAManagerV4 {
     private static final int ACTIVITY_START_FAILED = -1;
 
     private static volatile IFAAManagerImpl INSTANCE = null;
+
+    private static final String CA_CERT_ALIAS_DELIMITER = " ";
 
     private static final String INTERFACE_DESCRIPTOR =
             "vendor.xiaomi.hardware.mlipay@1.0::IMlipayService";
@@ -156,8 +157,7 @@ public class IFAAManagerImpl extends IFAAManagerV4 {
     }
 
     public String getExtInfo(int authType, String keyExtInfo) {
-        Slog.i(TAG, "getExtInfo:" + authType + WifiEnterpriseConfig.CA_CERT_ALIAS_DELIMITER +
-                keyExtInfo);
+        Slog.i(TAG, "getExtInfo:" + authType + CA_CERT_ALIAS_DELIMITER + keyExtInfo);
         return initExtString();
     }
 
