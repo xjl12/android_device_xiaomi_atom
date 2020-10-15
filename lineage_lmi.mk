@@ -23,6 +23,6 @@ PRODUCT_MANUFACTURER := Xiaomi
 
 PRODUCT_CHARACTERISTICS := nosdcard
 
-BUILD_FINGERPRINT := "Redmi/lmi/lmi:10/QKQ1.191117.002/V12.0.4.0.QJKCNXM:user/release-keys"
+BUILD_FINGERPRINT := "Redmi/lmi/lmi:10/QKQ1.191117.002/V12.0.8.0.QJKCNXM:user/release-keys"
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
