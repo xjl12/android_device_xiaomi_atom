@@ -99,6 +99,13 @@ PRODUCT_BOOT_JARS += \
 PRODUCT_PACKAGES += \
     lineage.livedisplay@2.0-service-sdm
 
+# NFC
+PRODUCT_PACKAGES += \
+    com.android.nfc_extras \
+    NfcNci \
+    Tag \
+    SecureElement
+
 # Parts
 PRODUCT_PACKAGES += \
     XiaomiParts
