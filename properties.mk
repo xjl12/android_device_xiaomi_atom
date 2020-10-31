@@ -17,7 +17,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     persist.dbg.wfc_avail_ovr=1
 
 # Telephony
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_PRODUCT_PROPERTIES += \
     ro.telephony.default_network=33,22
 
 # Vendor
