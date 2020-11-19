@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.popupcamera;
+package org.mokee.settings.popupcamera;
 
 public class Constants {
     public static final int FREE_FALL_SENSOR_ID = 33171042;

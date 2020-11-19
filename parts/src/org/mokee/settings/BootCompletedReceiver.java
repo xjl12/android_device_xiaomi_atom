@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings;
+package org.mokee.settings;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import org.lineageos.settings.doze.DozeUtils;
-import org.lineageos.settings.popupcamera.PopupCameraUtils;
+import org.mokee.settings.doze.DozeUtils;
+import org.mokee.settings.popupcamera.PopupCameraUtils;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 
