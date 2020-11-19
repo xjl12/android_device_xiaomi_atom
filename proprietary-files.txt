@@ -25,6 +25,9 @@ product/lib64/libdpmframework.so
 product/lib64/libdpmtcm.so
 -product/priv-app/dpmserviceapp/dpmserviceapp.apk
 
+# Hostapd - from jasmine QKQ1.190910.002
+vendor/bin/hw/hostapd:product/vendor_overlay/29/bin/hw/hostapd|255fa227acb17733cbdb5473a632797a4d49be64
+
 # IMS
 product/lib64/lib-imsvideocodec.so
 product/lib64/lib-imsvt.so
