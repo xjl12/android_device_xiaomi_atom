@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List of allowed channels in 2GHz band for softap. If the device doesn't want to restrict
+         channels this should be empty. Values is a comma separated channel string and/or channel
+         range string like '1-6,11'. -->
+    <string name="config_wifiSoftap2gChannelList"></string>
+
+    <!-- Channel list for softap 5G band. Empty means all channels -->
+    <string name="config_wifiSoftap5gChannelList"></string>
+
+    <!-- Channel list for softap 6G band. Empty means all channels -->
+    <string name="config_wifiSoftap6gChannelList"></string>
+</resources>

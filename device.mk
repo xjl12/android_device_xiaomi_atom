@@ -152,6 +152,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     mokee.trust@1.0-service
 
+# WiFi
+PRODUCT_PACKAGES += \
+    WifiResCommon
+
 # WiFi Display
 PRODUCT_PACKAGES += \
     libnl
