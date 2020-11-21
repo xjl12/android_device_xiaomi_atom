@@ -271,7 +271,7 @@
     <integer name="config_screenBrightnessDim">15</integer>
 
     <!-- Wifi driver supports batched scan -->
-    <bool translatable="false" name="config_wifi_batched_scan_supported">false</bool>
+    <bool translatable="false" name="config_wifi_batched_scan_supported">true</bool>
 
     <!-- Flag indicating if the speed up audio on mt call code should be executed -->
     <bool name="config_speed_up_audio_on_mt_calls">false</bool>
