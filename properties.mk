@@ -8,7 +8,8 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # Display
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    debug.sf.enable_hwc_vds=1
+    debug.sf.enable_hwc_vds=1 \
+    ro.sf.lcd_density=440
 
 # IMS
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
