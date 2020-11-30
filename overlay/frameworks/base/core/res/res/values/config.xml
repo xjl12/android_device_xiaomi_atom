@@ -257,7 +257,7 @@
 
     <!-- Default screen brightness setting.
          Must be in the range specified by minimum and maximum. -->
-    <integer name="config_screenBrightnessSettingDefault">102</integer>
+    <integer name="config_screenBrightnessSettingDefault">536</integer>
 
     <!-- Minimum screen brightness setting allowed by the power manager.
          The user is forbidden from setting the brightness below this level. -->
@@ -265,7 +265,7 @@
 
     <!-- Maximum screen brightness setting allowed by the power manager.
          The user is forbidden from setting the brightness above this level. -->
-    <integer name="config_screenBrightnessSettingMaximum">255</integer>
+    <integer name="config_screenBrightnessSettingMaximum">2047</integer>
 
     <!-- Fast brightness animation ramp rate in brightness units per second-->
     <integer name="config_brightness_ramp_rate_fast">180</integer>
@@ -323,7 +323,7 @@
     <!-- Config determines whether to update phone object when voice registration
     state changes. Voice radio tech change will always trigger an update of
     phone object irrespective of this config -->
-    <bool name="config_switch_phone_on_voice_reg_state_change">false</bool>
+    <bool name="config_switch_phone_on_voice_reg_state_change">true</bool>
 
     <!-- Whether the Unprocessed audio source supports the required frequency range and level -->
     <bool name="config_supportAudioSourceUnprocessed">false</bool>
