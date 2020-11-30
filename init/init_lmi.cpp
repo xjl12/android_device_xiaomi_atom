@@ -46,6 +46,7 @@ void vendor_load_properties() {
     if (region.find("CN") != std::string::npos) {
         if (product.find("pro") != std::string::npos) {
             property_set("ro.product.model", "Redmi K30 Pro Zoom Edition");
+            property_set("ro.product.device", "lmipro");
         } else {
             property_set("ro.product.model", "Redmi K30 Pro");
         }
