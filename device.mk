@@ -30,7 +30,8 @@ PRODUCT_PACKAGES += \
     FrameworksResCommon \
     FrameworksResTarget \
     DevicesOverlay \
-    DevicesAndroidOverlay
+    DevicesAndroidOverlay \
+    CarrierConfigResCommon
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
