@@ -71,8 +71,13 @@ PRODUCT_PACKAGES += \
     BluetoothQti
 
 # Camera
+ifeq ($(ARROW_GAPPS), true)
+PRODUCT_PACKAGES += \
+    GCamGOPrebuilt
+else
 PRODUCT_PACKAGES += \
     Snap
+endif
 
 PRODUCT_COPY_FILES += \
     hardware/interfaces/camera/provider/2.4/default/android.hardware.camera.provider@2.4-service_64.rc:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/init/android.hardware.camera.provider@2.4-service_64.rc

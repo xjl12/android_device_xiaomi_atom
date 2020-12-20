@@ -2,5 +2,9 @@
   {
     "repository": "android_vendor_xiaomi_lmi",
     "target_path": "vendor/xiaomi/lmi"
+  },
+  {
+    "repository": "android_packages_apps_GCamGOPrebuilt",
+    "target_path": "packages/apps/GCamGOPrebuilt"
   }
 ]
