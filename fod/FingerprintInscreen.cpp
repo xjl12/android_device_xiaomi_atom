@@ -68,6 +68,7 @@ namespace V1_0 {
 namespace implementation {
 
 FingerprintInscreen::FingerprintInscreen() {
+    displayFeatureService = IDisplayFeature::getService();
     touchFeatureService = ITouchFeature::getService();
     xiaomiFingerprintService = IXiaomiFingerprint::getService();
 }
@@ -108,6 +109,7 @@ Return<void> FingerprintInscreen::onRelease() {
 }
 
 Return<void> FingerprintInscreen::onShowFODView() {
+    displayFeatureService->setFeature(0, 17, 1, 1);
     touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 1);
     return Void();
 }
@@ -115,6 +117,7 @@ Return<void> FingerprintInscreen::onShowFODView() {
 Return<void> FingerprintInscreen::onHideFODView() {
     set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_OFF);
     touchFeatureService->resetTouchMode(TOUCH_FOD_ENABLE);
+    displayFeatureService->setFeature(0, 17, 0, 1);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
     return Void();
 }
