@@ -155,6 +155,8 @@ Return<int32_t> FingerprintInscreen::getDimAmount(int32_t) {
         alpha = 1.0 - pow(realBrightness / 1680.0, 0.455);
     }
 
+    if (alpha < 0.82) alpha += 0.1;
+
     return 255 * alpha;
 }
 
