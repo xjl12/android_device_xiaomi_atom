@@ -50,7 +50,7 @@ static T get(const std::string& path, const T& def) {
 }  // anonymous namespace
 
 namespace vendor {
-namespace mokee {
+namespace lineage {
 namespace biometrics {
 namespace fingerprint {
 namespace inscreen {
@@ -178,5 +178,5 @@ Return<void> FingerprintInscreen::setCallback(const sp<IFingerprintInscreenCallb
 }  // namespace inscreen
 }  // namespace fingerprint
 }  // namespace biometrics
-}  // namespace mokee
+}  // namespace lineage
 }  // namespace vendor
