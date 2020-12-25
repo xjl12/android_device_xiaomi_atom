@@ -6,5 +6,9 @@
   {
     "repository": "android_kernel_xiaomi_sm8250",
     "target_path": "kernel/xiaomi/sm8250"
+  },
+  {
+    "repository": "android_vendor_xiaomi_lmi",
+    "target_path": "vendor/xiaomi/lmi"
   }
 ]
