@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2019-2020 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,48 +27,32 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef ANDROID_HARDWARE_POWER_V1_2_POWER_H
-#define ANDROID_HARDWARE_POWER_V1_2_POWER_H
+#ifndef ANDROID_HARDWARE_POWER_POWER_H
+#define ANDROID_HARDWARE_POWER_POWER_H
 
-#include <android/hardware/power/1.2/IPower.h>
-#include <hidl/MQDescriptor.h>
-#include <hidl/Status.h>
-#include <hardware/power.h>
+#include <aidl/android/hardware/power/BnPower.h>
+#include "power-common.h"
 
+namespace aidl {
 namespace android {
 namespace hardware {
 namespace power {
-namespace V1_2 {
-namespace implementation {
+namespace impl {
 
-using ::android::hardware::power::V1_0::Feature;
-using PowerHint_1_0 = ::android::hardware::power::V1_0::PowerHint;
-using PowerHint_1_2 = ::android::hardware::power::V1_2::PowerHint;
-using ::android::hardware::power::V1_2::IPower;
-using ::android::hardware::Return;
-using ::android::hardware::Void;
-
-struct Power : public IPower {
-    // Methods from ::android::hardware::power::V1_0::IPower follow.
-
-    Power();
-
-    Return<void> setInteractive(bool interactive) override;
-    Return<void> powerHint(PowerHint_1_0 hint, int32_t data) override;
-    Return<void> setFeature(Feature feature, bool activate) override;
-    Return<void> getPlatformLowPowerStats(getPlatformLowPowerStats_cb _hidl_cb) override;
-
-    // Methods from ::android::hardware::power::V1_1::IPower follow
-    Return<void> getSubsystemLowPowerStats(getSubsystemLowPowerStats_cb _hidl_cb) override;
-    Return<void> powerHintAsync(PowerHint_1_0 hint, int32_t data) override;
-    // Methods from ::android::hardware::power::V1_2::IPower follow
-    Return<void> powerHintAsync_1_2(PowerHint_1_2 hint, int32_t data) override;
+class Power : public BnPower {
+    public:
+        Power() : BnPower(){
+            power_init();
+        }
+        ndk::ScopedAStatus setMode(Mode type, bool enabled) override;
+        ndk::ScopedAStatus isModeSupported(Mode type, bool* _aidl_return) override;
+        ndk::ScopedAStatus setBoost(Boost type, int32_t durationMs) override;
+        ndk::ScopedAStatus isBoostSupported(Boost type, bool* _aidl_return) override;
 };
 
-}  // namespace implementation
-}  // namespace V1_2
+}  // namespace impl
 }  // namespace power
 }  // namespace hardware
 }  // namespace android
-
-#endif  // ANDROID_HARDWARE_POWER_V1_2_POWER_H
+}  // namespace aidl
+#endif  // ANDROID_HARDWARE_POWER_POWER_H

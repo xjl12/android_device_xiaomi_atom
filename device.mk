@@ -124,7 +124,7 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.2-service.lmi
+    android.hardware.power-service.lmi
 
 # Ramdisk
 PRODUCT_PACKAGES += \

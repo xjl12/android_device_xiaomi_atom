@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2019-2020 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -29,74 +29,96 @@
 
 #define LOG_TAG "QTI PowerHAL"
 
-#include <android/log.h>
-#include <utils/Log.h>
 #include "Power.h"
-#include "power-common.h"
 
+#include <android-base/logging.h>
+
+#include <aidl/android/hardware/power/BnPower.h>
+
+#include <android-base/logging.h>
+#include <android/binder_manager.h>
+#include <android/binder_process.h>
+
+using ::aidl::android::hardware::power::BnPower;
+using ::aidl::android::hardware::power::IPower;
+using ::aidl::android::hardware::power::Mode;
+using ::aidl::android::hardware::power::Boost;
+
+using ::ndk::ScopedAStatus;
+using ::ndk::SharedRefBase;
+
+namespace aidl {
 namespace android {
 namespace hardware {
 namespace power {
-namespace V1_2 {
-namespace implementation {
+namespace impl {
 
-using ::android::hardware::power::V1_0::Feature;
-using ::android::hardware::power::V1_0::PowerHint;
-using ::android::hardware::power::V1_0::PowerStatePlatformSleepState;
-using ::android::hardware::power::V1_0::Status;
-using ::android::hardware::power::V1_1::PowerStateSubsystem;
-using ::android::hardware::hidl_vec;
-using ::android::hardware::Return;
-using ::android::hardware::Void;
-
-Power::Power() {
-    power_init();
+void setInteractive(bool interactive) {
+   set_interactive(interactive ? 1:0);
 }
 
-Return<void> Power::setInteractive(bool interactive) {
-    set_interactive(interactive ? 1:0);
-    return Void();
+ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
+    LOG(INFO) << "Power setMode: " << static_cast<int32_t>(type) << " to: " << enabled;
+    switch(type){
+        case Mode::DOUBLE_TAP_TO_WAKE:
+        case Mode::LOW_POWER:
+        case Mode::LAUNCH:
+        case Mode::EXPENSIVE_RENDERING:
+        case Mode::DEVICE_IDLE:
+        case Mode::DISPLAY_INACTIVE:
+        case Mode::AUDIO_STREAMING_LOW_LATENCY:
+        case Mode::CAMERA_STREAMING_SECURE:
+        case Mode::CAMERA_STREAMING_LOW:
+        case Mode::CAMERA_STREAMING_MID:
+        case Mode::CAMERA_STREAMING_HIGH:
+        case Mode::VR:
+            LOG(INFO) << "Mode " << static_cast<int32_t>(type) << "Not Supported";
+            break;
+        case Mode::INTERACTIVE:
+            setInteractive(enabled);
+            power_hint(POWER_HINT_INTERACTION, NULL);
+            break;
+        case Mode::SUSTAINED_PERFORMANCE:
+        case Mode::FIXED_PERFORMANCE:
+            power_hint(POWER_HINT_SUSTAINED_PERFORMANCE, NULL);
+            break;
+        default:
+            LOG(INFO) << "Mode " << static_cast<int32_t>(type) << "Not Supported";
+            break;
+    }
+    return ndk::ScopedAStatus::ok();
 }
 
-Return<void> Power::powerHint(PowerHint_1_0 hint, int32_t data) {
+ndk::ScopedAStatus Power::isModeSupported(Mode type, bool* _aidl_return) {
+    LOG(INFO) << "Power isModeSupported: " << static_cast<int32_t>(type);
 
-    power_hint(static_cast<power_hint_t>(hint), data ? (&data) : NULL);
-    return Void();
+    switch(type){
+        case Mode::INTERACTIVE:
+        case Mode::SUSTAINED_PERFORMANCE:
+        case Mode::FIXED_PERFORMANCE:
+            *_aidl_return = true;
+            break;
+        default:
+            *_aidl_return = false;
+            break;
+    }
+    return ndk::ScopedAStatus::ok();
 }
 
-Return<void> Power::setFeature(Feature feature, bool activate)  {
-    return Void();
+ndk::ScopedAStatus Power::setBoost(Boost type, int32_t durationMs) {
+    LOG(INFO) << "Power setBoost: " << static_cast<int32_t>(type)
+                 << ", duration: " << durationMs;
+    return ndk::ScopedAStatus::ok();
 }
 
-Return<void> Power::getPlatformLowPowerStats(getPlatformLowPowerStats_cb _hidl_cb) {
-
-    hidl_vec<PowerStatePlatformSleepState> states;
-    states.resize(0);
-
-    _hidl_cb(states, Status::SUCCESS);
-    return Void();
+ndk::ScopedAStatus Power::isBoostSupported(Boost type, bool* _aidl_return) {
+    LOG(INFO) << "Power isBoostSupported: " << static_cast<int32_t>(type);
+    *_aidl_return = false;
+    return ndk::ScopedAStatus::ok();
 }
 
-Return<void> Power::getSubsystemLowPowerStats(getSubsystemLowPowerStats_cb _hidl_cb) {
-
-    hidl_vec<PowerStateSubsystem> subsystems;
-
-    _hidl_cb(subsystems, Status::SUCCESS);
-    return Void();
-}
-
-Return<void> Power::powerHintAsync(PowerHint_1_0 hint, int32_t data) {
-
-    return powerHint(hint, data);
-}
-
-Return<void> Power::powerHintAsync_1_2(PowerHint_1_2 hint, int32_t data) {
-
-    return powerHint(static_cast<PowerHint_1_0> (hint), data);
-}
-
-}  // namespace implementation
-}  // namespace V1_2
+}  // namespace impl
 }  // namespace power
 }  // namespace hardware
 }  // namespace android
+}  // namespace aidl
