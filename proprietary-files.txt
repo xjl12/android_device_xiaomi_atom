@@ -37,9 +37,6 @@ system_ext/lib64/libdpmtcm.so
 system_ext/lib64/vendor.qti.diaghal@1.0.so
 -system_ext/priv-app/dpmserviceapp/dpmserviceapp.apk
 
-# Hostapd - from jasmine QKQ1.190910.002
-vendor/bin/hw/hostapd:product/vendor_overlay/30/bin/hw/hostapd|255fa227acb17733cbdb5473a632797a4d49be64
-
 # IMS
 system_ext/lib64/lib-imsvideocodec.so
 system_ext/lib64/lib-imsvt.so

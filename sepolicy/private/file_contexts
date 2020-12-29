@@ -2,7 +2,6 @@
 /(product|system/product)/vendor_overlay/[0-9]+/bin/init.qcom.post_boot.sh u:object_r:qti_init_shell_exec:s0
 
 # Vendor Overlay
-/(product|system/product)/vendor_overlay/[0-9]+/bin/hw(/.*)?     u:object_r:vendor_hw_exec_file:s0
 /(product|system/product)/vendor_overlay/[0-9]+/etc(/.*)?        u:object_r:vendor_configs_file:s0
 /(product|system/product)/vendor_overlay/[0-9]+/lib(64)?/soundfx(/.*)?     u:object_r:vendor_file:s0
 /(product|system/product)/vendor_overlay/[0-9]+/overlay(/.*)?    u:object_r:vendor_overlay_file:s0

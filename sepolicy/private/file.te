@@ -1,2 +1,1 @@
 type qti_init_shell_exec, exec_type, vendor_file_type, file_type;
-type vendor_hw_exec_file, exec_type, vendor_file_type, file_type;
