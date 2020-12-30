@@ -6,6 +6,9 @@ system_ext/lib/rfsa/adsp/libqvr_dsp_driver_skel.so
 system_ext/lib/rfsa/adsp/libtracker_6dof_skel_8150.so
 system_ext/lib/rfsa/adsp/libtracker_6dof_skel_8250.so
 
+# Alarm
+-product/app/PowerOffAlarm/PowerOffAlarm.apk
+
 # ANT+
 system_ext/lib/com.qualcomm.qti.ant@1.0.so
 system_ext/lib64/com.qualcomm.qti.ant@1.0.so
