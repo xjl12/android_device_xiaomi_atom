@@ -29,8 +29,11 @@
 
 #define LOG_TAG "QTI PowerHAL"
 
+#include <linux/input.h>
+
 #include "Power.h"
 
+#include <android-base/file.h>
 #include <android-base/logging.h>
 
 #include <aidl/android/hardware/power/BnPower.h>
@@ -47,6 +50,45 @@ using ::aidl::android::hardware::power::Boost;
 using ::ndk::ScopedAStatus;
 using ::ndk::SharedRefBase;
 
+namespace {
+
+int open_ts_input() {
+    int fd = -1;
+    DIR* dir = opendir("/dev/input");
+
+    if (dir != NULL) {
+        struct dirent* ent;
+
+        while ((ent = readdir(dir)) != NULL) {
+            if (ent->d_type == DT_CHR) {
+                char absolute_path[PATH_MAX] = {0};
+                char name[80] = {0};
+
+                strcpy(absolute_path, "/dev/input/");
+                strcat(absolute_path, ent->d_name);
+
+                fd = open(absolute_path, O_RDWR);
+                if (ioctl(fd, EVIOCGNAME(sizeof(name) - 1), &name) > 0) {
+                    if (strcmp(name, "atmel_mxt_ts") == 0 || strcmp(name, "fts_ts") == 0 ||
+                            strcmp(name, "fts") == 0 || strcmp(name, "ft5x46") == 0 ||
+                            strcmp(name, "synaptics_dsx") == 0 ||
+                            strcmp(name, "NVTCapacitiveTouchScreen") == 0)
+                        break;
+                }
+
+                close(fd);
+                fd = -1;
+            }
+        }
+
+        closedir(dir);
+    }
+
+    return fd;
+}
+
+}  // anonymous namespace
+
 namespace aidl {
 namespace android {
 namespace hardware {
@@ -60,7 +102,16 @@ void setInteractive(bool interactive) {
 ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
     LOG(INFO) << "Power setMode: " << static_cast<int32_t>(type) << " to: " << enabled;
     switch(type){
-        case Mode::DOUBLE_TAP_TO_WAKE:
+        case Mode::DOUBLE_TAP_TO_WAKE: {
+            int fd = open_ts_input();
+            struct input_event ev;
+            ev.type = EV_SYN;
+            ev.code = SYN_CONFIG;
+            ev.value = enabled ? INPUT_EVENT_WAKUP_MODE_ON : INPUT_EVENT_WAKUP_MODE_OFF;
+            write(fd, &ev, sizeof(ev));
+            close(fd);
+        }
+            break;
         case Mode::LOW_POWER:
         case Mode::LAUNCH:
         case Mode::EXPENSIVE_RENDERING:
@@ -93,6 +144,7 @@ ndk::ScopedAStatus Power::isModeSupported(Mode type, bool* _aidl_return) {
     LOG(INFO) << "Power isModeSupported: " << static_cast<int32_t>(type);
 
     switch(type){
+        case Mode::DOUBLE_TAP_TO_WAKE:
         case Mode::INTERACTIVE:
         case Mode::SUSTAINED_PERFORMANCE:
         case Mode::FIXED_PERFORMANCE:
