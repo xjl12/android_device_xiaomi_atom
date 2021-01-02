@@ -103,10 +103,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     org.ifaa.android.manager
 
-# Light
-PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.xiaomi_lmi
-
 # Livedisplay
 PRODUCT_PACKAGES += \
     mokee.livedisplay@2.0-service-sdm
