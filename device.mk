@@ -107,6 +107,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     org.ifaa.android.manager
 
+# Lights
+PRODUCT_PACKAGES += \
+    lights.lmi
+
 # Livedisplay
 PRODUCT_PACKAGES += \
     mokee.livedisplay@2.0-service-sdm

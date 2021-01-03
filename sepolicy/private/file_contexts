@@ -3,5 +3,5 @@
 
 # Vendor Overlay
 /(product|system/product)/vendor_overlay/[0-9]+/etc(/.*)?        u:object_r:vendor_configs_file:s0
-/(product|system/product)/vendor_overlay/[0-9]+/lib(64)?/soundfx(/.*)?     u:object_r:vendor_file:s0
+/(product|system/product)/vendor_overlay/[0-9]+/lib(64)?(/.*)?   u:object_r:vendor_file:s0
 /(product|system/product)/vendor_overlay/[0-9]+/overlay(/.*)?    u:object_r:vendor_overlay_file:s0
