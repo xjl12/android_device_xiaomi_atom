@@ -26,11 +26,9 @@ DEVICE_PACKAGE_OVERLAYS += \
 
 # Overlays -- Override vendor ones
 PRODUCT_PACKAGES += \
-    FrameworksResCommon \
     FrameworksResTarget \
     DevicesOverlay \
-    DevicesAndroidOverlay \
-    CarrierConfigResCommon
+    DevicesAndroidOverlay
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
