@@ -54,6 +54,7 @@ void vendor_load_properties() {
     std::string product = GetProperty("ro.boot.product.hardware.sku", "");
 
     property_override("ro.oem_unlock_supported", "0");
+    property_override("ro.boot.selinux", "enforcing");
     property_override("ro.build.description", "wayne-user 8.1.0 OPM1.171019.011 V9.5.11.0.ODCCNFA release-keys");
     property_override("ro.build.fingerprint", "xiaomi/wayne/wayne:8.1.0/OPM1.171019.011/V9.5.11.0.ODCCNFA:user/release-keys");
     if (region.find("CN") != std::string::npos) {
