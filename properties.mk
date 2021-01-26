@@ -29,7 +29,8 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 # Telephony
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.telephony.default_network=33,22
+    ro.telephony.default_network=33,22 \
+    persist.vendor.data.iwlan.enable=true
 
 # Vendor
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
