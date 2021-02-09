@@ -63,10 +63,6 @@ system_ext/lib/libmmparser_lite.so
 system_ext/lib64/libmmosal.so
 system_ext/lib64/libmmparser_lite.so
 
-# Perf
-system_ext/lib/vendor.qti.hardware.perf@2.0.so
-system_ext/lib64/vendor.qti.hardware.perf@2.0.so
-
 # Permissions
 etc/permissions/privapp-permissions-qti.xml
 etc/sysconfig/qti_whitelist.xml

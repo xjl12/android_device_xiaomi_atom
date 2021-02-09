@@ -126,7 +126,8 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service.lmi
+    android.hardware.power-service.lmi \
+    vendor.qti.hardware.perf@2.0
 
 # Ramdisk
 PRODUCT_PACKAGES += \
