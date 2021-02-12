@@ -1,0 +1,2 @@
+# Add system_ext to the default group since it might not be there and we're not building super or rewriting it
+add system_ext default
