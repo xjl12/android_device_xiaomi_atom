@@ -31,11 +31,14 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <resources>
     <!-- the padding on the start of the statusbar -->
-    <dimen name="status_bar_padding_start">8.2dip</dimen>
+    <dimen name="status_bar_padding_start">10dp</dimen>
 
     <!-- the padding on the end of the statusbar -->
-    <dimen name="status_bar_padding_end">6.5dip</dimen>
+    <dimen name="status_bar_padding_end">10dp</dimen>
+
+    <!-- Margin on the right side of the system icon group on Keyguard. -->
+    <dimen name="system_icons_keyguard_padding_end">8dp</dimen>
 
     <!-- the padding of the rounded corner -->
-    <dimen name="rounded_corner_content_padding">7.0dip</dimen>
+    <dimen name="rounded_corner_content_padding">8dp</dimen>
 </resources>
