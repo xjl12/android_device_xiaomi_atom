@@ -70,7 +70,6 @@ TARGET_KERNEL_SOURCE := kernel/xiaomi/sm8250
 
 # Platform
 TARGET_BOARD_PLATFORM := kona
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno650
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "qualcomm-hidl"
