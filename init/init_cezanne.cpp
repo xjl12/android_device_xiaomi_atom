@@ -59,5 +59,4 @@ void vendor_load_properties() {
     property_override("ro.product.brand", "Redmi");
     property_override("ro.product.model", "Redmi K30 Ultra");
     property_override("ro.product.device", "cezanne");
-    }
 }
