@@ -32,10 +32,10 @@
 #define TOUCH_FOD_ENABLE 10
 
 #define FOD_SENSOR_X 439
-#define FOD_SENSOR_Y 1655
+#define FOD_SENSOR_Y 1732
 #define FOD_SENSOR_SIZE 202
 
-#define BRIGHTNESS_PATH "/sys/class/backlight/panel0-backlight/brightness"
+#define BRIGHTNESS_PATH "/sys/class/leds/lcd-backlight/brightness"
 
 namespace {
 
