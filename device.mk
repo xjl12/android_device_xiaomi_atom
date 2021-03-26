@@ -14,7 +14,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 
 # Get non-open-source specific aspects
-$(call inherit-product, vendor/xiaomi/lmi/lmi-vendor.mk)
+$(call inherit-product, vendor/xiaomi/cezanne/cezanne-vendor.mk)
 
 # Inherit properties
 include $(LOCAL_PATH)/properties.mk
@@ -33,7 +33,7 @@ PRODUCT_PACKAGES += \
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
-    device/xiaomi/lmi \
+    device/xiaomi/cezanne \
     vendor/qcom/opensource/commonsys/packages/apps/Bluetooth \
     vendor/qcom/opensource/commonsys/system/bt/conf
 
@@ -86,11 +86,11 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-    lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_lmi
+    lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_cezanne
 
 # Fstab
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/fstab.qcom:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
+    $(LOCAL_PATH)/rootdir/etc/fstab.mt6885:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6885
 
 # HIDL
 PRODUCT_PACKAGES += \
@@ -110,7 +110,7 @@ PRODUCT_BOOT_JARS += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    lights.lmi
+    lights.cezanne
 
 # NFC
 PRODUCT_PACKAGES += \
@@ -125,7 +125,7 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service.lmi \
+    android.hardware.power-service.cezanne \
     vendor.qti.hardware.perf@2.0
 
 # Ramdisk

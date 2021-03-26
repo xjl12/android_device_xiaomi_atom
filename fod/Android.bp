@@ -16,8 +16,8 @@
 cc_binary {
     relative_install_path: "hw",
     defaults: ["hidl_defaults"],
-    name: "lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_lmi",
-    init_rc: ["lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_lmi.rc"],
+    name: "lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_cezanne",
+    init_rc: ["lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_cezanne.rc"],
     srcs: [
         "service.cpp",
         "FingerprintInscreen.cpp"
@@ -38,7 +38,7 @@ cc_binary {
 }
 
 cc_library_static {
-    name: "libfod_extension.lmi",
+    name: "libfod_extension.cezanne",
     srcs: ["FodExtension.cpp"],
     include_dirs: [
         "frameworks/native/services/surfaceflinger/CompositionEngine/include"

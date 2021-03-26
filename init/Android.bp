@@ -15,8 +15,8 @@
 //
 
 cc_library_static {
-    name: "libinit_lmi",
-    srcs: ["init_lmi.cpp"],
+    name: "libinit_cezanne",
+    srcs: ["init_cezanne.cpp"],
     recovery_available: true,
     include_dirs: [
         "system/core/base/include",

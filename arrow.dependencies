@@ -1,7 +1,7 @@
 [
   {
-    "repository": "android_vendor_xiaomi_lmi",
-    "target_path": "vendor/xiaomi/lmi"
+    "repository": "android_vendor_xiaomi_cezanne",
+    "target_path": "vendor/xiaomi/cezanne"
   },
   {
     "repository": "android_packages_apps_GCamGOPrebuilt",
