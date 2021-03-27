@@ -19,15 +19,18 @@
     -->
     <integer name="config_fingerprintSensorLocation">1</integer>
 
-    <!-- Screen off FOD -->
-    <bool name="config_supportScreenOffFod">true</bool>
-
-    <!-- FOD recognizing animation -->
-    <bool name="config_showFODAnimationSettings">true</bool>
+    <!-- Whether or not the device is capable of multiple levels of vibration intensity.
+         Note that this is different from whether it can control the vibration amplitude as some
+         devices will be able to vary their amplitude but do not possess enough dynamic range to
+         have distinct intensity levels -->
+    <bool name="config_vibration_supports_multiple_intensities">true</bool>
 
     <!-- Device specific doze package -->
     <string name="config_customDozePackage" translatable="false">org.mokee.settings/org.mokee.settings.doze.DozeSettingsActivity</string>
 
     <!-- Smart Charging -->
     <bool name="config_supportSmartCharging">true</bool>
+    
+    <!-- Whether to show min refresh rate in display settings -->
+    <bool name="config_show_min_refresh_rate_switch">true</bool>
 </resources>
