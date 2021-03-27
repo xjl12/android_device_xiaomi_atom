@@ -16,11 +16,11 @@
 cc_binary {
     relative_install_path: "hw",
     defaults: ["hidl_defaults"],
-    name: "lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_cezanne",
-    init_rc: ["lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_cezanne.rc"],
+    name: "lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_kona",
+    init_rc: ["lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_kona.rc"],
     srcs: [
-        "service.cpp",
-        "FingerprintInscreen.cpp"
+	"service.cpp",
+        "FingerprintInscreen.cpp",
     ],
     shared_libs: [
         "libbase",
@@ -31,14 +31,14 @@ cc_binary {
         "libutils",
         "vendor.goodix.hardware.biometrics.fingerprint@2.1",
         "vendor.lineage.biometrics.fingerprint.inscreen@1.0",
-        "vendor.xiaomi.hardware.displayfeature@1.0",
         "vendor.xiaomi.hardware.fingerprintextension@1.0",
         "vendor.xiaomi.hardware.touchfeature@1.0",
+        "vendor.xiaomi.hardware.displayfeature@1.0", 
     ],
 }
 
 cc_library_static {
-    name: "libfod_extension.cezanne",
+    name: "libfod_extension.kona",
     srcs: ["FodExtension.cpp"],
     include_dirs: [
         "frameworks/native/services/surfaceflinger/CompositionEngine/include"

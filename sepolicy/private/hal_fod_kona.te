@@ -1,0 +1,5 @@
+type hal_fod_kona, coredomain, domain;
+hal_server_domain(hal_fod_kona, hal_lineage_fod)
+
+type hal_fod_kona_exec, exec_type, system_file_type, file_type;
+init_daemon_domain(hal_fod_kona)

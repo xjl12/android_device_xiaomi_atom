@@ -77,7 +77,7 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-    lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_cezanne
+    lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_kona
 
 # Fstab
 PRODUCT_COPY_FILES += \

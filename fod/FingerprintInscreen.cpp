@@ -19,9 +19,9 @@
 #include "FingerprintInscreen.h"
 
 #include <android-base/logging.h>
-#include <fstream>
-#include <cmath>
 #include <hardware_legacy/power.h>
+#include <cmath>
+#include <fstream>
 
 #define FINGERPRINT_ACQUIRED_VENDOR 6
 
@@ -31,23 +31,9 @@
 
 #define TOUCH_FOD_ENABLE 10
 
-#define FOD_SENSOR_X 439
-#define FOD_SENSOR_Y 1732
-#define FOD_SENSOR_SIZE 202
-
-#define BRIGHTNESS_PATH "/sys/class/leds/lcd-backlight/brightness"
-
-namespace {
-
-template <typename T>
-static T get(const std::string& path, const T& def) {
-    std::ifstream file(path);
-    T result;
-    file >> result;
-    return file.fail() ? def : result;
-}
-
-}  // anonymous namespace
+#define FOD_SENSOR_X 441
+#define FOD_SENSOR_Y 1808
+#define FOD_SENSOR_SIZE 197
 
 namespace vendor {
 namespace lineage {
@@ -57,8 +43,14 @@ namespace inscreen {
 namespace V1_0 {
 namespace implementation {
 
+template <typename T>
+static void set(const std::string& path, const T& value) {
+    std::ofstream file(path);
+    file << value;
+}
+
 FingerprintInscreen::FingerprintInscreen() {
-    displayFeatureService = IDisplayFeature::getService();
+    xiaomiDisplayFeatureService = IDisplayFeature::getService();
     touchFeatureService = ITouchFeature::getService();
     xiaomiFingerprintService = IXiaomiFingerprint::getService();
 }
@@ -90,22 +82,20 @@ Return<void> FingerprintInscreen::onPress() {
 }
 
 Return<void> FingerprintInscreen::onRelease() {
-    touchFeatureService->resetTouchMode(TOUCH_FOD_ENABLE);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
     release_wake_lock(LOG_TAG);
     return Void();
 }
 
 Return<void> FingerprintInscreen::onShowFODView() {
-    displayFeatureService->setFeature(0, 17, 1, 1);
+    xiaomiDisplayFeatureService->setFeature(0, 17, 1, 1);
     touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 1);
     return Void();
 }
 
 Return<void> FingerprintInscreen::onHideFODView() {
     touchFeatureService->resetTouchMode(TOUCH_FOD_ENABLE);
-    displayFeatureService->setFeature(0, 17, 0, 1);
-    xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
+    xiaomiDisplayFeatureService->setFeature(0, 17, 0, 1);
     return Void();
 }
 
@@ -116,7 +106,7 @@ Return<bool> FingerprintInscreen::handleAcquired(int32_t acquiredInfo, int32_t v
     }
 
     if (acquiredInfo == FINGERPRINT_ACQUIRED_VENDOR) {
-        if (vendorCode == 22) {
+        if (vendorCode == 0) {
             Return<void> ret = mCallback->onFingerDown();
             if (!ret.isOk()) {
                 LOG(ERROR) << "FingerDown() error: " << ret.description();
@@ -124,7 +114,7 @@ Return<bool> FingerprintInscreen::handleAcquired(int32_t acquiredInfo, int32_t v
             return true;
         }
 
-        if (vendorCode == 23) {
+        if (vendorCode == 1) {
             Return<void> ret = mCallback->onFingerUp();
             if (!ret.isOk()) {
                 LOG(ERROR) << "FingerUp() error: " << ret.description();
@@ -137,7 +127,7 @@ Return<bool> FingerprintInscreen::handleAcquired(int32_t acquiredInfo, int32_t v
 }
 
 Return<bool> FingerprintInscreen::handleError(int32_t error, int32_t vendorCode) {
-    LOG(ERROR) << "error: " << error << ", vendorCode: " << vendorCode << "\n";
+    LOG(ERROR) << "error: " << error << ", vendorCode: " << vendorCode;
     return false;
 }
 
@@ -145,19 +135,18 @@ Return<void> FingerprintInscreen::setLongPressEnabled(bool) {
     return Void();
 }
 
-Return<int32_t> FingerprintInscreen::getDimAmount(int32_t) {
-    int realBrightness = get(BRIGHTNESS_PATH, 0);
+Return<int32_t> FingerprintInscreen::getDimAmount(int32_t brightness) {
     float alpha;
 
-    if (realBrightness > 9) {
-        alpha = (255 + ((-8.08071) * pow(realBrightness, 0.45)));
+    if (brightness == 9.0) {
+        alpha = 0.9619584887;
+    } else if (brightness > 40) {
+        alpha = 1.0 - pow(((((brightness * 1.0) / 255.0) * 430.0) / 600.0), 0.455);
     } else {
-        alpha = (255 + ((-10.08071) * pow(realBrightness, 0.45)));
+        alpha = 1.0 - pow((brightness * 1.0) / 210.0, 0.455);
     }
 
-    if (alpha < 0.82) alpha += 0.1;
-
-    return alpha;
+    return 255 * alpha;
 }
 
 Return<bool> FingerprintInscreen::shouldBoostBrightness() {
@@ -172,6 +161,7 @@ Return<void> FingerprintInscreen::setCallback(const sp<IFingerprintInscreenCallb
 
     return Void();
 }
+
 
 }  // namespace implementation
 }  // namespace V1_0

@@ -57,7 +57,7 @@ public:
     Return<void> setCallback(const sp<IFingerprintInscreenCallback>& callback) override;
 
 private:
-    sp<IDisplayFeature> displayFeatureService;
+    sp<IDisplayFeature> xiaomiDisplayFeatureService;
     sp<ITouchFeature> touchFeatureService;
     sp<IXiaomiFingerprint> xiaomiFingerprintService;
 
