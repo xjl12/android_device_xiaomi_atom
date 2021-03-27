@@ -47,10 +47,6 @@ PRODUCT_TARGET_VNDK_VERSION := 30
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_BUILD_SUPER_PARTITION := false
 
-# ANT+
-PRODUCT_PACKAGES += \
-    AntHalService-Soong
-
 # Audio
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
