@@ -6,5 +6,13 @@
   {
     "repository": "android_packages_apps_GCamGOPrebuilt",
     "target_path": "packages/apps/GCamGOPrebuilt"
-  }
+  },
+  {
+    "repository" : "PixelExperience/vendor_mediatek_ims",
+    "target_path": "vendor/mediatek/ims",
+    "branch"     : "eleven"
+  },
 ]
+
+// Assume that you are at the root directory of the Android source.
+// git clone https://github.com/PixelExperience/vendor_mediatek_ims vendor/mediatek/ims/

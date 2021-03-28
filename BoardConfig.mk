@@ -90,6 +90,9 @@ TARGET_SURFACEFLINGER_FOD_LIB := //$(DEVICE_PATH):libfod_extension.kona
 # HIDL
 DEVICE_FRAMEWORK_MANIFEST_FILE := $(DEVICE_PATH)/framework_manifest.xml
 
+# Mediatek IMS
+TARGET_PROVIDES_MEDIATEK_IMS_STACK := true
+
 # Init
 TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_cezanne
 TARGET_RECOVERY_DEVICE_MODULES := libinit_cezanne

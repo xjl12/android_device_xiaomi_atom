@@ -16,6 +16,9 @@ $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 # Get non-open-source specific aspects
 $(call inherit-product, vendor/xiaomi/cezanne/cezanne-vendor.mk)
 
+# IMS
+$(call inherit-product, vendor/mediatek/ims/mtk-ims.mk)
+
 # Inherit properties
 include $(LOCAL_PATH)/properties.mk
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
@@ -95,6 +98,10 @@ PRODUCT_PACKAGES += \
 # HotwordEnrollement
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-hotword.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-hotword.xml
+
+# ImsInit hack
+PRODUCT_PACKAGES += \
+    ImsInit
 
 # IFAA manager
 PRODUCT_PACKAGES += \
