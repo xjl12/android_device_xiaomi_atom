@@ -115,6 +115,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     org.ifaa.android.manager
 
+# Keylayout
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/keylayout/mtk-kpd.kl:$(TARGET_COPY_OUT_SYSTEM)/usr/keylayout/mtk-kpd.kl
+
 # Lights
 PRODUCT_PACKAGES += \
     lights.cezanne
