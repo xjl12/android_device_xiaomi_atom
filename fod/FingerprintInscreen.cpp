@@ -31,7 +31,7 @@
 
 #define FOD_SENSOR_X 439
 #define FOD_SENSOR_Y 1732
-#define FOD_SENSOR_SIZE 202
+#define FOD_SENSOR_SIZE 220
 
 #define BRIGHTNESS_PATH "/sys/class/leds/lcd-backlight/brightness"
 
@@ -85,7 +85,8 @@ Return<int32_t> FingerprintInscreen::getDimAmount(int32_t /* brightness */) {
     }else{
         alpha = 1.0 - pow(realBrightness / 1680.0, 0.475);
     }
-    return 255 * alpha;
+//    return 255 * alpha;
+    return 0;
 }
 
 Return<int32_t> FingerprintInscreen::getSize() {
