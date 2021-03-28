@@ -12,7 +12,19 @@
     "target_path": "vendor/mediatek/ims",
     "branch"     : "eleven"
   },
+  {
+    "repository" : "PixelExperience/vendor_mediatek-opensource",
+    "target_path": "vendor/mediatek/opensource",
+    "branch"     : "eleven"
+  },
+  {
+    "repository" : "PixelExperience/vendor_mediatek_interfaces",
+    "target_path": "vendor/mediatek/interfaces",
+    "branch"     : "eleven"
+  },
 ]
 
 // Assume that you are at the root directory of the Android source.
 // git clone https://github.com/PixelExperience/vendor_mediatek_ims vendor/mediatek/ims/
+// git clone https://github.com/PixelExperience/vendor_mediatek-opensource vendor/mediatek/opensource/
+// git clone https://github.com/PixelExperience/vendor_mediatek_interfaces vendor/mediatek/interfaces/
