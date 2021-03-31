@@ -5,9 +5,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/arrow_cezanne.mk
+    $(LOCAL_DIR)/aosp_cezanne.mk
 
 COMMON_LUNCH_CHOICES := \
-    arrow_cezanne-user \
-    arrow_cezanne-userdebug \
-    arrow_cezanne-eng
+    aosp_cezanne-user \
+    aosp_cezanne-userdebug \
+    aosp_cezanne-eng
