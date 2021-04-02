@@ -6,7 +6,10 @@ endif
 
 # Audio
 PRODUCT_PRODUCT_PROPERTIES += \
-    audio.offload.min.duration.secs=30
+    audio.offload.min.duration.secs=30 \
+    ro.bluetooth.a2dp_offload.supported=false \
+    persist.bluetooth.a2dp_offload.disabled=true \
+    vendor.audio.feature.a2dp_offload.enable=false
 
 # Camera
 PRODUCT_PRODUCT_PROPERTIES += \
