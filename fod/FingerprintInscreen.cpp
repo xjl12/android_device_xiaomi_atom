@@ -158,7 +158,7 @@ Return<bool> FingerprintInscreen::shouldBoostBrightness() {
 }
 
 
-Return<void> FingerprintInscreen::setCallback(const sp<IFingerprintInscreenCallback>& callback) {
+Return<void> FingerprintInscreen::setCallback(const sp<IFingerprintInscreenCallback>& /* callback */) {
     return Void();
 }
 
