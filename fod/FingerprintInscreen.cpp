@@ -17,11 +17,15 @@
 #define LOG_TAG "FingerprintInscreenService"
 
 #include "FingerprintInscreen.h"
+#include <unistd.h>
 
 #include <android-base/logging.h>
 #include <hardware_legacy/power.h>
 #include <cmath>
 #include <fstream>
+
+
+#define FINGERPRINT_ACQUIRED_VENDOR 6
 
 #define COMMAND_NIT 10
 #define PARAM_NIT_FOD 1
@@ -66,6 +70,7 @@ FingerprintInscreen::FingerprintInscreen() {
     xiaomiDisplayFeatureService = IDisplayFeature::getService();
     touchFeatureService = ITouchFeature::getService();
     xiaomiFingerprintService = IXiaomiFingerprint::getService();
+    sd = get("/FOD_S",300000);
 }
 
 Return<int32_t> FingerprintInscreen::getPositionX() {
@@ -106,20 +111,22 @@ Return<void> FingerprintInscreen::onFinishEnroll() {
 
 Return<void> FingerprintInscreen::onPress() {
     acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
+    usleep(sd);
     set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_ON);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_FOD);
     return Void();
 }
 
 Return<void> FingerprintInscreen::onRelease() {
-    set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_OFF);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
+    set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_OFF);
     release_wake_lock(LOG_TAG);
     return Void();
 }
 
 Return<void> FingerprintInscreen::onShowFODView() {
     xiaomiDisplayFeatureService->setFeature(0, 17, 1, 1);
+    //xiaomiDisplayFeatureService->setFeature(0, 22, 1, 10);
     touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 2);
     return Void();
 }
@@ -127,6 +134,7 @@ Return<void> FingerprintInscreen::onShowFODView() {
 Return<void> FingerprintInscreen::onHideFODView() {
     set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_OFF);
     touchFeatureService->resetTouchMode(TOUCH_FOD_ENABLE);
+    //xiaomiDisplayFeatureService->setFeature(0, 22, 0, 10);
     xiaomiDisplayFeatureService->setFeature(0, 17, 0, 1);
     return Void();
 }

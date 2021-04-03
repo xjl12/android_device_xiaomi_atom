@@ -21,3 +21,14 @@ media/audio/ui/popup_muqin_down.ogg
 media/audio/ui/popup_muqin_up.ogg
 media/audio/ui/popup_yingyan_down.ogg
 media/audio/ui/popup_yingyan_up.ogg
+
+# Bluetooth
+bin/autobt
+lib/libbluetooth_mtk_pure.so
+lib64/libbluetooth_mtk_pure.so
+lib/libbluetooth_mtk.so
+lib64/libbluetooth_mtk.so
+lib/libbluetoothem_mtk.so
+lib64/libbluetoothem_mtk.so
+lib/libbt-vendor.so
+lib64/libbt-vendor.so

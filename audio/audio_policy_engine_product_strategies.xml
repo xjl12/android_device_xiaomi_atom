@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+     -->
+
+<ProductStrategies>
+
+    <!-- "hidden strategies" like TTS, enforced audible:
+            Shall we expose them here or keep it hard coded -->
+
+    <!-- Used to identify the volume of audio streams for enforced system sounds in certain
+         countries (e.g. camera in Japan)
+         This strategy will only have higher priority than phone if force for system is set to
+         enforced. -->
+
+    <ProductStrategy name="STRATEGY_PHONE">
+        <AttributesGroup streamType="AUDIO_STREAM_VOICE_CALL" volumeGroup="voice_call">
+            <Attributes> <Usage value="AUDIO_USAGE_VOICE_COMMUNICATION"/> </Attributes>
+        </AttributesGroup>
+        <AttributesGroup streamType="AUDIO_STREAM_BLUETOOTH_SCO" volumeGroup="bluetooth_sco">
+            <Attributes> <Flags value="AUDIO_FLAG_SCO"/> </Attributes>
+        </AttributesGroup>
+    </ProductStrategy>
+
+    <ProductStrategy name="STRATEGY_SONIFICATION">
+        <AttributesGroup streamType="AUDIO_STREAM_RING" volumeGroup="ring">
+            <Attributes> <Usage value="AUDIO_USAGE_NOTIFICATION_TELEPHONY_RINGTONE"/> </Attributes>
+        </AttributesGroup>
+        <AttributesGroup streamType="AUDIO_STREAM_ALARM" volumeGroup="alarm">
+            <Attributes> <Usage value="AUDIO_USAGE_ALARM"/> </Attributes>
+        </AttributesGroup>
+    </ProductStrategy>
+
+    <ProductStrategy name="STRATEGY_ENFORCED_AUDIBLE">
+        <AttributesGroup streamType="AUDIO_STREAM_ENFORCED_AUDIBLE" volumeGroup="enforced_audible">
+            <Attributes> <Flags value="AUDIO_FLAG_AUDIBILITY_ENFORCED"/> </Attributes>
+        </AttributesGroup>
+    </ProductStrategy>
+
+    <ProductStrategy name="STRATEGY_ACCESSIBILITY">
+        <AttributesGroup streamType="AUDIO_STREAM_ACCESSIBILITY" volumeGroup="accessibility">
+            <Attributes> <Usage value="AUDIO_USAGE_ASSISTANCE_ACCESSIBILITY"/> </Attributes>
+        </AttributesGroup>
+    </ProductStrategy>
+
+    <ProductStrategy name="STRATEGY_SONIFICATION_RESPECTFUL">
+        <AttributesGroup streamType="AUDIO_STREAM_NOTIFICATION" volumeGroup="notification">
+            <Attributes> <Usage value="AUDIO_USAGE_NOTIFICATION"/> </Attributes>
+            <Attributes> <Usage value="AUDIO_USAGE_NOTIFICATION_COMMUNICATION_REQUEST"/> </Attributes>
+            <Attributes> <Usage value="AUDIO_USAGE_NOTIFICATION_COMMUNICATION_INSTANT"/> </Attributes>
+            <Attributes> <Usage value="AUDIO_USAGE_NOTIFICATION_COMMUNICATION_DELAYED"/> </Attributes>
+            <Attributes> <Usage value="AUDIO_USAGE_NOTIFICATION_EVENT"/> </Attributes>
+        </AttributesGroup>
+    </ProductStrategy>
+
+    <ProductStrategy name="STRATEGY_MEDIA">
+         <AttributesGroup streamType="AUDIO_STREAM_MUSIC" volumeGroup="music">
+            <Attributes> <Usage value="AUDIO_USAGE_MEDIA"/> </Attributes>
+            <Attributes> <Usage value="AUDIO_USAGE_GAME"/> </Attributes>
+            <Attributes> <Usage value="AUDIO_USAGE_ASSISTANT"/> </Attributes>
+            <Attributes> <Usage value="AUDIO_USAGE_ASSISTANCE_NAVIGATION_GUIDANCE"/> </Attributes>
+            <Attributes></Attributes>
+        </AttributesGroup>
+        <AttributesGroup streamType="AUDIO_STREAM_ASSISTANT" volumeGroup="assistant">
+            <Attributes>
+                <ContentType value="AUDIO_CONTENT_TYPE_SPEECH"/>
+                <Usage value="AUDIO_USAGE_ASSISTANT"/>
+            </Attributes>
+        </AttributesGroup>
+        <AttributesGroup streamType="AUDIO_STREAM_SYSTEM" volumeGroup="system">
+            <Attributes> <Usage value="AUDIO_USAGE_ASSISTANCE_SONIFICATION"/> </Attributes>
+        </AttributesGroup>
+    </ProductStrategy>
+
+    <ProductStrategy name="STRATEGY_DTMF">
+        <AttributesGroup streamType="AUDIO_STREAM_DTMF" volumeGroup="dtmf">
+            <Attributes> <Usage value="AUDIO_USAGE_VOICE_COMMUNICATION_SIGNALLING"/> </Attributes>
+        </AttributesGroup>
+    </ProductStrategy>
+
+    <!-- Used to identify the volume of audio streams exclusively transmitted through the  speaker
+         (TTS) of the device -->
+    <ProductStrategy name="STRATEGY_TRANSMITTED_THROUGH_SPEAKER">
+        <AttributesGroup streamType="AUDIO_STREAM_TTS" volumeGroup="tts">
+            <Attributes> <Flags value="AUDIO_FLAG_BEACON"/> </Attributes>
+        </AttributesGroup>
+    </ProductStrategy>
+
+</ProductStrategies>
+
