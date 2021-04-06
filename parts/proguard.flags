@@ -1,7 +1,7 @@
--keep class org.mokee.settings.doze.* {
+-keep class org.lineageos.settings.doze.* {
   *;
 }
 
--keep class org.mokee.settings.popupcamera.* {
+-keep class org.lineageos.settings.popupcamera.* {
   *;
 }

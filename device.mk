@@ -25,7 +25,7 @@ PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay-arrow
+    $(LOCAL_PATH)/overlay
 
 # Overlays -- Override vendor ones
 PRODUCT_PACKAGES += \
@@ -106,6 +106,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.mt6885:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6885
 
+# Gboard
+ifeq ($(WITH_GAPPS), false)
+PRODUCT_PACKAGES += \
+    Gboard 
+endif
+
+
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
@@ -145,6 +152,9 @@ PRODUCT_PACKAGES += \
 # Parts
 PRODUCT_PACKAGES += \
     XiaomiParts
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/privapp-permissions-ols.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-ols.xml
 
 # Power
 PRODUCT_PACKAGES += \
