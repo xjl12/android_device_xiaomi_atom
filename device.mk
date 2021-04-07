@@ -19,8 +19,6 @@ $(call inherit-product, vendor/xiaomi/cezanne/cezanne-vendor.mk)
 # IMS
 $(call inherit-product, vendor/mediatek/ims/mtk-ims.mk)
 
-# Inherit properties
-include $(LOCAL_PATH)/properties.mk
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
 
 # Overlays
