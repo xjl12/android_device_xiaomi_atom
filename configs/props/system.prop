@@ -28,7 +28,9 @@ persist.vendor.mtk_ct_volte_support=3
 persist.vendor.mtk_hvolte_volte_indicator=0
 persist.vendor.volte_enable=1
 persist.vendor.mtk_wfc_support=1
-
+persist.dbg.volte_avail_ovr=1
+persist.dbg.vt_avail_ovr=1
+persist.dbg.wfc_avail_ovr=1
 
 # Telephony
 ro.telephony.default_network=33,22
