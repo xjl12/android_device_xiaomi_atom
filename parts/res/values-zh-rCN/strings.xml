@@ -27,11 +27,11 @@
     <string name="popup_sound_chilun">齿轮</string>
     <string name="popup_sound_cangmen">舱门</string>
     <!--  DT2W    -->
-    <string name="dt2w_enable_title">Double-Tap to Wake </string>
-    <string name="dt2w_enable_summary">Double-tap on lockscreen to wake device</string>
+    <string name="dt2w_enable_title">双击唤醒</string>
+    <string name="dt2w_enable_summary">息屏双击唤醒</string>
 
     <!--  Refresh Rate    -->
-    <string name="device_specific_settings_title">Device-specific settings</string>
-    <string name="device_specific_settings_summary">Refresh rate configuration</string>
-    <string name="device_min_refresh_rate">Minimum Refresh Rate</string>
+    <string name="device_specific_settings_title">设备设置</string>
+    <string name="device_specific_settings_summary">屏幕刷新率配置</string>
+    <string name="device_min_refresh_rate">屏幕刷新率</string>
 </resources>
