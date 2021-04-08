@@ -70,7 +70,7 @@ FingerprintInscreen::FingerprintInscreen() {
     xiaomiDisplayFeatureService = IDisplayFeature::getService();
     touchFeatureService = ITouchFeature::getService();
     xiaomiFingerprintService = IXiaomiFingerprint::getService();
-    sd = get("/FOD_S",300000);
+    sd = get("/FOD_S",250000);
 }
 
 Return<int32_t> FingerprintInscreen::getPositionX() {
@@ -81,18 +81,16 @@ Return<int32_t> FingerprintInscreen::getPositionY() {
     return FOD_SENSOR_Y;
 }
 
-Return<int32_t> FingerprintInscreen::getDimAmount(int32_t /* brightness */) {
+Return<int32_t> FingerprintInscreen::getDimAmount(int32_t brightness ) {
     float alpha;
-    int realBrightness = get(BRIGHTNESS_PATH, 0);
-    
-    if (realBrightness >= 500) {
-        alpha = 1.0 - pow(realBrightness / 2047.0 * 430.0 / 600.0, 0.485);
-    } else if (realBrightness < 500 && realBrightness >=250) {
-        alpha = 1.0 - pow(realBrightness / 2047.0 * 430.0 / 600.0, 0.530);
-    } else if (realBrightness > 60) {
-         alpha = 1.0 - pow(realBrightness / 1680.0, 0.525);
+    if (brightness >= 62) {
+        alpha = 1.0 - pow(brightness / 255.0 * 430.0 / 600.0, 0.485);
+    } else if (brightness < 62 && brightness >=31) {
+        alpha = 1.0 - pow(brightness / 255.0 * 430.0 / 600.0, 0.530);
+    } else if (brightness > 7) {
+         alpha = 1.0 - pow(brightness / 209.0, 0.525);
     }else{
-        alpha = 1.0 - pow(realBrightness / 1680.0, 0.475);
+        alpha = 1.0 - pow(brightness / 209.0, 0.475);
     }
     return 255 * alpha;
 }
