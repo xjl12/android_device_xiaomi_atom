@@ -1,0 +1,40 @@
+# Copyright (C) 2012 The Android Open Source Project
+#
+# IMPORTANT: Do not create world writable files or directories.
+# This is a common source of Android security bugs.
+#
+
+on early-init
+    write /sys/class/net/ccmni0/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni1/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni2/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni3/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni4/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni5/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni6/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni7/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni9/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni10/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni11/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni12/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni13/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni14/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni15/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni16/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni17/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni18/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni19/queues/rx-0/rps_cpus "0D"
+    write /sys/class/net/ccmni20/queues/rx-0/rps_cpus "0D"
+
+    write /proc/sys/net/core/netdev_max_backlog 50000
+    write /proc/sys/net/ipv4/ipfrag_high_thresh 20971520
+
+on post-fs-data
+
+    write /proc/bootprof "post-fs-data: on modem start"
+
+# Encrypt phone function
+    setprop vold.post_fs_data_done 1
+
+
+

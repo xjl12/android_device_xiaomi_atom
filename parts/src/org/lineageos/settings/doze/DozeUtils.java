@@ -34,7 +34,7 @@ import static android.provider.Settings.Secure.DOZE_ENABLED;
 public final class DozeUtils {
 
     private static final String TAG = "DozeUtils";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 

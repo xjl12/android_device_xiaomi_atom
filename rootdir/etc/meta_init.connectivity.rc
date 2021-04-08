@@ -1,0 +1,122 @@
+#INTERNAL_START
+on post-fs-data
+#
+# Connectivity related modules and character device nodes (Begin)
+#
+
+    mkdir /data/vendor/stp_dump 0755 system system
+    mkdir /data/vendor/connsyslog 0755 system system
+
+#/dev/ttyMT2 for Connectivity BT/FM/GPS usage
+    chmod 0660 /dev/ttyMT2
+    chown system system /dev/ttyMT2
+
+#GPS
+    mkdir /data/vendor/gps 0770 gps system
+
+# GPS EMI
+    chmod 666 /dev/gps_emi
+
+#
+# Connectivity related device nodes & configuration (end)
+#
+
+
+on boot
+
+#
+# Connectivity related services (Begin)
+#
+# WMT
+service wmt_loader /vendor/bin/wmt_loader
+    user system
+    group system
+    oneshot
+
+service wmt_launcher /vendor/bin/wmt_launcher -p /vendor/firmware/
+    user system
+    group system
+
+# conninfra
+service conninfra_loader /vendor/bin/conninfra_loader
+    class core
+    user system
+    group system
+    oneshot
+
+# GPS
+#service mnld /vendor/bin/mnld
+#    class main
+#    user gps
+#    group gps inet misc sdcard_rw sdcard_r media_rw system radio
+#    socket mnld stream 660 gps system
+
+#service BGW /vendor/bin/BGW
+#    user system
+#    group gps system radio
+#    class main
+
+#
+# Connectivity related services (End)
+#
+
+#
+# Connectivity related kernel objects (Begin)
+#
+
+# load wmt_drv
+on boot
+    insmod /vendor/lib/modules/wmt_drv.ko
+
+# load conninfra driver
+on boot
+    insmod /vendor/lib/modules/conninfra.ko
+
+# load bt_drv
+on property:vendor.connsys.driver.ready=yes
+    insmod /vendor/lib/modules/bt_drv.ko
+
+# load wifi chrdev driver and wlan driver after wmt_loader finish
+on property:vendor.connsys.driver.ready=yes
+    insmod /vendor/lib/modules/wmt_chrdev_wifi.ko
+    insmod /vendor/lib/modules/wlan_drv_${ro.vendor.wlan.gen}.ko
+
+# load fmradio_drv
+on property:vendor.connsys.driver.ready=yes
+    insmod /vendor/lib/modules/fmradio_drv.ko
+
+# load gps_drv
+on property:vendor.connsys.driver.ready=yes
+  insmod /vendor/lib/modules/gps_drv.ko
+
+on property:ro.build.type=eng
+    write /sys/kernel/debug/tracing/tracing_on 1
+
+on property:persist.vendor.connsys.coredump.mode=1
+    start stp_dump
+
+on property:persist.vendor.connsys.coredump.mode=2
+    start stp_dump
+
+on property:persist.vendor.connsys.coredump.mode=0
+    stop stp_dump
+
+on property:vendor.connsys.driver.ready=yes && property:persist.vendor.connsys.coredump.mode=*
+    write /proc/driver/wmt_dbg "0x15 ${persist.vendor.connsys.coredump.mode}"
+
+on property:vendor.connsys.driver.ready=yes && property:debug.vendor.connsys.suspend.alarm=*
+    write /proc/driver/wmt_dbg "0x2e ${debug.vendor.connsys.suspend.alarm}"
+
+on property:persist.vendor.em.dy.debug=1
+    setprop persist.vendor.connsys.coredump.mode 0
+
+service stp_dump /vendor/bin/stp_dump3
+    user system
+    group system sdcard_rw misc
+    class core
+    disabled
+#
+# Connectivity related kernel objects (End)
+#
+
+#INTERNAL_END

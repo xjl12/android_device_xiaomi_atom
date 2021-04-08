@@ -14,12 +14,36 @@ ro.vendor.touchfeature.type=11
 ro.vendor.radio.5g=3
 ro.sf.lcd_density=440
 
+# Perf
+ro.mtk_perf_simple_start_win=1
+ro.mtk_perf_fast_start_win=1
+ro.mtk_perf_response_time=1
+
+# USB
+ro.sys.usb.mtp.whql.enable=0
+ro.sys.usb.storage.type=mtp
+ro.sys.usb.bicr=no
+ro.sys.usb.charging.only=yes
+persist.vendor.quick.charge=1
+
+# WiFi
+wifi.interface=wlan0
+ro.mediatek.wlan.wsc=1
+ro.mediatek.wlan.p2p=1
+mediatek.wlan.ctia=0
+wifi.tethering.interface=ap0
+wifi.direct.interface=p2p0
+ro.vendor.net.enable_dual_wifi=1
 
 # Audio
-audio.offload.min.duration.secs=30
-ro.bluetooth.a2dp_offload.supported=false
-persist.bluetooth.a2dp_offload.disabled=true
-vendor.audio.feature.a2dp_offload.enable=false
+ro.camera.sound.forced=0
+ro.audio.silent=0
+ro.vendor.audio.soundfx.type=mi
+ro.vendor.audio.soundfx.usb=true
+ro.vendor.audio.voice.volume.boost=manual
+ro.vendor.audio.game.effect=true
+ro.vendor.audio.sos=true
+vendor.audio.spkcal.copy.inhal=true
 
 # IMS
 persist.vendor.volte_support=1
@@ -42,3 +66,8 @@ persist.sys.fuse.default_fuse_enabled=false
 persist.sys.fflag.override.settings_fuse=false
 persist.device_config.storage_native_boot.fuse_enabled=false
 ro.sys.sdcardfs=true
+
+# Blur
+ro.surface_flinger.supports_background_blur=1
+persist.sys.sf.disable_blurs=1
+ro.sf.blurs_are_expensive=1

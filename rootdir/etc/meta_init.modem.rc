@@ -1,0 +1,49 @@
+# Copyright (C) 2012 The Android Open Source Project
+#
+# IMPORTANT: Do not create world writable files or directories.
+# This is a common source of Android security bugs.
+#
+
+on post-fs-data
+
+    write /proc/bootprof "post-fs-data: on meta modem start"
+
+    # Modem related device nodes
+    mkdir /mnt/vendor/nvdata/md  0770 root system
+    mkdir /mnt/vendor/nvdata/md3  0770 root system
+    mkdir /data/md3	0770 root system
+
+#  Build-in Modified - S
+#    insmod /vendor/lib/modules/ccci_plat.ko
+#    insmod /vendor/lib/modules/ccci.ko
+#  Build-in Modified - E
+    chown radio radio /sys/kernel/ccci/boot
+
+#SeLinux
+    mkdir /data/ccci_cfg 0770 system radio
+    restorecon /data/ccci_cfg
+    restorecon_recursive /mnt/vendor/protect_f
+    restorecon_recursive /mnt/vendor/protect_s
+
+    # Encrypt phone function
+    setprop vold.post_fs_data_done 1
+    
+service permission_check /vendor/bin/permission_check
+    user root
+    group system radio
+    oneshot
+
+service vendor.ccci_fsd /vendor/bin/ccci_fsd 0
+    user radio
+    group radio system
+    oneshot
+
+service ccci_mdinit /vendor/bin/ccci_mdinit 0
+    user system
+    group radio system
+    oneshot
+
+service ccci_rpcd /vendor/bin/ccci_rpcd 0
+    user radio
+    group radio system
+    oneshot

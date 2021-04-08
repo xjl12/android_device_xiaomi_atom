@@ -1,0 +1,670 @@
+# Copyright (C) 2012 The Android Open Source Project
+#
+# IMPORTANT: Do not create world writable files or directories.
+# This is a common source of Android security bugs.
+#
+import /system/etc/init/hw/vendor_init_as_system.rc
+import /init.environ.rc
+import /vendor/etc/init/hw/init.aee.rc
+import /system_ext/etc/init/hw/init.aee.rc
+import /vendor/etc/init/trustonic.rc
+import ${ro.vendor.rc}meta_init.connectivity.rc
+import /vendor/etc/init/hw/meta_init.project.rc
+import /vendor/etc/init/microtrust.rc
+import /vendor/etc/init/android.hardware.boot@1.1-service.rc
+import /vendor/etc/init/android.hardware.boot@1.1-service-lazy.rc
+
+#copy from system/etc for APEX
+import /system/etc/init/apexd.rc
+import /system/etc/init/art_apex_boot_integrity.rc
+import /system/etc/init/vold.rc
+import /system/etc/init/servicemanager.rc
+import /system/etc/init/hwservicemanager.rc
+import /system/etc/init/android.hidl.allocator@1.0-service.rc
+
+import ${ro.vendor.rc}multi_init.rc
+
+#Make sure meta_init.modem.rc is the last rc file.
+import ${ro.vendor.rc}meta_init.modem.rc
+
+
+on early-init
+    write /proc/bootprof "INIT:early-init"
+    # Set init and its forked children's oom_adj.
+    write /proc/1/oom_score_adj -1000
+
+    # Disable sysrq from keyboard
+    write /proc/sys/kernel/sysrq 0
+
+    # Set the security context of /adb_keys if present.
+    restorecon /adb_keys
+
+    # Set the security context of /postinstall if present.
+    restorecon /postinstall
+
+
+    # Set up linker config subdirectories based on mount namespaces
+    mkdir /linkerconfig/bootstrap 0755
+    mkdir /linkerconfig/default 0755
+
+    # Generate ld.config.txt for early executed processes
+    exec -- /system/bin/linkerconfig --target /linkerconfig/bootstrap
+    chmod 644 /linkerconfig/bootstrap/ld.config.txt
+    copy /linkerconfig/bootstrap/ld.config.txt /linkerconfig/default/ld.config.txt
+    chmod 644 /linkerconfig/default/ld.config.txt
+
+    # Mount bootstrap linker configuration as current
+    mount none /linkerconfig/bootstrap /linkerconfig bind rec
+
+    start ueventd
+
+
+    # Run apexd-bootstrap so that APEXes that provide critical libraries
+    # become available. Note that this is executed as exec_start to ensure that
+    # the libraries are available to the processes started after this statement.
+    exec_start apexd-bootstrap
+
+#INTERNAL_START
+    mount debugfs debugfs /sys/kernel/debug
+    chmod 0755 /sys/kernel/debug
+#INTERNAL_END
+
+on init
+    write /proc/bootprof "INIT:init"
+    sysclktz 0
+
+    # Mix device-specific information into the entropy pool
+    copy /proc/cmdline /dev/urandom
+    copy /default.prop /dev/urandom
+
+    write /proc/bootprof "INIT: on init start"
+
+    # Backward compatibility.
+    symlink /system/bin /bin
+    symlink /system/etc /etc
+
+    # Backward compatibility.
+    symlink /sys/kernel/debug /d
+
+    # Link /vendor to /system/vendor for devices without a vendor partition.
+    symlink /system/vendor /vendor
+
+# Temp Backward compatibility
+    symlink /dev/block/platform/bootdevice/by-name/boot /dev/bootimg
+    symlink /dev/block/platform/bootdevice/by-name/recovery /dev/recovery
+    symlink /dev/block/platform/bootdevice/by-name/secro  /dev/sec_ro
+    symlink /dev/block/platform/bootdevice/by-name/kb /dev/kb
+    symlink /dev/block/platform/bootdevice/by-name/dkb /dev/dkb
+    symlink /dev/block/platform/bootdevice/by-name/seccfg /dev/seccfg
+    symlink /dev/block/platform/bootdevice/by-name/proinfo /dev/pro_info
+    symlink /dev/block/platform/bootdevice/by-name/nvram /dev/nvram
+    symlink /dev/block/platform/bootdevice/by-name/para /dev/misc
+    symlink /dev/block/platform/bootdevice/by-name/logo /dev/logo
+
+    # Mount cgroup mount point for cpu accounting
+    mount cgroup none /acct cpuacct
+    mkdir /acct/uid
+
+    # Create energy-aware scheduler tuning nodes
+    mkdir /dev/stune
+    mount cgroup none /dev/stune nodev noexec nosuid schedtune
+    mkdir /dev/stune/foreground
+    mkdir /dev/stune/background
+    mkdir /dev/stune/top-app
+    mkdir /dev/stune/rt
+    chown system system /dev/stune
+    chown system system /dev/stune/foreground
+    chown system system /dev/stune/background
+    chown system system /dev/stune/top-app
+    chown system system /dev/stune/rt
+    chown system system /dev/stune/tasks
+    chown system system /dev/stune/foreground/tasks
+    chown system system /dev/stune/background/tasks
+    chown system system /dev/stune/top-app/tasks
+    chown system system /dev/stune/rt/tasks
+    chmod 0664 /dev/stune/tasks
+    chmod 0664 /dev/stune/foreground/tasks
+    chmod 0664 /dev/stune/background/tasks
+    chmod 0664 /dev/stune/top-app/tasks
+    chmod 0664 /dev/stune/rt/tasks
+
+    # Permissions for System Server and daemons.
+    chown system system /sys/power/autosleep
+    chown system system /sys/power/state
+    chown system system /sys/power/wakeup_count
+    chown radio wakelock /sys/power/wake_lock
+    chown radio wakelock /sys/power/wake_unlock
+    chmod 0660 /sys/power/state
+    chmod 0660 /sys/power/wake_lock
+    chmod 0660 /sys/power/wake_unlock
+
+    restorecon_recursive /mnt
+    # Support legacy paths
+    symlink /sdcard /mnt/sdcard
+
+    mount configfs none /config nodev noexec nosuid
+    chmod 0770 /config/sdcardfs
+    chown system package_info /config/sdcardfs
+
+    # Mount binderfs
+    mkdir /dev/binderfs
+    mount binder binder /dev/binderfs stats=global
+    chmod 0755 /dev/binderfs
+
+    # Mount fusectl
+    mount fusectl none /sys/fs/fuse/connections
+
+    symlink /dev/binderfs/binder /dev/binder
+    symlink /dev/binderfs/hwbinder /dev/hwbinder
+    symlink /dev/binderfs/vndbinder /dev/vndbinder
+
+    chmod 0666 /dev/binderfs/hwbinder
+    chmod 0666 /dev/binderfs/binder
+    chmod 0666 /dev/binderfs/vndbinder
+
+    mkdir /mnt/secure 0700 root root
+    mkdir /mnt/secure/asec  0700 root root
+    mkdir /mnt/asec 0755 root system
+    mkdir /mnt/obb 0755 root system
+    mkdir /mnt/media_rw 0750 root media_rw
+    mkdir /mnt/user 0755 root root
+    mkdir /mnt/user/0 0755 root root
+    mkdir /mnt/expand 0771 system system
+    mkdir /mnt/appfuse 0711 root root
+
+    # Storage views to support runtime permissions
+    mkdir /mnt/runtime 0700 root root
+    mkdir /mnt/runtime/default 0755 root root
+    mkdir /mnt/runtime/default/self 0755 root root
+    mkdir /mnt/runtime/read 0755 root root
+    mkdir /mnt/runtime/read/self 0755 root root
+    mkdir /mnt/runtime/write 0755 root root
+    mkdir /mnt/runtime/write/self 0755 root root
+
+    # Symlink to keep legacy apps working in multi-user world
+    symlink /storage/self/primary /sdcard
+    symlink /storage/self/primary /mnt/sdcard
+    symlink /mnt/user/0/primary /mnt/runtime/default/self/primary
+
+    # root memory control cgroup, used by lmkd
+    mkdir /dev/memcg 0700 root system
+    mount cgroup none /dev/memcg memory
+    # app mem cgroups, used by activity manager, lmkd and zygote
+    mkdir /dev/memcg/apps/ 0755 system system
+
+    write /proc/sys/kernel/panic_on_oops 1
+    write /proc/sys/kernel/hung_task_timeout_secs 0
+    write /proc/cpu/alignment 4
+
+    # scheduler tunables
+    # Disable auto-scaling of scheduler tunables with hotplug. The tunables
+    # will vary across devices in unpredictable ways if allowed to scale with
+    # cpu cores.
+    write /proc/sys/kernel/sched_tunable_scaling 0
+    write /proc/sys/kernel/sched_latency_ns 10000000
+    write /proc/sys/kernel/sched_wakeup_granularity_ns 2000000
+    write /proc/sys/kernel/sched_child_runs_first 0
+
+    write /proc/sys/kernel/randomize_va_space 2
+    write /proc/sys/vm/mmap_min_addr 32768
+    write /proc/sys/net/ipv4/ping_group_range "0 2147483647"
+    write /proc/sys/net/unix/max_dgram_qlen 600
+    write /proc/sys/kernel/sched_rt_runtime_us 950000
+    write /proc/sys/kernel/sched_rt_period_us 1000000
+
+    # Assign reasonable ceiling values for socket rcv/snd buffers.
+    # These should almost always be overridden by the target per the
+    # the corresponding technology maximums.
+    write /proc/sys/net/core/rmem_max  262144
+    write /proc/sys/net/core/wmem_max  262144
+
+    # reflect fwmark from incoming packets onto generated replies
+    write /proc/sys/net/ipv4/fwmark_reflect 1
+    write /proc/sys/net/ipv6/fwmark_reflect 1
+
+    # set fwmark on accepted sockets
+    write /proc/sys/net/ipv4/tcp_fwmark_accept 1
+
+#INTERNAL_START
+    symlink /sdcard /mnt/sdcard
+
+    mkdir /mnt/cd-rom 0000 system system
+#INTERNAL_END
+
+    # enable armv8_deprecated instruction hooks
+    write /proc/sys/abi/swp 1
+    # Linux's execveat() syscall may construct paths containing /dev/fd
+    # expecting it to point to /proc/self/fd
+    symlink /proc/self/fd /dev/fd
+    # set RLIMIT_NICE to allow priorities from 19 to -20
+    setrlimit nice 40 40
+
+    start servicemanager
+    start hwservicemanager
+    start hidl_memory
+
+# Healthd can trigger a full boot from charger mode by signaling this
+# property when the power button is held.
+on property:sys.boot_from_charger_mode=1
+    class_stop charger
+    trigger late-init
+
+# Load properties from /system/ + /factory after fs mount.
+on load_system_props_action
+    load_system_props
+
+on load_persist_props_action
+    load_persist_props
+    start logd
+    start logd-reinit
+
+    # avoid no log in meta mode due to logd-reinit
+    stop keyinstall-1-0
+    start keyinstall-1-0
+
+# Indicate to fw loaders that the relevant mounts are up.
+on firmware_mounts_complete
+    rm /dev/.booting
+
+# Mount filesystems and start core system services.
+on late-init
+    trigger early-fs
+
+    # Mount fstab in init.{$device}.rc by mount_all command. Optional parameter
+    # '--early' can be specified to skip entries with 'latemount'.
+    # /system and /vendor must be mounted by the end of the fs stage,
+    # while /data is optional.
+    trigger fs
+    trigger post-fs
+
+    # Load properties from /system/ + /factory after fs mount. Place
+    # this in another action so that the load will be scheduled after the prior
+    # issued fs triggers have completed.
+    trigger load_system_props_action
+
+    # Mount fstab in init.{$device}.rc by mount_all with '--late' parameter
+    # to only mount entries with 'latemount'. This is needed if '--early' is
+    # specified in the previous mount_all command on the fs stage.
+    # With /system mounted and properties form /system + /factory available,
+    # some services can be started.
+    trigger late-fs
+
+    # Now we can mount /data. File encryption requires keymaster to decrypt
+    # /data, which in turn can only be loaded when system properties are present.
+    trigger post-fs-data
+
+    # Load persist properties and override properties (if enabled) from /data.
+    trigger load_persist_props_action
+
+    # Remove a file to wake up anything waiting for firmware.
+    trigger firmware_mounts_complete
+
+    trigger early-boot
+    trigger boot
+
+ on early-fs
+    # Once metadata has been mounted, we'll need vold to deal with userdata checkpointing
+   start vold
+
+on fs
+    ## USB configfs
+    mkdir /dev/usb-ffs 0770 shell shell
+    mkdir /dev/usb-ffs/adb 0770 shell shell
+    mkdir /config/usb_gadget/g1 0770 shell shell
+    write /config/usb_gadget/g1/idVendor 0x0E8D
+    write /config/usb_gadget/g1/bcdDevice 0xFFFF
+    write /config/usb_gadget/g1/bcdUSB 0x0200
+    mkdir /config/usb_gadget/g1/strings/0x409 0770
+    write /config/usb_gadget/g1/strings/0x409/manufacturer "Android"
+    write /config/usb_gadget/g1/strings/0x409/product "Android"
+    write /config/usb_gadget/g1/bDeviceClass 0
+    write /config/usb_gadget/g1/bDeviceSubClass 0
+    write /config/usb_gadget/g1/bDeviceProtocol 0
+    mkdir /config/usb_gadget/g1/functions/mass_storage.usb0
+    mkdir /config/usb_gadget/g1/functions/ffs.adb
+    mkdir /config/usb_gadget/g1/functions/acm.gs0
+    mkdir /config/usb_gadget/g1/functions/acm.gs1
+    mkdir /config/usb_gadget/g1/functions/acm.gs2
+    mkdir /config/usb_gadget/g1/functions/acm.gs3
+    mkdir /config/usb_gadget/g1/configs/b.1 0770 shell shell
+    mkdir /config/usb_gadget/g1/configs/b.1/strings/0x409 0770 shell shell
+    write /config/usb_gadget/g1/configs/b.1/MaxPower 500
+    symlink /config/usb_gadget/g1/configs/b.1 /config/usb_gadget/g1/os_desc/b.1
+
+#INTERNAL_START
+    write /proc/bootprof "INIT:Mount_START"
+
+    start vendor.boot-hal-1-1
+    mount_all --early
+    write /proc/bootprof "INIT:Mount_END"
+#INTERNAL_END
+
+on post-fs
+    start logd
+    start keyinstall-1-0
+    start light-hal-2-0
+    start system_suspend
+    start merged_hal_service
+    # Once everything is setup, no need to modify /.
+    # The bind+ro combination avoids modifying any other mount flags.
+    # mount rootfs rootfs / remount bind ro
+    # Mount shared so changes propagate into child namespaces
+    mount rootfs rootfs / shared rec
+    # Mount default storage into root namespace
+    mount none /mnt/runtime/default /storage bind rec
+    mount none none /storage slave rec
+
+    # Make sure /sys/kernel/debug (if present) is labeled properly
+    # Note that tracefs may be mounted under debug, so we need to cross filesystems
+    restorecon --recursive --cross-filesystems /sys/kernel/debug
+    chmod 0755 /sys/kernel/debug/tracing
+
+    # Support legacy paths
+    symlink /sdcard /storage/sdcard0
+
+    # We chown/chmod /cache again so because mount is run as root + defaults
+    chown system cache /cache
+    chmod 0770 /cache
+    # We restorecon /cache in case the cache partition has been reset.
+    restorecon_recursive /cache
+
+    #change permissions on kmsg & sysrq-trigger so bugreports can grab kthread stacks
+    chown root system /proc/kmsg
+    chmod 0440 /proc/kmsg
+    chown root system /proc/sysrq-trigger
+    chmod 0220 /proc/sysrq-trigger
+    chown system log /proc/last_kmsg
+    chmod 0440 /proc/last_kmsg
+
+    # make the selinux kernel policy world-readable
+    chmod 0444 /sys/fs/selinux/policy
+
+    # create the lost+found directories, so as to enforce our permissions
+    mkdir /cache/lost+found 0770 root root
+
+#INTERNAL_START
+    chown system system /mnt/vendor/protect_f
+    chmod 0770 /mnt/vendor/protect_f
+
+    chown system system /mnt/vendor/protect_s
+    chmod 0770 /mnt/vendor/protect_s
+
+    chown system system /mnt/vendor/nvcfg
+    chmod 0771 /mnt/vendor/nvcfg
+    restorecon_recursive /mnt/vendor/nvcfg
+
+    chown root system /mnt/vendor/nvdata
+    chmod 0771 /mnt/vendor/nvdata
+    mkdir /mnt/vendor/nvdata/media 0771 media audio
+    restorecon_recursive /mnt/vendor/nvdata
+
+#INTERNAL_END
+
+on late-fs
+    wait_for_prop hwservicemanager.ready "true"
+    start vendor.keymaster-3-0
+    start vendor.keymaster-3-0-trustonic
+    start vendor.keymaster-4-0
+    start vendor.keymaster-4-0-trustonic
+    start vendor.keymaster-4-0-beanpod
+    start keymaster_attestation-1-1
+    exec_start wait_for_keymaster
+    mount_all --late
+
+on post-fs-data
+    write /proc/bootprof "INIT:post-fs-data"
+
+#INTERNAL_START
+    # WiFi
+    mkdir /data/misc/wifi 0770 system wifi
+    mkdir /data/misc/wifi/sockets 0770 system wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
+    #give system access to rfkill device node
+    chmod 0660 /dev/rfkill
+
+    # RTC
+    mkdir /data/misc/rtc 0770 system system
+
+    # Android SEC related device nodes
+    chmod 0660 /dev/sec
+    chown root system /dev/sec
+
+    #change partition permission
+    exec /vendor/etc/partition_permission.sh
+
+    chmod 0666 /dev/exm0
+#INTERNAL_END
+
+# It is recommended to put unnecessary data/ initialization from post-fs-data
+# to start-zygote in device's init.rc to unblock zygote start.
+on zygote-start && property:ro.crypto.state=unencrypted
+    # A/B update verifier that marks a successful boot.
+    exec_start update_verifier_nonencrypted
+    start netd
+    start zygote
+    start zygote_secondary
+
+on zygote-start && property:ro.crypto.state=unsupported
+    # A/B update verifier that marks a successful boot.
+    exec_start update_verifier_nonencrypted
+    start netd
+    start zygote
+    start zygote_secondary
+
+on zygote-start && property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    # A/B update verifier that marks a successful boot.
+    exec_start update_verifier_nonencrypted
+    start netd
+    start zygote
+    start zygote_secondary
+
+on boot
+    # For backlight
+    chmod 0664 /sys/class/leds/lcd-backlight/brightness
+    chown system system /sys/class/leds/lcd-backlight/brightness
+
+# basic network init
+    ifup lo
+    hostname localhost
+    domainname localdomain
+
+#INTERNAL_START
+    class_start default
+#INTERNAL_END
+
+    # Start standard binderized HAL daemons
+    class_start hal
+
+    class_start core
+
+#USB configfs
+    mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
+    chown system radio /dev/ttyGS3
+    chmod 0660 /dev/ttyGS3
+    setprop sys.usb.configfs 1
+	setprop sys.usb.ffs.aio_compat 1
+
+on nonencrypted
+    class_start main
+    class_start late_start
+
+on property:vold.decrypt=trigger_reset_main
+    class_reset main
+
+on property:vold.decrypt=trigger_load_persist_props
+    load_persist_props
+    start logd
+    start logd-reinit
+
+    # avoid no log in meta mode due to logd-reinit
+    stop keyinstall-1-0
+    start keyinstall-1-0
+
+on property:vold.decrypt=trigger_post_fs_data
+    trigger post-fs-data
+    trigger zygote-start
+
+on property:vold.decrypt=trigger_restart_min_framework
+    # A/B update verifier that marks a successful boot.
+    exec_start update_verifier
+    class_start main
+
+on property:vold.decrypt=trigger_restart_framework
+    stop surfaceflinger
+    start surfaceflinger
+    # A/B update verifier that marks a successful boot.
+    exec_start update_verifier
+    class_start main
+    class_start late_start
+
+on property:vold.decrypt=trigger_shutdown_framework
+    class_reset late_start
+    class_reset main
+
+# One shot invocation to deal with encrypted volume.
+on defaultcrypto
+    exec - root -- /system/bin/vdc --wait cryptfs mountdefaultencrypted
+    # vold will set vold.decrypt to trigger_restart_framework (default
+    # encryption) or trigger_restart_min_framework (other encryption)
+
+# One shot invocation to encrypt unencrypted volumes
+# mtk modification:
+#   To speed up the booting in meta/factory mode, we don't encrypt the device.
+#   And then handle it as 'unencrypted' state.
+on encrypt
+    mount ext4 /dev/block/platform/bootdevice/by-name/userdata /data noatime nosuid nodev noauto_da_alloc discard wait
+    setprop vendor.crypto.fake_encrypt 1
+    setprop vold.post_fs_data_done 0
+    trigger post-fs-data
+on property:vendor.crypto.fake_encrypt=1 && property:vold.post_fs_data_done=1
+    trigger load_persist_props_action
+    # setprop ro.crypto.state unencrypted
+    setprop vendor.soter.teei.crypto.state unencrypted
+    exec_start update_verifier
+    class_start main
+    class_start late_start
+    start mount_all_storages
+
+## Daemon processes to be run by init.
+##
+service ueventd /system/bin/ueventd
+    class core
+    critical
+    seclabel u:r:ueventd:s0
+
+service console /system/bin/sh
+    class core
+    console
+    disabled
+    user shell
+    group shell log readproc
+    seclabel u:r:shell:s0
+
+#Log too much setting
+on property:ro.vendor.mtklog_internal=1
+    setprop vendor.logmuch.value 10000
+
+on property:ro.debuggable=1
+    # Give writes to anyone for the trace folder on debug builds.
+    # The folder is used to store method traces.
+    chmod 0773 /data/misc/trace
+    start console
+
+# adbd is controlled via property triggers in init.<platform>.usb.rc
+service adbd /apex/com.android.adbd/bin/adbd --root_seclabel=u:r:su:s0
+    class core
+    socket adbd seqpacket 660 system system
+    disabled
+    override
+    seclabel u:r:adbd:s0
+
+#INTERNAL_START
+service emdlogger1 /system/system_ext/bin/emdlogger1
+    class main
+    user shell
+    group system shell radio sdcard_rw inet sdcard_r media_rw
+
+service connsyslogger /system/bin/connsyslogger
+    class main
+    user shell
+    group system shell radio sdcard_rw inet sdcard_r media_rw bluetooth gps wifi
+
+service loghidlvendorservice /vendor/bin/loghidlvendorservice
+    class main
+    user shell
+    group system shell radio
+
+service loghidlsysservice /system/bin/loghidlsysservice
+    class main
+    user shell
+    group system shell radio
+
+service meta_tst /vendor/bin/meta_tst
+    group radio system wifi audio bluetooth media gps
+
+
+service fuelgauged /vendor/bin/fuelgauged
+    class main
+    user system
+    group system
+
+#META+ADB
+on property:ro.boot.usbconfig=0 && property:sys.usb.configfs=1
+    write /proc/bootprof "INIT:start adbd"
+    start adbd
+
+on property:sys.usb.ffs.ready=1 && property:ro.boot.usbconfig=0 && property:sys.usb.configfs=1
+    write /proc/bootprof "INIT:on property:ro.boot.usbconfig=0"
+    write /config/usb_gadget/g1/UDC "none"
+    write /config/usb_gadget/g1/strings/0x409/serialnumber ${ro.serialno}
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "adb_acm"
+    write /config/usb_gadget/g1/idProduct 0x200E
+    symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1
+    symlink /config/usb_gadget/g1/functions/acm.gs0 /config/usb_gadget/g1/configs/b.1/f2
+    write /config/usb_gadget/g1/UDC "musb-hdrc"
+
+#META, move this to kernel driver
+on property:ro.boot.usbconfig=1 && property:sys.usb.configfs=1
+    write /proc/bootprof "INIT:on property:ro.boot.usbconfig 1"
+    #write /config/usb_gadget/g1/UDC "none"
+    #write /config/usb_gadget/g1/strings/0x409/serialnumber ""
+    #write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "acm"
+    #write /config/usb_gadget/g1/idProduct 0x2007
+    #write /config/usb_gadget/g1/bDeviceClass 02
+    #symlink /config/usb_gadget/g1/functions/acm.gs0 /config/usb_gadget/g1/configs/b.1/f1
+    #write /config/usb_gadget/g1/UDC "musb-hdrc"
+
+#META+ELT, move this to kernel driver
+on property:ro.boot.usbconfig=2 && property:sys.usb.configfs=1
+    write /proc/bootprof "INIT:on property:ro.boot.usbconfig 2"
+    setprop vendor.usb.acm_idx 1,4
+    #write /config/usb_gadget/g1/UDC "none"
+    #write /config/usb_gadget/g1/strings/0x409/serialnumber $ro.serialno
+    #write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "meta_elt"
+    #write /config/usb_gadget/g1/idProduct 0x202d
+    #symlink /config/usb_gadget/g1/functions/mass_storage.usb0 /config/usb_gadget/g1/configs/b.1/f1
+    #symlink /config/usb_gadget/g1/functions/acm.gs0 /config/usb_gadget/g1/configs/b.1/f2
+    #symlink /config/usb_gadget/g1/functions/acm.gs3 /config/usb_gadget/g1/configs/b.1/f3
+    #write /config/usb_gadget/g1/UDC "musb-hdrc"
+
+#META+ELT+ADB
+on property:ro.boot.usbconfig=3 && property:sys.usb.configfs=1
+    write /proc/bootprof "INIT:start adbd"
+    start adbd
+
+on property:sys.usb.ffs.ready=1 && property:ro.boot.usbconfig=3 && property:sys.usb.configfs=1
+    write /proc/bootprof "INIT:on property:ro.boot.usbconfig 3"
+    write /config/usb_gadget/g1/UDC "none"
+    write /config/usb_gadget/g1/strings/0x409/serialnumber ${ro.serialno}
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "meta_elt_adb"
+    write /config/usb_gadget/g1/idProduct 0x2040
+    write /sys/devices/platform/mt_usb/saving 1
+    symlink /config/usb_gadget/g1/functions/mass_storage.usb0 /config/usb_gadget/g1/configs/b.1/f1
+    symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f2
+    symlink /config/usb_gadget/g1/functions/acm.gs0 /config/usb_gadget/g1/configs/b.1/f3
+    symlink /config/usb_gadget/g1/functions/acm.gs3 /config/usb_gadget/g1/configs/b.1/f4
+    write /config/usb_gadget/g1/UDC "musb-hdrc"
+    setprop vendor.usb.acm_idx 1,4
+
+#INTERNAL_END

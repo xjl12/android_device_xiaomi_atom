@@ -1,0 +1,12 @@
+<volumes>
+    <!--Audio add for voice assist-->
+    <volume_ext stream="AUDIO_STREAM_ASSISTANT" deviceCategory="DEVICE_CATEGORY_HEADSET"
+                                        ref="DEFAULT_MEDIA_VOLUME_CURVE"/>
+    <volume_ext stream="AUDIO_STREAM_ASSISTANT" deviceCategory="DEVICE_CATEGORY_SPEAKER"
+                                        ref="DEFAULT_DEVICE_CATEGORY_SPEAKER_VOLUME_CURVE"/>
+    <volume_ext stream="AUDIO_STREAM_ASSISTANT" deviceCategory="DEVICE_CATEGORY_EARPIECE"
+                                        ref="DEFAULT_MEDIA_VOLUME_CURVE"/>
+    <volume_ext stream="AUDIO_STREAM_ASSISTANT" deviceCategory="DEVICE_CATEGORY_EXT_MEDIA"
+                                        ref="DEFAULT_MEDIA_VOLUME_CURVE"/>
+</volumes>
+

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carrier_config_list xmlns:android="http://schemas.android.com/apk/res/android">
+    <carrier_config>
+        <boolean name="carrier_volte_available_bool" value="false"/>
+        <boolean name="carrier_vt_available_bool" value="false"/>
+        <boolean name="config_enable_vt_with_mobile_data_off" value="true"/>
+        <boolean name="ignore_data_enabled_changed_for_video_calls" value="true"/>
+        <boolean name="carrier_wfc_ims_available_bool" value="false"/>
+        <boolean name="allow_adding_apns_bool" value="true"/>
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+        <int name="carrier_default_wfc_ims_mode_int" value="1"/>
+        <boolean name="carrier_5g_switch_available_bool" value="false"/>
+    </carrier_config>
+    <carrier_config sdk="26">
+        <boolean name="vilte_data_is_metered_bool" value="false"/>
+    </carrier_config>
+    <carrier_config mcc="1" mnc="1">
+        <boolean name="carrier_volte_available_bool" value="true"/>
+        <boolean name="carrier_vt_available_bool" value="true"/>
+        <boolean name="hide_ims_apn_bool" value="false"/>
+        <string-array name="apn_hide_rule_strings_array" num="2">
+            <item value="type"/>
+            <item value=""/>
+        </string-array>
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+    </carrier_config>
+    <carrier_config mcc="208" mnc="10" sdk="28">
+        <boolean name="gsm_cdma_calls_can_be_hd_audio" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="222" mnc="88,99" cust_region="hk_h3g">
+        <int name="fast_dormancy_screen_on_minutes_int" value="3"/>
+    </carrier_config>
+    <carrier_config mcc="222" mnc="1">
+        <boolean name="carrier_5g_switch_available_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="228" mnc="2">
+        <boolean name="carrier_5g_switch_available_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="238" mnc="6">
+        <string-array name="non_roaming_operator_string_array" num="1">
+            <item value="23801"/>
+        </string-array>
+    </carrier_config>
+    <carrier_config mcc="1" mnc="1">
+        <boolean name="carrier_volte_available_bool" value="true"/>
+        <boolean name="carrier_vt_available_bool" value="true"/>
+        <boolean name="hide_ims_apn_bool" value="false"/>
+        <string-array name="apn_hide_rule_strings_array" num="2">
+            <item value="type"/>
+            <item value=""/>
+        </string-array>
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+    </carrier_config>
+    <carrier_config mcc="260">
+        <string-array name="carrier_metered_apn_types_strings" num="4">
+            <item value="default"/>
+            <item value="dun"/>
+            <item value="supl"/>
+            <item value="fota"/>
+        </string-array>
+        <string-array name="carrier_metered_roaming_apn_types_strings" num="4">
+            <item value="default"/>
+            <item value="dun"/>
+            <item value="supl"/>
+            <item value="fota"/>
+        </string-array>
+    </carrier_config>
+    <carrier_config mcc="268" mnc="6">
+        <string name="default_vm_number_string">+351962000000
+        </string>
+    </carrier_config>
+    <carrier_config mcc="334" mnc="20">
+        <boolean name="voicemail_notification_persistent_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="460">
+        <boolean name="carrier_volte_available_bool" value="true"/>
+        <boolean name="carrier_vt_available_bool" value="true"/>
+        <boolean name="carrier_5g_switch_available_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="460" mnc="01,06,09">
+        <boolean name="carrier_volte_available_bool" value="false"/>
+        <boolean name="carrier_vt_available_bool" value="false"/>
+        <string-array name="apn_hide_rule_strings_array" num="2">
+            <item value="type"/>
+            <item value=""/>
+        </string-array>
+    </carrier_config>
+    <carrier_config mcc="460" mnc="01,06,09" sdk="28">
+        <boolean name="gsm_cdma_calls_can_be_hd_audio" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="460" mnc="03,05,11,12">
+        <boolean name="carrier_volte_available_bool" value="false"/>
+        <boolean name="carrier_vt_available_bool" value="false"/>
+        <string-array name="apn_hide_rule_strings_array" num="2">
+            <item value="type"/>
+            <item value=""/>
+        </string-array>
+    </carrier_config>
+    <carrier_config mcc="502" mnc="152">
+        <boolean name="carrier_volte_available_bool" value="true"/>
+        <boolean name="carrier_vt_available_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="404">
+        <boolean name="carrier_volte_available_bool" value="true"/>
+        <boolean name="carrier_vt_available_bool" value="true"/>
+        <boolean name="editable_wfc_mode_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="405">
+        <boolean name="carrier_volte_available_bool" value="true"/>
+        <boolean name="carrier_vt_available_bool" value="true"/>
+        <boolean name="editable_wfc_mode_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="405" mnc="840,854,855,856,857,858,859,860,861,862,863,864,865,866,867,868,869,870,871,872,873,874">
+        <boolean name="carrier_use_ims_first_for_emergency_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="455" mnc="02,07">
+        <string-array name="apn_hide_rule_strings_array" num="2">
+            <item value="type"/>
+            <item value=""/>
+        </string-array>
+    </carrier_config>
+    <carrier_config mcc="427" mnc="2">
+        <boolean name="carrier_5g_switch_available_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="525" mnc="5" sdk="28">
+        <boolean name="gsm_cdma_calls_can_be_hd_audio" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="530" mnc="24">
+        <string name="default_vm_number_string">+64222022002
+        </string>
+    </carrier_config>
+    <carrier_config mcc="234" mnc="20" cust_region="hk_h3g">
+        <boolean name="hide_enhanced_4g_lte_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="234" mnc="15">
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+        <boolean name="voicemail_notification_persistent_bool" value="true"/>
+        <boolean name="carrier_5g_switch_available_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="234" mnc="15" cust_region="es_vodafone">
+        <boolean name="hide_enhanced_4g_lte_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="214" mnc="1">
+        <boolean name="voicemail_notification_persistent_bool" value="true"/>
+        <boolean name="carrier_5g_switch_available_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="214" mnc="1" cust_region="es_vodafone">
+        <boolean name="hide_enhanced_4g_lte_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="214" mnc="4">
+        <boolean name="carrier_5g_switch_available_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="262" mnc="02,09">
+        <string name="default_vm_number_string">5500
+        </string>
+        <boolean name="voicemail_notification_persistent_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="262" mnc="02,09" cust_region="es_vodafone">
+        <boolean name="hide_enhanced_4g_lte_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="222" mnc="10">
+        <boolean name="voicemail_notification_persistent_bool" value="true"/>
+        <boolean name="carrier_5g_switch_available_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="222" mnc="10" cust_region="es_vodafone">
+        <boolean name="hide_enhanced_4g_lte_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="268" mnc="1">
+        <boolean name="voicemail_notification_persistent_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="268" mnc="1" cust_region="es_vodafone">
+        <boolean name="hide_enhanced_4g_lte_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="202" mnc="5">
+        <string name="default_vm_number_string">121
+        </string>
+        <boolean name="voicemail_notification_persistent_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="202" mnc="5" cust_region="es_vodafone">
+        <boolean name="hide_enhanced_4g_lte_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="208" mnc="10">
+        <string name="default_vm_number_string">123
+        </string>
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+        <int name="carrier_default_wfc_ims_mode_int" value="2"/>
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="208" mnc="20">
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+    </carrier_config>
+    <carrier_config mcc="222" mnc="10">
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+    </carrier_config>
+    <carrier_config mcc="214" mnc="1">
+        <string name="default_vm_number_string">22177
+        </string>
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+    </carrier_config>
+    <carrier_config mcc="214" mnc="03,04,05,06,07,08,16,17,21,32">
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+    </carrier_config>
+    <carrier_config mcc="214" mnc="05,07">
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="730" mnc="3">
+        <string-array name="non_roaming_operator_string_array" num="1">
+            <item value="73009"/>
+        </string-array>
+    </carrier_config>
+    <carrier_config mcc="730" mnc="2">
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="730" mnc="9">
+        <int name="carrier_default_wfc_ims_mode_int" value="2"/>
+        <string-array name="non_roaming_operator_string_array" num="4">
+            <item value="73001"/>
+            <item value="73002"/>
+            <item value="73003"/>
+            <item value="73021"/>
+        </string-array>
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="716" mnc="17">
+        <boolean name="carrier_default_wfc_ims_enabled_bool" value="true"/>
+        <int name="carrier_default_wfc_ims_mode_int" value="2"/>
+    </carrier_config>
+    <carrier_config mcc="730" mnc="1" cust_region="cl_entel">
+        <boolean name="carrier_default_wfc_ims_enabled_bool" value="true"/>
+        <int name="carrier_default_wfc_ims_mode_int" value="2"/>
+    </carrier_config>
+    <carrier_config mcc="222" mnc="50">
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+    </carrier_config>
+    <carrier_config mcc="208" mnc="15">
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+    </carrier_config>
+    <carrier_config mcc="647" mnc="3">
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+    </carrier_config>
+    <carrier_config mcc="647" mnc="10">
+        <string-array name="read_only_apn_types_string_array" num="0"/>
+    </carrier_config>
+    <carrier_config mcc="272" mnc="2">
+        <string-array name="non_roaming_operator_string_array" num="1">
+            <item value="27205"/>
+        </string-array>
+    </carrier_config>
+    <carrier_config mcc="272" mnc="5">
+        <string-array name="non_roaming_operator_string_array" num="1">
+            <item value="27202"/>
+        </string-array>
+    </carrier_config>
+    <carrier_config mcc="466" mnc="1">
+        <boolean name="carrier_default_wfc_ims_enabled_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="466" mnc="5">
+        <boolean name="carrier_default_wfc_ims_enabled_bool" value="true"/>
+        <int name="carrier_default_wfc_ims_mode_int" value="2"/>
+        <int name="wfc_spn_format_idx_int" value="1"/>
+        <string-array name="non_roaming_operator_string_array" num="1">
+            <item value="46697"/>
+        </string-array>
+        <boolean name="carrier_use_ims_first_for_emergency_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="525" mnc="5" gid1="0A">
+        <boolean name="carrier_default_wfc_ims_enabled_bool" value="true"/>
+        <int name="carrier_default_wfc_ims_mode_int" value="2"/>
+    </carrier_config>
+    <carrier_config mcc="456" mnc="11">
+        <boolean name="editable_enhanced_4g_lte_bool" value="false"/>
+    </carrier_config>
+    <carrier_config mcc="226" mnc="1">
+        <boolean name="config_support_callbarring_over_ims" value="false"/>
+    </carrier_config>
+    <carrier_config mcc="222" mnc="10">
+        <boolean name="config_support_callbarring_over_ims" value="false"/>
+    </carrier_config>
+    <carrier_config mcc="234" mnc="15">
+        <boolean name="config_support_callbarring_over_ims" value="false"/>
+    </carrier_config>
+    <carrier_config mcc="214">
+        <boolean name="config_support_callbarring_over_ims" value="false"/>
+    </carrier_config>
+    <carrier_config mcc="510" mnc="28">
+        <boolean name="support_video_conference_call_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="260" mnc="6">
+        <int name="wfc_spn_format_idx_int" value="1"/>
+    </carrier_config>
+    <carrier_config mcc="286" mnc="2">
+        <boolean name="hide_enhanced_4g_lte_bool" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="202" mnc="10">
+        <boolean name="config_callbarring_base_on_volte" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="525" mnc="1">
+        <boolean name="config_callbarring_base_on_volte" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="246" mnc="1">
+        <boolean name="config_callbarring_base_on_volte" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="219" mnc="1">
+        <string name="default_vm_number_string">+38598151100
+        </string>
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="202" mnc="1">
+        <boolean name="carrier_default_wfc_ims_enabled_bool" value="true"/>
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="250" mnc="1">
+        <int name="carrier_default_wfc_ims_mode_int" value="2"/>
+    </carrier_config>
+    <carrier_config mcc="732" mnc="101">
+        <string name="default_vm_number_string">*123
+        </string>
+    </carrier_config>
+    <carrier_config mcc="716" mnc="10">
+        <string name="default_vm_number_string">131
+        </string>
+    </carrier_config>
+    <carrier_config mcc="716" mnc="17">
+        <int name="carrier_default_wfc_ims_mode_int" value="2"/>
+    </carrier_config>
+    <carrier_config mcc="730" mnc="3">
+        <string name="default_vm_number_string">*20
+        </string>
+    </carrier_config>
+    <carrier_config mcc="454" mnc="12,13">
+        <boolean name="config_support_callbarring_over_ims" value="false"/>
+    </carrier_config>
+    <carrier_config mcc="732" mnc="103,111,165">
+        <string name="default_vm_number_string">*123
+        </string>
+    </carrier_config>
+    <carrier_config mcc="222" mnc="1">
+        <boolean name="config_support_callbarring_over_ims" value="false"/>
+    </carrier_config>
+    <carrier_config cust_region="mx_telcel">
+        <boolean name="support_direct_fdn_dialing_bool" value="true"/>
+    </carrier_config>
+    <carrier_config cust_region="cl_moviestar">
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config cust_region="cl_wom">
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config cust_region="it_vodafone">
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config cust_region="fr_sfr">
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config cust_region="es_telefonica">
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="216" mnc="30">
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+    <carrier_config mcc="231" mnc="2">
+        <boolean name="config_show_prefer_4g" value="true"/>
+    </carrier_config>
+</carrier_config_list>

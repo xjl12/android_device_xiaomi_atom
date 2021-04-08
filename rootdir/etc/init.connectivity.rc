@@ -1,0 +1,83 @@
+# MTK connectivity .rc configure
+
+on post-fs-data
+
+
+#
+# Connectivity related device nodes & configuration (begin)
+#
+
+#/dev/ttyMT2 for Connectivity BT/FM/GPS usage
+    chmod 0660 /dev/ttyMT2
+    chown system system /dev/ttyMT2
+
+#/dev/ttyMT1 for GPS 3337 usage
+    chmod 0660 /dev/ttyMT1
+    chown system system /dev/ttyMT1
+
+# GPS
+    mkdir /data/vendor/gps 0770 gps system
+    mkdir /data/vendor/log 0770 gps system
+    mkdir /data/vendor/log/gps 0770 gps system
+
+# GPS EMI
+    chmod 0660 /dev/gps_emi
+
+# WiFi
+    mkdir /data/vendor/wifi 0770 wifi wifi
+    mkdir /data/vendor/wifi/wpa 0770 wifi wifi
+    mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
+
+# BT relayer mode used VCOM
+    chown bluetooth bluetooth /dev/ttyGS2
+    chmod 0660 /dev/ttyGS2
+
+#
+# Connectivity related device nodes & configuration (end)
+#
+
+
+on boot
+
+#
+# Connectivity related services (Begin)
+#
+# GPS
+service mnld /vendor/bin/mnld
+    class main
+    user gps
+    capabilities WAKE_ALARM
+    group gps inet misc sdcard_rw sdcard_r media_rw system radio wakelock
+    socket mnld stream 660 gps system
+
+# GPS Debug Process
+service lbs_dbg /system/bin/lbs_dbg
+    class main
+    user shell
+    group log system gps inet misc sdcard_rw sdcard_r media_rw radio
+    socket lbs_dbg stream 660 gps system
+
+on property:persist.vendor.em.dy.debug=1
+    stop lbs_dbg
+
+#service BGW /vendor/bin/BGW
+#    user system
+#    group gps system radio
+#    class main
+
+# Wlan
+#service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
+#    -g@android:wpa_wlan0
+#    interface android.hardware.wifi.supplicant@1.0::ISupplicant default
+#    interface android.hardware.wifi.supplicant@1.1::ISupplicant default
+#    interface android.hardware.wifi.supplicant@1.2::ISupplicant default
+#    interface android.hardware.wifi.supplicant@1.3::ISupplicant default
+#    socket wpa_wlan0 dgram 660 wifi wifi
+#    class main
+#    disabled
+#    oneshot
+
+#
+# Connectivity related services (End)
+#
+

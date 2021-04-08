@@ -27,7 +27,7 @@ import android.util.Log;
 
 public class DozeService extends Service {
     private static final String TAG = "DozeService";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private ProximitySensor mProximitySensor;
     private PickupSensor mPickupSensor;

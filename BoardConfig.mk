@@ -96,6 +96,9 @@ DEVICE_FRAMEWORK_MANIFEST_FILE := $(DEVICE_PATH)/framework_manifest.xml
 # Mediatek IMS
 TARGET_PROVIDES_MEDIATEK_IMS_STACK := true
 
+# MTK Rules
+TARGET_PROVIDES_MTK_PROPRIETARY := true
+
 # Init
 TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_cezanne
 TARGET_RECOVERY_DEVICE_MODULES := libinit_cezanne
@@ -151,9 +154,6 @@ TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 include device/qcom/sepolicy/SEPolicy.mk
 
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
-
-# Telephony
-TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 
 # Verified Boot
 BOARD_AVB_ENABLE := true

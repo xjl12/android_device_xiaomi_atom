@@ -30,9 +30,35 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -->
 <resources>
-    <!-- Enable doze mode -->
-    <bool name="doze_display_state_supported">true</bool>
+  <!-- Enable doze mode -->
+  <bool name="doze_display_state_supported">true</bool>
+  <!-- Type of a sensor that provides a low-power estimate of the desired display
+         brightness, suitable to listen to while the device is asleep (e.g. during
+         always-on display) -->
+  <string name="doze_brightness_sensor_type" translatable="false">android.sensor.light</string>
 
-    <!-- Color of the FOD view -->
-    <color name="config_fodColor">#ffffff</color>
+  <!-- Doze: Table that translates sensor values from the doze_brightness_sensor_type sensor
+               to brightness values; -1 means keeping the current brightness. -->
+  <integer-array name="config_doze_brightness_sensor_to_brightness">
+    <item>-1</item>    <!-- 0: OFF -->
+    <item>1</item>    <!-- 1: NIGHT -->
+    <item>3</item>    <!-- 2: LOW -->
+    <item>27</item>    <!-- 3: HIGH -->
+    <item>27</item>    <!-- 4: SUN -->
+  </integer-array>
+
+  <!-- Doze: Table that translates sensor values from the doze_brightness_sensor_type sensor
+               to an opacity value for a black scrim that is overlayed in AOD1.
+               Valid range is from 0 (transparent) to 255 (opaque).
+               -1 means keeping the current opacity. -->
+  <integer-array name="config_doze_brightness_sensor_to_scrim_opacity">
+    <item>-1</item>    <!-- 0: OFF -->
+    <item>133</item>    <!-- 1: NIGHT -->
+    <item>0</item>    <!-- 2: LOW -->
+    <item>0</item>    <!-- 3: HIGH -->
+    <item>0</item>    <!-- 4: SUN -->
+  </integer-array>
+
+  <!-- Color of the FOD view -->
+  <color name="config_fodColor">#ffffff</color>
 </resources>

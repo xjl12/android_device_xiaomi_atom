@@ -30,7 +30,7 @@ import java.util.concurrent.Future;
 
 public class ProximitySensor implements SensorEventListener {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     private static final String TAG = "ProximitySensor";
 
     // Maximum time for the hand to cover the sensor: 1s
