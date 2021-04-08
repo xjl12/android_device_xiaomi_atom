@@ -66,8 +66,3 @@ persist.sys.fuse.default_fuse_enabled=false
 persist.sys.fflag.override.settings_fuse=false
 persist.device_config.storage_native_boot.fuse_enabled=false
 ro.sys.sdcardfs=true
-
-# Blur
-ro.surface_flinger.supports_background_blur=1
-persist.sys.sf.disable_blurs=1
-ro.sf.blurs_are_expensive=1

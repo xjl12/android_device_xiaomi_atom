@@ -21,7 +21,7 @@
     "repository" : "PixelExperience/vendor_mediatek_interfaces",
     "target_path": "vendor/mediatek/interfaces",
     "branch"     : "eleven"
-  },
+  }
 ]
 
 // Assume that you are at the root directory of the Android source.
