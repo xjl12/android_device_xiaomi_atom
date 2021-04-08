@@ -18,6 +18,9 @@ $(call inherit-product, vendor/xiaomi/cezanne/cezanne-vendor.mk)
 
 # IMS
 $(call inherit-product, vendor/mediatek/ims/mtk-ims.mk)
+$(call inherit-product, vendor/mediatek/ims/mtk-engi.mk)
+PRODUCT_PACKAGES += \
+    vendor.mediatek.hardware.videotelephony@1.0-impl
 
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
 
@@ -49,9 +52,9 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_BUILD_SUPER_PARTITION := false
 
 # Audio
-PRODUCT_PACKAGES += \
-    audio.a2dp.default \
-    libaacwrapper
+#PRODUCT_PACKAGES += \
+#    audio.a2dp.default \
+#    libaacwrapper
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/a2dp_audio_policy_configuration.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/a2dp_audio_policy_configuration.xml \
@@ -72,8 +75,8 @@ PRODUCT_COPY_FILES += \
  
     
 # Bluetooth
-PRODUCT_PACKAGES += \
-    libldacBT_dec 
+#PRODUCT_PACKAGES += \
+#    libldacBT_dec 
 
 
 # Camera
@@ -121,8 +124,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapps/privapp-permissions-hotword.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-hotword.xml
 
 # ImsInit hack
-PRODUCT_PACKAGES += \
-    ImsInit
+#PRODUCT_PACKAGES += \
+#    ImsInit
 
 # IFAA manager
 PRODUCT_PACKAGES += \
@@ -167,20 +170,20 @@ PRODUCT_PACKAGES += \
     init.safailnet.rc
 
 # Telephony
-PRODUCT_PACKAGES += \
-    ims-ext-common \
-    ims_ext_common.xml \
-    qti-telephony-hidl-wrapper \
-    qti_telephony_hidl_wrapper.xml \
-    qti-telephony-utils \
-    qti_telephony_utils.xml \
-    telephony-ext
-
-PRODUCT_BOOT_JARS += \
-    telephony-ext
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/privapps/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-qti.xml
+#PRODUCT_PACKAGES += \
+#    ims-ext-common \
+#    ims_ext_common.xml \
+#    qti-telephony-hidl-wrapper \
+#    qti_telephony_hidl_wrapper.xml \
+#    qti-telephony-utils \
+#    qti_telephony_utils.xml \
+#    telephony-ext
+#
+#PRODUCT_BOOT_JARS += \
+#    telephony-ext
+#
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/configs/privapps/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-qti.xml
 
 # WiFi
 PRODUCT_PACKAGES += \
