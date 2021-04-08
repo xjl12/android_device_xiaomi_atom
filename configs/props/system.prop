@@ -1,5 +1,5 @@
 # Volume Step
-ro.config.vc_call_vol_steps=14
+ro.config.vc_call_vol_steps=15
 ro.config.media_vol_steps=30
 
 # Xiaomi
@@ -33,6 +33,12 @@ persist.dbg.vt_avail_ovr=1
 persist.dbg.wfc_avail_ovr=1
 
 # Telephony
-ro.telephony.default_network=33,22
-persist.vendor.data.iwlan.enable=true
+ro.vendor.radio.features_common=2
 
+# sdcardfs
+persist.sys.fuse=false
+persist.fuse_sdcard=false
+persist.sys.fuse.default_fuse_enabled=false
+persist.sys.fflag.override.settings_fuse=false
+persist.device_config.storage_native_boot.fuse_enabled=false
+ro.sys.sdcardfs=true
