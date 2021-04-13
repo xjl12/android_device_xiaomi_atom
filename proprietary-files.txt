@@ -21,3 +21,24 @@ media/audio/ui/popup_muqin_down.ogg
 media/audio/ui/popup_muqin_up.ogg
 media/audio/ui/popup_yingyan_down.ogg
 media/audio/ui/popup_yingyan_up.ogg
+
+# Mtk em lib
+/system/lib/libem_audio_jni.so
+/system/lib/libem_usb_jni.so
+/system/lib/libem_wifi_jni.so
+/system/lib/libaudiotoolkit.so
+/system/lib/libaudio_param_parser-sys.so
+/system/lib/libaudiocomponentengine.so
+/system/lib/libaudiocompensationfilter.so
+/system/lib/libaudioutilmtk.so
+
+/system/lib64/libem_audio_jni.so
+/system/lib64/libem_usb_jni.so
+/system/lib64/libem_wifi_jni.so
+/system/lib64/libaudiotoolkit.so
+/system/lib64/libaudio_param_parser-sys.so
+/system/lib64/libaudiocomponentengine.so
+/system/lib64/libaudiocompensationfilter.so
+/system/lib64/libaudioutilmtk.so
+/system/lib64/libaudiopolicycustomextensions.so
+/system/lib64/libaudiopolicyengineconfigurable.so

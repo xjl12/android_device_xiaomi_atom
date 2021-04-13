@@ -1,5 +1,6 @@
 /*
-* Copyright (C) 2017-2020 The LineageOS Project
+*
+* Copyright (C) 2019-2020 The LineageOS Project
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,18 +15,6 @@
 * limitations under the License.
 */
 
-java_library {
-    name: "org.ifaa.android.manager",
-    installable: true,
-    srcs: [
-        "src/**/*.java",
-        "src/**/I*.aidl",
-    ],
-    libs: [
-        "app-compat-annotations",
-        "unsupportedappusage",
-    ],
-    aidl: {
-        local_include_dirs: ["src"],
-    },
-}
+subdirs = [
+    "*",
+]

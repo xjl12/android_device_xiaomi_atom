@@ -1,0 +1,92 @@
+//
+// Copyright (C) 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+cc_library_shared {
+    name: "android.hardware.bluetooth@1.0-impl-mediatek",
+    defaults: ["hidl_defaults"],
+    vendor: true,
+    relative_install_path: "hw",
+    srcs: [
+        "bluetooth_hci.cc",
+        "vendor_interface.cc",
+    ],
+    shared_libs: [
+        "android.hardware.bluetooth@1.0",
+        "libbase",
+        "libcutils",
+        "libhardware",
+        "libhidlbase",
+        "liblog",
+        "libutils",
+    ],
+    static_libs: [
+        "android.hardware.bluetooth-async-mediatek",
+        "android.hardware.bluetooth-hci-mediatek",
+    ],
+}
+
+cc_library_static {
+    name: "android.hardware.bluetooth-async-mediatek",
+    vendor: true,
+    defaults: ["hidl_defaults"],
+    srcs: [
+        "async_fd_watcher.cc",
+    ],
+    export_include_dirs: ["."],
+    shared_libs: [
+        "liblog",
+    ],
+}
+
+cc_binary {
+    name: "android.hardware.bluetooth@1.0-service-mediatek",
+    relative_install_path: "hw",
+    proprietary: true,
+    owner: "mtk",
+    init_rc: ["android.hardware.bluetooth@1.0-service-mediatek.rc"],
+    srcs: ["service.cpp"],
+
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libdl",
+        "libbase",
+        "libutils",
+        "libhardware",
+    ] + [
+        "libhidlbase",
+        "android.hardware.bluetooth@1.0",
+    ],
+}
+
+
+cc_library_static {
+    name: "android.hardware.bluetooth-hci-mediatek",
+    vendor: true,
+    defaults: ["hidl_defaults"],
+    srcs: [
+        "hci_packetizer.cc",
+        "hci_protocol.cc",
+        "h4_protocol.cc",
+        "mct_protocol.cc",
+    ],
+    export_include_dirs: ["."],
+    shared_libs: [
+        "libbase",
+        "libhidlbase",
+        "liblog",
+        "libutils",
+    ],
+}

@@ -20,8 +20,6 @@ $(call inherit-product, vendor/mediatek/opensource/mtk-builds.mk)
 # IMS
 $(call inherit-product, vendor/mediatek/ims/mtk-ims.mk)
 $(call inherit-product, vendor/mediatek/ims/mtk-engi.mk)
-PRODUCT_PACKAGES += \
-    vendor.mediatek.hardware.videotelephony@1.0-impl
 
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
 
@@ -54,36 +52,40 @@ PRODUCT_BUILD_SUPER_PARTITION := false
 
 # Audio
 PRODUCT_PACKAGES += \
-    android.hardware.audio.effect@5.0-impl \
-    android.hardware.audio.common@6.0-util \
-    android.hardware.soundtrigger@2.2-impl \
-    android.hardware.bluetooth.audio@2.0-impl \
-    audio.primary.default \
+	audio.a2dp.default \
     audio.bluetooth.default \
-    audio.r_submix.default \
-    audio.usb.default \
-    audio.a2dp.default \
+	audio.r_submix.default \
+	audio.usb.default \
+	audio_policy.stub \
+    audio.primary.default \
+	libalsautils \
+	libaudio-resampler \
+	libtinyalsa \
     libaudiopreprocessing \
     libbundlewrapper \
+	libtinyxml \
+	libaudiospdif \
+	libnbaio \
+	libeffects \
     libdownmix \
     libdynproc \
     libeffectproxy \
     libldnhncr \
     libreverbwrapper \
     libvisualizer \
-    tinymixr
+    libtinycompress \
+    libtinycompress.vendor \
+    tinymix \
+	android.hardware.audio@6.1-impl \
+	android.hardware.audio@4.0-impl \
+	android.hardware.audio@2.0-service \
+	android.hardware.audio.effect@4.0-impl \
+    android.hardware.audio.effect@4.0-service \
+    android.hardware.soundtrigger@2.2-impl \
+    android.hardware.soundtrigger@2.2-service
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/audio/audio_device.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_device.xml \
-    $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_effects.xml \
-    $(LOCAL_PATH)/configs/audio/audio_em.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_em.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy_configuration_a2dp_offload_disabled.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_policy_configuration_a2dp_offload_disabled.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy_configuration_bluetooth_legacy_hal.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_policy_configuration_bluetooth_legacy_hal.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy_configuration_new.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_policy_configuration_new.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy_volumes_new.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_policy_volumes_new.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy_volumes.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_policy_volumes.xml \
-    $(LOCAL_PATH)/configs/audio/misound_res.bin:$(TARGET_COPY_OUT_SYSTEM)/etc/misound_res.bin
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/audio/,$(TARGET_COPY_OUT_SYSTEM)/etc)
 
 PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/a2dp_audio_policy_configuration.xml \
@@ -91,11 +93,16 @@ PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/bluetooth_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/r_submix_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/usb_audio_policy_configuration.xml
-    
+
 # Bluetooth
 PRODUCT_PACKAGES += \
-    libldacBT_dec \
-    libbtconfigstore
+	btremoted \
+    libldacBT_dec
+#	libbt-vendor \
+#	libbluetooth_mtk
+
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/bluetooth/,$(TARGET_COPY_OUT_SYSTEM)/etc/bluetooth)
 
 
 # Camera
@@ -134,7 +141,8 @@ PRODUCT_PACKAGES += \
     lineage.biometrics.fingerprint.inscreen@1.0-service.kona
 
 # Gboard
-ifeq ($(WITH_GAPPS), false)
+ifeq ($(WITH_GAPPS), true)
+else
 PRODUCT_PACKAGES += \
     Gboard 
 endif
@@ -146,6 +154,7 @@ PRODUCT_PACKAGES += \
 
 # HIDL
 PRODUCT_PACKAGES += \
+    libhidlbase \
     android.hidl.base@1.0 \
     android.hidl.base@1.0_system \
     android.hidl.manager@1.0 \
@@ -177,18 +186,27 @@ PRODUCT_PACKAGES += \
 
 # Media
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
-    $(LOCAL_PATH)/configs/media/media_codecs_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_c2.xml \
-    $(LOCAL_PATH)/configs/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
-    $(LOCAL_PATH)/configs/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/media/,$(TARGET_COPY_OUT_SYSTEM)/etc)
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media/media_codecs_mediatek_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_mediatek_audio.xml \
-    $(LOCAL_PATH)/configs/media/media_codecs_mediatek_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_mediatek_video.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/media_codecs_google_video_le.xml
 
-PRODUCT_COPY_FILES += \
-    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
+# MediaMtk
+PRODUCT_PACKAGES += \
+    vendor.mediatek.hardware.nvram@1.1-impl \
+    vendor.mediatek.hardware.log@1.0-impl \
+    vendor.mediatek.hardware.vpu@1.0-impl \
+    vendor.mediatek.hardware.mtkradioex@1.0-impl\
+    vendor.mediatek.hardware.power@2.1-impl\
+    vendor.mediatek.hardware.power@2.0-impl \
+    vendor.mediatek.hardware.bluetooth.audio@2.1-impl \
+    vendor.mediatek.hardware.mtkpower@1.1-impl \
+    vendor.mediatek.hardware.audio@6.1-impl \
+    vendor.mediatek.hardware.aee@1.0-impl \
+    vendor.mediatek.hardware.gpu@1.0-impl \
+    vendor.mediatek.hardware.videotelephony@1.0-impl
+
 
 # NFC
 PRODUCT_PACKAGES += \
@@ -204,10 +222,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapps/privapp-permissions-ols.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-ols.xml
 
-# Power
-PRODUCT_PACKAGES += \
-    android.hardware.power-service.cezanne \
-    vendor.qti.hardware.perf@2.0
+
+# Public Libraries
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -249,10 +267,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
-
-# Video Telephony
-PRODUCT_PACKAGES += \
-    vendor.mediatek.hardware.videotelephony@1.0
 
 # WiFi
 PRODUCT_PACKAGES += \

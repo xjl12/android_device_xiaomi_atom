@@ -1,0 +1,30 @@
+This directory contains Bluetooth driver layer code for BlueDroid stack.
+
+WHAT IT DOES?
+=============
+It provides Bluetooth driver interfaces for stack usage.
+
+HOW IT WAS BUILT?
+==================
+
+It needs the following libs from AOSP:
+1. libcutils.so
+
+and the following libs from MediaTek:
+1. liblog.so
+2. libnvram.so
+
+All source/dependency modules of this module are already put in
+'vendor/mediatek/libs' folder.
+
+
+HOW TO USE IT?
+==============
+
+Files in this directory is used to
+1. Generate a library named 'libbt-vendor.so' for BlueDroid stack.
+2. Generate a library named 'libbluetooth_mtk.so', which provides the actual driver functions and linked by 'libbt-vendor.so'.
+
+
+All the source code of this library were written by MediaTek co..
+

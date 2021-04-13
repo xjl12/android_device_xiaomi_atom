@@ -1,0 +1,14 @@
+service bluetooth-1-0 /vendor/bin/hw/android.hardware.bluetooth@1.0-service-mediatek
+    class hal
+    user bluetooth
+    group bluetooth
+    writepid /dev/stune/foreground/tasks
+
+on property:vts.native_server.on=1 && property:ro.build.type=userdebug
+    stop bluetooth-1-0
+on property:vts.native_server.on=1 && property:ro.build.type=eng
+    stop bluetooth-1-0
+on property:vts.native_server.on=0 && property:ro.build.type=userdebug
+    start bluetooth-1-0
+on property:vts.native_server.on=0 && property:ro.build.type=eng
+    start bluetooth-1-0

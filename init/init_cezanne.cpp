@@ -54,9 +54,9 @@ void vendor_load_properties() {
     std::string product = GetProperty("ro.boot.product.hardware.sku", "");
     property_override("ro.oem_unlock_supported", "0");
     property_override("ro.boot.selinux", "permissive");
-    property_override("ro.build.description", "cezanne-user 11 RP1A.200720.011 21.3.31 release-keys");
-    property_override("ro.build.fingerprint", "Redmi/cezanne/cezanne:11/RP1A.200720.011/21.3.31:user/release-keys");
+    property_override("ro.build.description", "cezanne-user 11 RP1A.200720.011 21.4.7 release-keys");
+    property_override("ro.build.fingerprint", "Redmi/cezanne/cezanne:11/RP1A.200720.011/21.4.7:user/release-keys");
     property_override("ro.product.brand", "Redmi");
-    property_override("ro.product.model", "Redmi K30 Ultra");
+    property_override("ro.product.model", "M2006J10C");
     property_override("ro.product.device", "cezanne");
 }
