@@ -1,0 +1,119 @@
+# 1 "vendor/mediatek/proprietary/hardware/fstab/mt6873/fstab.in.mt6873"
+# 1 "<built-in>" 1
+# 1 "<built-in>" 3
+# 341 "<built-in>" 3
+# 1 "<command line>" 1
+# 1 "<built-in>" 2
+# 1 "vendor/mediatek/proprietary/hardware/fstab/mt6873/fstab.in.mt6873" 2
+# 141 "vendor/mediatek/proprietary/hardware/fstab/mt6873/fstab.in.mt6873"
+system /system ext4 ro wait,,avb=vbmeta_system,logical,first_stage_mount,avb_keys=/avb/q-gsi.avbpubkey:/avb/r-gsi.avbpubkey:/avb/s-gsi.avbpubkey
+
+vendor /vendor ext4 ro wait,,avb,logical,first_stage_mount
+
+
+
+product /product ext4 ro wait,,avb,logical,first_stage_mount
+
+
+
+
+
+/dev/block/by-name/metadata /metadata ext4 noatime,nosuid,nodev,discard wait,check,formattable,first_stage_mount
+
+/dev/block/by-name/userdata /data ext4 noatime,nosuid,nodev,noauto_da_alloc,errors=panic,inlinecrypt wait,check,formattable,quota,reservedsize=128m,latemount,resize,checkpoint=block,fileencryption=aes-256-xts:aes-256-cts:v1
+
+/dev/block/by-name/cache /cache ext4 noatime,nosuid,nodev,noauto_da_alloc,discard wait,check,formattable
+
+/dev/block/by-name/protect1 /mnt/vendor/protect_f ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
+/dev/block/by-name/protect2 /mnt/vendor/protect_s ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
+/dev/block/by-name/nvdata /mnt/vendor/nvdata ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
+/dev/block/by-name/nvcfg /mnt/vendor/nvcfg ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
+
+
+/dev/block/by-name/persist /mnt/vendor/persist ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
+
+
+
+/devices/platform/externdevice* auto auto defaults voldmanaged=sdcard1:auto,encryptable=userdata
+
+
+
+/devices/platform/usb_xhci* auto vfat defaults voldmanaged=usbotg:auto
+/devices/platform/soc/11201000.usb0/11200000.xhci* auto vfat defaults voldmanaged=usbotg:auto
+
+/dev/block/by-name/frp /persistent emmc defaults defaults
+
+/dev/block/by-name/nvram /nvram emmc defaults defaults
+/dev/block/by-name/proinfo /proinfo emmc defaults defaults
+/dev/block/by-name/lk /bootloader emmc defaults defaults
+/dev/block/by-name/lk2 /bootloader2 emmc defaults defaults
+/dev/block/by-name/para /para emmc defaults defaults
+/dev/block/by-name/misc /misc emmc defaults defaults
+
+
+/dev/block/by-name/recovery /recovery emmc defaults first_stage_mount,nofail,
+
+/dev/block/by-name/boot /boot emmc defaults first_stage_mount,nofail,
+
+
+
+
+
+/dev/block/by-name/vbmeta_vendor /vbmeta_vendor emmc defaults first_stage_mount,nofail,
+/dev/block/by-name/vbmeta_system /vbmeta_system emmc defaults first_stage_mount,nofail,,avb=vbmeta
+
+/dev/block/by-name/logo /logo emmc defaults defaults
+/dev/block/by-name/expdb /expdb emmc defaults defaults
+/dev/block/by-name/seccfg /seccfg emmc defaults defaults
+
+/dev/block/by-name/tee1 /tee1 emmc defaults defaults
+/dev/block/by-name/tee2 /tee2 emmc defaults defaults
+
+
+/dev/block/by-name/scp1 /scp1 emmc defaults defaults
+/dev/block/by-name/scp2 /scp2 emmc defaults defaults
+
+
+/dev/block/by-name/sspm_1 /sspm_1 emmc defaults defaults
+/dev/block/by-name/sspm_2 /sspm_2 emmc defaults defaults
+
+
+/dev/block/by-name/dpm_1 /dpm_1 emmc defaults defaults
+/dev/block/by-name/dpm_2 /dpm_2 emmc defaults defaults
+
+/dev/block/by-name/mcupm_1 /mcupm_1 emmc defaults defaults
+/dev/block/by-name/mcupm_2 /mcupm_2 emmc defaults defaults
+
+
+
+/dev/block/by-name/md1img /md1img emmc defaults defaults
+/dev/block/by-name/md1dsp /md1dsp emmc defaults defaults
+/dev/block/by-name/md1arm7 /md1arm7 emmc defaults defaults
+/dev/block/by-name/md3img /md3img emmc defaults defaults
+
+/dev/block/by-name/cam_vpu1 /cam_vpu1 emmc defaults defaults
+/dev/block/by-name/cam_vpu2 /cam_vpu2 emmc defaults defaults
+/dev/block/by-name/cam_vpu3 /cam_vpu3 emmc defaults defaults
+
+/dev/block/by-name/gz1 /gz1 emmc defaults defaults
+/dev/block/by-name/gz2 /gz2 emmc defaults defaults
+
+/dev/block/by-name/spmfw /spmfw emmc defaults defaults
+
+
+
+
+
+/dev/block/by-name/audio_dsp /audio_dsp emmc defaults defaults
+
+/dev/block/by-name/pi_img /pi_img emmc defaults defaults
+/dev/block/by-name/boot_para /boot_para emmc defaults defaults
+
+/dev/block/by-name/odmdtbo /odmdtbo emmc defaults defaults
+/dev/block/by-name/dtbo /dtbo emmc defaults defaults
+
+
+/dev/block/by-name/otp /otp emmc defaults defaults
+
+
+/dev/block/by-name/vbmeta /vbmeta emmc defaults defaults

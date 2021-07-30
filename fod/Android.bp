@@ -18,6 +18,7 @@ cc_binary {
     defaults: ["hidl_defaults"],
     name: "lineage.biometrics.fingerprint.inscreen@1.0-service.kona",
     init_rc: ["lineage.biometrics.fingerprint.inscreen@1.0-service.kona.rc"],
+    vintf_fragments: ["lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_kona.xml"],
     srcs: [
 	"service.cpp",
         "FingerprintInscreen.cpp",

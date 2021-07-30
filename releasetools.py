@@ -19,9 +19,6 @@ import re
 
 def FullOTA_InstallBegin(info):
   input_zip = info.input_zip
-  data = input_zip.read("RADIO/dynamic-add-system_ext")
-  common.ZipWriteStr(info.output_zip, "dynamic-add-system_ext", data)
-  info.script.AppendExtra('update_dynamic_partitions(package_extract_file("dynamic-add-system_ext"));')
   return
 
 def FullOTA_InstallEnd(info):

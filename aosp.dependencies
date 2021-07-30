@@ -1,0 +1,12 @@
+[
+
+   {
+    "repository": "android_hardware_xiaomi",
+    "target_path": "hardware/xiaomi"
+  },
+  {
+    "repository" : "ASKSAP/android_kernel_xiaomi_bomb",
+    "target_path": "kernel/xiaomi/mt6873",
+  },
+]
+
