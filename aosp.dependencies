@@ -1,12 +1,14 @@
 [
-
-   {
-    "repository": "android_hardware_xiaomi",
-    "target_path": "hardware/xiaomi"
+  {
+    "repository": "DotOS-Merlin/android_vendor_mediatek_ims",
+    "target_path": "vendor/mediatek/ims",
+     "branch": "dot11",
+    "remote": "github"
   },
   {
-    "repository" : "ASKSAP/android_kernel_xiaomi_bomb",
-    "target_path": "kernel/xiaomi/mt6873",
-  },
+    "repository": "android_hardware_xiaomi",
+    "target_path": "hardware/xiaomi",
+    "branch": "lineage-18.1",
+    "remote": "lineage"
+  }
 ]
-

@@ -8,7 +8,7 @@
 
 set -e
 
-DEVICE=cezanne
+DEVICE=atom
 VENDOR=xiaomi
 
 # Load extract_utils and do some sanity checks

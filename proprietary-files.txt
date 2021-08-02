@@ -1,9 +1,6 @@
 system_ext/lib64/libaptXHD_encoder.so
 system_ext/lib64/libaptX_encoder.so
 
-system_ext/framework/com.android.hotwordenrollment.common.util.jar
-
-vendor/odm/etc/vintf/manifest.xml
 vendor/odm/etc/vintf/manifest_qsqs.xml
 vendor/odm/etc/vintf/manifest_tsts.xml
 vendor/odm/etc/vintf/manifest_dsds.xml
@@ -278,7 +275,6 @@ product/media/audio/ui/camera_click.ogg
 product/media/audio/ui/LowBattery.ogg
 product/media/audio/ui/Effect_Tick.ogg
 product/media/audio/ui/KeypressReturn.ogg
-product/media/audio/notifications
 product/media/audio/notifications/Highwire.ogg
 product/media/audio/notifications/Merope.ogg
 product/media/audio/notifications/pizzicato.ogg

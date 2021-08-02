@@ -60,6 +60,7 @@ private:
     sp<IDisplayFeature> xiaomiDisplayFeatureService;
     sp<ITouchFeature> touchFeatureService;
     sp<IXiaomiFingerprint> xiaomiFingerprintService;
+    //int32_t sd;
 };
 
 }  // namespace implementation
