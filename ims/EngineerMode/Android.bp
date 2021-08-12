@@ -1,0 +1,10 @@
+android_app_import {
+	name: "EngineerMode",
+	owner: "xiaomi",
+	apk: "EngineerMode.apk",
+	certificate: "platform",
+	dex_preopt: {
+		enabled: false,
+	},
+	privileged: true,
+}

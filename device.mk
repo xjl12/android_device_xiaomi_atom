@@ -32,9 +32,13 @@ PRODUCT_SHIPPING_API_LEVEL := 29
 PRODUCT_TARGET_VNDK_VERSION := 30
 
 # Partitions
-PRODUCT_USE_DYNAMIC_PARTITIONS := false
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_BUILD_SUPER_PARTITION := false
 
+# DT2W
+PRODUCT_PACKAGES += \
+    DT2W-Service-Merlin
+    
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio.effect@5.0-impl \
@@ -49,7 +53,8 @@ PRODUCT_PACKAGES += \
     libeffectproxy \
     libldnhncr \
     libreverbwrapper \
-    libvisualizer
+    libvisualizer   \
+    treble-overlay-xiaomi-redmi10x5g
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_policy_configuration.xml \
@@ -98,7 +103,11 @@ PRODUCT_COPY_FILES += \
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
-    android.hidl.manager@1.0
+    android.hidl.manager@1.0 \
+    libhidltransport \
+    libhidltransport.vendor \
+    libhwbinder \
+    libhwbinder.vendor    
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/permissions/privapp-permissions-mediatek.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-mediatek.xml \
@@ -106,6 +115,33 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     ImsInit
 
+# IMS
+PRODUCT_PACKAGES += \
+	vendor.mediatek.hardware.mtkradioex@1.0 \
+	vendor.mediatek.hardware.videotelephony@1.0 \
+	ImsService \
+	EngineerMode \
+	mediatek-common \
+        mediatek-framework \
+    	mediatek-ims-base \
+    	mediatek-ims-common \
+    	mediatek-telecom-common \
+    	mediatek-telephony-base \
+    	mediatek-telephony-common
+
+	
+PRODUCT_BOOT_JARS += \
+    mediatek-common \
+    mediatek-framework \
+    mediatek-ims-base \
+    mediatek-ims-common \
+    mediatek-telecom-common \
+    mediatek-telephony-base \
+    mediatek-telephony-common
+
+# RcsService
+PRODUCT_PACKAGES += \
+    RcsService
 # IFAA manager
 PRODUCT_PACKAGES += \
     org.ifaa.android.manager
@@ -121,13 +157,6 @@ PRODUCT_COPY_FILES += \
 # Lights
 PRODUCT_PACKAGES += \
     lights.atom
-
-# NFC
-PRODUCT_PACKAGES += \
-    com.android.nfc_extras \
-    NfcNci \
-    Tag \
-    SecureElement
 
 # Parts
 PRODUCT_PACKAGES += \
@@ -202,5 +231,4 @@ PRODUCT_COPY_FILES += \
    $(LOCAL_PATH)/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
 
 
-
-   
+$(call inherit-product, vendor/xiaomi/atom/atom-vendor.mk)

@@ -69,8 +69,8 @@ static void set(const std::string& path, const T& value) {
 
 static void threadboost(sp<IXiaomiFingerprint> txiaomiFingerprintService){
     LOG(ERROR) << "Thread start";
-    usleep(200000);
-    set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_ON);
+    usleep(150000);
+    set(DISPPARAM_PATH, flag ? DISPPARAM_HBM_FOD_ON:DISPPARAM_HBM_FOD_OFF);
     txiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_FOD);
 }
 
@@ -118,12 +118,14 @@ Return<void> FingerprintInscreen::onFinishEnroll() {
 Return<void> FingerprintInscreen::onPress() {
     acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
     std::thread(threadboost,xiaomiFingerprintService).detach();
+    flag=1;
     return Void();
 }
 
 Return<void> FingerprintInscreen::onRelease() {
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
     set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_OFF);
+    flag=0;
     release_wake_lock(LOG_TAG);
     return Void();
 }
@@ -140,6 +142,7 @@ Return<void> FingerprintInscreen::onHideFODView() {
     touchFeatureService->resetTouchMode(TOUCH_FOD_ENABLE);
     //xiaomiDisplayFeatureService->setFeature(0, 22, 0, 10);
     xiaomiDisplayFeatureService->setFeature(0, 17, 0, 1);
+    flag=0;
     return Void();
 }
 

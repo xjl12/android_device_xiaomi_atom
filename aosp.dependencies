@@ -1,9 +1,9 @@
 [
   {
-    "repository": "DotOS-Merlin/android_vendor_mediatek_ims",
-    "target_path": "vendor/mediatek/ims",
-     "branch": "dot11",
-    "remote": "github"
+    "repository": "device_mediatek_common",
+    "target_path": "device/mediatek/common",
+    "branch": "eleven",
+    "remote": "pixel"
   },
   {
     "repository": "android_hardware_xiaomi",

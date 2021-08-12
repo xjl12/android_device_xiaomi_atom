@@ -242,6 +242,8 @@ applications that come with the platform
         <permission name="android.permission.MASTER_CLEAR"/>
         <permission name="android.permission.REAL_GET_TASKS"/>
         <permission name="android.permission.READ_LOGS"/>
+        <permission name="android.permission.FORCE_STOP_PACKAGES"/>
+        <permission name="android.permission.WRITE_APN_SETTINGS"/>
         <!-- Add reboot permission for TelephonyManager.switchMultiSimConfig -->
         <permission name="android.permission.MODIFY_PHONE_STATE"/>
         <permission name="android.permission.MANAGE_USB"/>
