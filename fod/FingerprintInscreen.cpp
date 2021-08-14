@@ -67,10 +67,10 @@ static void set(const std::string& path, const T& value) {
     file << value;
 }
 
-static void threadboost(sp<IXiaomiFingerprint> txiaomiFingerprintService){
+static void threadboost(sp<IXiaomiFingerprint> txiaomiFingerprintService,char *pflag){
     LOG(ERROR) << "Thread start";
     usleep(150000);
-    set(DISPPARAM_PATH, flag ? DISPPARAM_HBM_FOD_ON:DISPPARAM_HBM_FOD_OFF);
+    set(DISPPARAM_PATH, *pflag ? DISPPARAM_HBM_FOD_ON:DISPPARAM_HBM_FOD_OFF);
     txiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_FOD);
 }
 
@@ -117,7 +117,7 @@ Return<void> FingerprintInscreen::onFinishEnroll() {
 
 Return<void> FingerprintInscreen::onPress() {
     acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
-    std::thread(threadboost,xiaomiFingerprintService).detach();
+    std::thread(threadboost,xiaomiFingerprintService,&flag).detach();
     flag=1;
     return Void();
 }

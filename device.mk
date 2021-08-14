@@ -121,6 +121,7 @@ PRODUCT_PACKAGES += \
 	vendor.mediatek.hardware.videotelephony@1.0 \
 	ImsService \
 	EngineerMode \
+	libem_support_jni \
 	mediatek-common \
         mediatek-framework \
     	mediatek-ims-base \
