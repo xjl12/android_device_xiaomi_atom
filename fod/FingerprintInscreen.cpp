@@ -69,7 +69,7 @@ static void set(const std::string& path, const T& value) {
 
 static void threadboost(sp<IXiaomiFingerprint> txiaomiFingerprintService,char *pflag){
     LOG(ERROR) << "Thread start";
-    usleep(150000);
+    usleep(200000);
     set(DISPPARAM_PATH, *pflag ? DISPPARAM_HBM_FOD_ON:DISPPARAM_HBM_FOD_OFF);
     txiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_FOD);
 }

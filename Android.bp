@@ -1,3 +1,2 @@
 soong_namespace {
-	imports: ["hardware/xiaomi"],
 }

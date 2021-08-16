@@ -16,6 +16,7 @@
 cc_binary {
     relative_install_path: "hw",
     defaults: ["hidl_defaults"],
+//    vintf_fragments: ["lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_kona.xml"],
     name: "lineage.biometrics.fingerprint.inscreen@1.0-service.kona",
     init_rc: ["lineage.biometrics.fingerprint.inscreen@1.0-service.kona.rc"],
     srcs: [
@@ -35,7 +36,6 @@ cc_binary {
         "vendor.xiaomi.hardware.touchfeature@1.0",
         "vendor.xiaomi.hardware.displayfeature@1.0", 
     ],
-    proprietary: true,
 }
 
 cc_library_static {

@@ -5,10 +5,4 @@
     "branch": "eleven",
     "remote": "pixel"
   },
-  {
-    "repository": "android_hardware_xiaomi",
-    "target_path": "hardware/xiaomi",
-    "branch": "lineage-18.1",
-    "remote": "lineage"
-  }
 ]

@@ -6,7 +6,6 @@
         <interface>
             <name>IFingerprintInscreen</name>
             <instance>default</instance>
-             <fqname>@1.0::IFingerprintInscreen/default</fqname>
         </interface>
     </hal>
 </manifest>
