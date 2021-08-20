@@ -43,3 +43,6 @@ ro.vendor.radio.5g=3
 ro.vendor.radio.features_common=2
 vendor.rild.libpath=mtk-ril.so
 vendor.rild.libargs=-d /dev/ttyC0
+
+# Bluetooth
+persist.bluetooth.bluetooth_audio_hal.disabled=true
