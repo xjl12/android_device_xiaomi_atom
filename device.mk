@@ -117,7 +117,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.mt6873:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6873
 
 # Parts
-#PRODUCT_PACKAGES += XiaomiParts
+PRODUCT_PACKAGES += XiaomiParts
 
 # HIDL
 PRODUCT_PACKAGES += \
@@ -130,6 +130,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/permissions/privapp-permissions-mediatek.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-mediatek.xml \
+    $(LOCAL_PATH)/permissions/privapp-permissions-xiaomi.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-xiaomi.xml \
 # ImsInit hack
 PRODUCT_PACKAGES += \
     ImsInit

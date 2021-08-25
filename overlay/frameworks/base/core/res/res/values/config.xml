@@ -9,6 +9,7 @@
     <bool name="config_haveHigherAspectRatioScreen">true</bool>
     <integer name="config_navBarInteractionMode">2</integer>
     <string name="config_recentsComponentName">app.lawnchair/com.android.quickstep.RecentsActivity</string>
+    <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
     
     <!--
 	
@@ -312,7 +313,7 @@
     <bool name="config_wifi_dual_band_support">true</bool>
     <bool name="config_dozeAlwaysOnDisplayAvailable">true</bool>
     <bool name="config_displayBlanksAfterDoze">false</bool>
-    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">false</bool>
+    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
     <bool name="config_dozeAfterScreenOffByDefault">true</bool>
     <bool name="config_dozePulsePickup">false</bool>
     <bool name="config_showNavigationBar">true</bool>
@@ -323,7 +324,7 @@
     <bool name="config_suspendWhenScreenOffDueToProximity">true</bool>
     <bool name="config_unplugTurnsOnScreen">true</bool>
     <bool name="config_cellBroadcastAppLinks">false</bool>
-    <bool name="config_dozeAlwaysOnEnabled">true</bool>
+    <bool name="config_dozeAlwaysOnEnabled">false</bool>
     <bool name="config_pinnerCameraApp">false</bool>
     <bool name="config_enableNetworkLocationOverlay">false</bool>
     <bool name="config_hearing_aid_profile_supported">true</bool>
@@ -363,7 +364,7 @@
     <integer name="config_defaultNotificationVibrationIntensity">2</integer>
     <integer name="config_screenBrightnessForVrSettingMinimum">632</integer>
     <integer name="config_screenBrightnessForVrSettingMaximum">2047</integer>
-    <integer name="config_wakeUpDelayDoze">0</integer>
+    <integer name="config_wakeUpDelayDoze">32</integer>
     <integer name="config_screenBrightnessSettingDefault">1024</integer>
     <integer name="config_screenBrightnessSettingMaximum">2047</integer>
     <integer name="config_screenBrightnessSettingMinimum">12</integer>
