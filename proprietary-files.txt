@@ -21,7 +21,6 @@ lib/libimsma_socketwrapper.so
 lib/libmtk_vt_service.so
 lib/libmtk_vt_wrapper.so
 lib/libsignal.so
-lib/libsink.so
 lib/libsource.so
 lib/libsysenv_system.so
 lib/libvcodec_cap.so

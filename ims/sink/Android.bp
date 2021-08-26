@@ -1,0 +1,11 @@
+cc_prebuilt_library_shared {
+  name: "libsink",
+  compile_multilib: "both",
+  check_elf_files: false,
+	owner: "mtk",
+	target: {
+		android_arm: {
+			srcs: ["libsink.so"],
+		},
+	},
+}
