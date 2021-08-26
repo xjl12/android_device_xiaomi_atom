@@ -15,9 +15,11 @@ import com.android.ims.ImsManager;
 public class PhoneStateService extends Service {
     private static final String LOG_TAG = "ImsInit";
     private static ServiceState sLastState = null;
+    private static int count = 0;
     
     private void handleServiceStateChanged(ServiceState serviceState) {
         Log.i(LOG_TAG, "handleServiceStateChanged");
+        count = count+1;
         if ((sLastState == null || sLastState.getDataRegState() != ServiceState.STATE_IN_SERVICE)
                 && serviceState.getDataRegState() == ServiceState.STATE_IN_SERVICE) {
             SharedPreferences prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
@@ -28,15 +30,16 @@ public class PhoneStateService extends Service {
                 return;
             }
         
-            if (ImsManager.isEnhanced4gLteModeSettingEnabledByUser(this)) {
+            if (ImsManager.isEnhanced4gLteModeSettingEnabledByUser(this) && count==1) {
                 Log.i(LOG_TAG, "VoLTE enabled, trying to toggle it off and back on");
                 ImsManager.setEnhanced4gLteModeSetting(this, false);
                 new Thread(() -> {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(3000);
                     } catch (Exception e) {
                         // Ignore
                     }
+                    Log.i(LOG_TAG, "Thread:VoLTE enable");
                     ImsManager.setEnhanced4gLteModeSetting(this, true);
                 }).start();
             }
