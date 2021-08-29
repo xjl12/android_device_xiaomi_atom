@@ -18,16 +18,16 @@ $(call inherit-product, vendor/aosp/config/common_full_phone.mk)
 PRODUCT_NAME := aosp_atom
 PRODUCT_DEVICE := atom
 PRODUCT_BRAND := Redmi
-PRODUCT_MODEL := Redmi 10X
+PRODUCT_MODEL := M2004J7AC
 PRODUCT_MANUFACTURER := Xiaomi
 DEVICE_MAINTAINER := Xayah,Raspberry-Monster,Laulan56,XJLe
 
 # PRODUCT_CHARACTERISTICS := nosdcard
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DISC="atom-user 11 RP1A.200720.011 V12.5.2.0.RJHCNXM release-keys"
+    PRIVATE_BUILD_DISC="atom-user 11 RP1A.200720.011 V12.5.4.0.RJHCNXM release-keys"
 
-BUILD_FINGERPRINT := "Redmi/atom/atom:11/RP1A.200720.011/V12.5.2.0.RJHCNXM:user/release-keys"
+BUILD_FINGERPRINT := "Redmi/atom/atom:11/RP1A.200720.011/V12.5.4.0.RJHCNXM:user/release-keys"
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.build.fingerprint=$(BUILD_FINGERPRINT)
