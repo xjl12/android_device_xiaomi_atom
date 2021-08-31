@@ -4,8 +4,8 @@
          "name":"MIUI 稳定版",
          "os_version":"11",
          "cpu_abi": "arm64-v8a",
-         "details":"Redmi 10X 5G 官方MIUI稳定版V12.5.4.0，必须搭配稳定版底包使用！（本包下载源为本地链接，请提前准备好网络环境）",
-         "uri":"http://192.168.134.100/dsu.zip"
+         "details":"Redmi 10X 5G 官方MIUI稳定版V12.5.4.0，必须搭配稳定版底包使用！（本包安装源为/sdcard/dsu.zip，请提前准备好文件）",
+         "uri":"file:///storage/emulated/0/dsu.zip"
       }
     ]
 }
