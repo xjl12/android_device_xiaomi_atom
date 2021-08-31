@@ -1,6 +1,5 @@
 # 专为 Redmi 10X 5G 打造的 PixelExperience Plus 11
 
-***
 
 ## 安装步骤
 1. 首先通过小米官方[解锁设备](https://www.miui.com/unlock/)
