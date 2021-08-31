@@ -6,5 +6,6 @@
          "cpu_abi": "arm64-v8a",
          "details":"Redmi 10X 5G 官方稳定版系统，必须搭配稳定版底包使用！（本包下载源为GitHub Release，请提前准备好网络环境）",
          "uri":"https://github.com/xjl12/android_device_xiaomi_atom/releases/download/1.4/Miui-sta-dsu-12.5.4.0.zip"
-      },]
+      }
+    ]
 }
