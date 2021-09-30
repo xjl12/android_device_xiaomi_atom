@@ -1,0 +1,10 @@
+android_app_import {
+	name: "IFAAService",
+	owner: "xiaomi",
+	apk: "IFAAService.apk",
+	certificate: "platform",
+	dex_preopt: {
+		enabled: true,
+	},
+	privileged: true,
+}

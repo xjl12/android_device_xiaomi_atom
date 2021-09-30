@@ -1,0 +1,10 @@
+android_app_import {
+	name: "SoterService",
+	owner: "xiaomi",
+	apk: "SoterService.apk",
+	certificate: "platform",
+	dex_preopt: {
+		enabled: true,
+	},
+	privileged: true,
+}
