@@ -1,0 +1,20 @@
+on boot
+    chown system system /sys/class/touch/tp_dev/fod_status
+    chmod 0644 /sys/class/touch/tp_dev/fod_status
+    chmod 0666 /dev/input/event1
+    chown system system /dev/input/event2
+    chmod 0660 /dev/input/event2
+    
+    chown system system /sys/class/drm/card0-DSI-1/disp_param
+    chmod 0700 /sys/class/drm/card0-DSI-1/disp_param
+    chown system system /sys/devices/platform/soc/5e00000.qcom,mdss_mdp/drm/card0/card0-DSI-1/disp_param
+    chmod 0700 /sys/devices/platform/soc/5e00000.qcom,mdss_mdp/drm/card0/card0-DSI-1/disp_param
+
+on init
+    # Goodix fingerprint
+    chown system system /dev/goodix_fp
+
+service fps_hal /system/bin/hw/android.hardware.biometrics.fingerprint@2.3-service
+    class late_start
+    user system
+    group system input uhid

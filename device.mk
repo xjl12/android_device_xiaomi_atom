@@ -111,6 +111,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libtinyxml
 
+# UDFPS
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint@2.3-service
+
 # Vibrator
 PRODUCT_PACKAGES += \
     android.hardware.vibrator@1.0-impl \
@@ -232,6 +236,10 @@ PRODUCT_COPY_FILES += \
 # Lights
 PRODUCT_PACKAGES += \
     lights.atom
+
+# UDFPS
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint@2.3-service
 
 # Vendor Init
 PRODUCT_PACKAGES += \

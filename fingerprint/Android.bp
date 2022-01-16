@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2019-2020 The LineageOS Project
+// Copyright (C) 2019 The LineageOS Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,34 +14,23 @@
 // limitations under the License.
 
 cc_binary {
+    name: "android.hardware.biometrics.fingerprint@2.3-service",
     relative_install_path: "hw",
+    vintf_fragments: ["android.hardware.biometrics.fingerprint@2.3-service.xml"],
+    init_rc: ["android.hardware.biometrics.fingerprint@2.3-service.rc"],
     defaults: ["hidl_defaults"],
-//    vintf_fragments: ["lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_kona.xml"],
-    name: "lineage.biometrics.fingerprint.inscreen@1.0-service.kona",
-    init_rc: ["lineage.biometrics.fingerprint.inscreen@1.0-service.kona.rc"],
     srcs: [
-	"service.cpp",
-        "FingerprintInscreen.cpp",
+        "service.cpp",
+        "BiometricsFingerprint.cpp",
     ],
     shared_libs: [
         "libbase",
-        "libhardware",
-        "libhardware_legacy",
         "libhidlbase",
         "liblog",
         "libutils",
-        "vendor.goodix.hardware.biometrics.fingerprint@2.1",
-        "vendor.lineage.biometrics.fingerprint.inscreen@1.0",
+        "android.hardware.biometrics.fingerprint@2.1",
+        "android.hardware.biometrics.fingerprint@2.2",
+        "android.hardware.biometrics.fingerprint@2.3",
         "vendor.xiaomi.hardware.fingerprintextension@1.0",
-        "vendor.xiaomi.hardware.touchfeature@1.0",
-        "vendor.xiaomi.hardware.displayfeature@1.0", 
-    ],
-}
-
-cc_library_static {
-    name: "libfod_extension.atom",
-    srcs: ["FodExtension.cpp"],
-    include_dirs: [
-        "frameworks/native/services/surfaceflinger/CompositionEngine/include"
     ],
 }
