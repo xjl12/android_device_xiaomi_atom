@@ -44,7 +44,7 @@ volume index from 0 to 100.
     <volume stream="AUDIO_STREAM_VOICE_CALL" deviceCategory="DEVICE_CATEGORY_EXT_MEDIA"
                                              ref="DEFAULT_MEDIA_VOLUME_CURVE"/>
     <volume stream="AUDIO_STREAM_VOICE_CALL" deviceCategory="DEVICE_CATEGORY_HEARING_AID"
-                                             ref="DEFAULT_HEARING_AID_VOLUME_CURVE"/>
+                                             ref="DEFAULT_NON_MUTABLE_HEARING_AID_VOLUME_CURVE"/>
     <volume stream="AUDIO_STREAM_SYSTEM" deviceCategory="DEVICE_CATEGORY_HEADSET">
         <point>1,-3000</point>
         <point>33,-2600</point>
@@ -181,6 +181,16 @@ volume index from 0 to 100.
                                                 ref="DEFAULT_NON_MUTABLE_VOLUME_CURVE"/>
     <volume stream="AUDIO_STREAM_ACCESSIBILITY" deviceCategory="DEVICE_CATEGORY_HEARING_AID"
                                                 ref="DEFAULT_NON_MUTABLE_HEARING_AID_VOLUME_CURVE"/>
+    <volume stream="AUDIO_STREAM_ASSISTANT" deviceCategory="DEVICE_CATEGORY_HEADSET"
+                                                ref="DEFAULT_MEDIA_VOLUME_CURVE"/>
+    <volume stream="AUDIO_STREAM_ASSISTANT" deviceCategory="DEVICE_CATEGORY_SPEAKER"
+                                                ref="DEFAULT_DEVICE_CATEGORY_SPEAKER_VOLUME_CURVE"/>
+    <volume stream="AUDIO_STREAM_ASSISTANT" deviceCategory="DEVICE_CATEGORY_EARPIECE"
+                                                ref="DEFAULT_MEDIA_VOLUME_CURVE"/>
+    <volume stream="AUDIO_STREAM_ASSISTANT" deviceCategory="DEVICE_CATEGORY_EXT_MEDIA"
+                                                ref="DEFAULT_MEDIA_VOLUME_CURVE"/>
+    <volume stream="AUDIO_STREAM_ASSISTANT" deviceCategory="DEVICE_CATEGORY_HEARING_AID"
+                                                ref="DEFAULT_HEARING_AID_VOLUME_CURVE"/>
     <volume stream="AUDIO_STREAM_REROUTING" deviceCategory="DEVICE_CATEGORY_HEADSET"
                                             ref="FULL_SCALE_VOLUME_CURVE"/>
     <volume stream="AUDIO_STREAM_REROUTING" deviceCategory="DEVICE_CATEGORY_SPEAKER"
