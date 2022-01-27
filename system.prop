@@ -49,3 +49,19 @@ persist.bluetooth.bluetooth_audio_hal.disabled=true
 
 #DSU
 persist.sys.fflag.override.settings_dynamic_system.list=https://xjl12.github.io/android_device_xiaomi_atom/gsi-src-local.json
+
+#Added from MIUI
+#inspired by @HuaLiMao-Code
+ro.vendor.xiaomi.bl.poll=true
+ro.vendor.display.type=oled
+ro.vendor.gcp.enable=true
+ro.vendor.cabc.enable=true
+ro.vendor.fod.dimlayer.enable=true
+ro.vendor.net.enable_sla=1
+ro.kernel.zio=38,108,105,16
+ro.logd.size=2M
+ro.vendor.audio.soundtrigger=mtk
+ro.vendor.audio.soundtrigger.lowpower=true
+vendor.hbm.enable=true
+persist.vendor.dc_backlight.enable=false
+
