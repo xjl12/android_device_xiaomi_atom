@@ -1,15 +1,14 @@
-# 1 "vendor/mediatek/proprietary/hardware/fstab/mt6873/fstab.in.mt6873"
+# 1 "vendor/mediatek/proprietary/hardware/fstab/mt6873/fstab.in.emmc"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 341 "<built-in>" 3
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
-# 1 "vendor/mediatek/proprietary/hardware/fstab/mt6873/fstab.in.mt6873" 2
-# 141 "vendor/mediatek/proprietary/hardware/fstab/mt6873/fstab.in.mt6873"
+# 1 "vendor/mediatek/proprietary/hardware/fstab/mt6873/fstab.in.emmc" 2
+# 141 "vendor/mediatek/proprietary/hardware/fstab/mt6873/fstab.in.emmc"
 system /system ext4 ro wait,,avb=vbmeta_system,logical,first_stage_mount,avb_keys=/avb/q-gsi.avbpubkey:/avb/r-gsi.avbpubkey:/avb/s-gsi.avbpubkey
 
 vendor /vendor ext4 ro wait,,avb,logical,first_stage_mount
-
 
 
 product /product ext4 ro wait,,avb,logical,first_stage_mount
@@ -38,8 +37,8 @@ product /product ext4 ro wait,,avb,logical,first_stage_mount
 
 
 
+
 /devices/platform/usb_xhci* auto vfat defaults voldmanaged=usbotg:auto
-/devices/platform/soc/11201000.usb0/11200000.xhci* auto vfat defaults voldmanaged=usbotg:auto
 
 /dev/block/by-name/frp /persistent emmc defaults defaults
 

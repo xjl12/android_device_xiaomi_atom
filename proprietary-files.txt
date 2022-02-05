@@ -1,5 +1,5 @@
-system_ext/lib64/libaptXHD_encoder.so
-system_ext/lib64/libaptX_encoder.so
+lib64/libaptXHD_encoder.so
+lib64/libaptX_encoder.so
 
 vendor/lib64/libbluetooth_audio_session_mediatek.so
 vendor/lib64/libbluetoothem_mtk.so

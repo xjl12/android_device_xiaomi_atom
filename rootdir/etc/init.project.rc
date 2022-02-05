@@ -24,6 +24,10 @@ on post-fs-data
     chown system system /sys/power/screen_off_flag
     chmod 0660 /sys/power/screen_off_flag
 
+#Turbo sched
+    chmod 0666 /sys/module/migt/parameters/mi_viptask
+    restorecon /sys/module/migt/parameters/mi_viptask
+
 #thermal
 chown system system /sys/class/thermal/thermal_message/sconfig
 
@@ -31,8 +35,8 @@ chown system system /sys/class/thermal/thermal_message/sconfig
     chmod 0660 /dev/MAINAF
     chown system camera /dev/MAINAF
 
-    chmod 0660 /dev/MAINAF2
-    chown system camera /dev/MAINAF2
+    chmod 0660 /dev/MAIN2AF
+    chown system camera /dev/MAIN2AF
 
     chmod 0660 /dev/SUBAF
     chown system camera /dev/SUBAF
@@ -52,9 +56,6 @@ chown system system /sys/class/thermal/thermal_message/sconfig
     chmod 0660 /dev/BU64745GWZAF
     chown system camera /dev/BU64745GWZAF
 
-    chmod 0777 /sys/class/drv8846/ti-drv8846/debug
-    chown system system /sys/class/drv8846/ti-drv8846/debug
-
 #SMB
     chown system system /proc/smb/ScreenComm
     chmod 0660 /proc/smb/ScreenComm
@@ -62,33 +63,6 @@ chown system system /sys/class/thermal/thermal_message/sconfig
     chmod 0660 /dev/spm
     chown system system /dev/spm
 
-#NFC
-    chmod 0660 /dev/nq-nci
-    chown nfc nfc /dev/nq-nci
-    chmod 0660 /dev/p73
-    chown nfc nfc /dev/p73
-
-#TOUCH
-    chown system system /proc/tp_selftest
-    chmod 0664 /proc/tp_selftest
-
-#CAMERA
-on init
-    chown system camera /dev/ti-drv8846
-    chown system camera /dev/akm09970
-    chmod 0660 /dev/ti-drv8846
-    chmod 0660 /dev/akm09970
-
-#torch_light
-chown system system /sys/devices/platform/flashlights_mt6360/leds/torch-light0/brightness
-chown system system /sys/devices/platform/flashlights_mt6360/leds/torch-light1/brightness
-chown system system /sys/class/leds/torch-light0/brightness
-chown system system /sys/class/leds/torch-light1/brightness
-
-service vendor.motor /vendor/bin/hw/vendor.xiaomi.hardware.motor@1.0-service
-    class hal
-    user system
-    group system
 
 on init
     # Refer to http://source.android.com/devices/tech/storage/index.html
@@ -100,10 +74,18 @@ on init
     #
     # export SECONDARY_STORAGE /storage/sdcard1
 
+#torch_light
+chown system system /sys/devices/platform/flashlights_mt6360/leds/torch-light0/brightness
+chown system system /sys/devices/platform/flashlights_mt6360/leds/torch-light1/brightness
+chown system system /sys/class/leds/torch-light0/brightness
+chown system system /sys/class/leds/torch-light1/brightness
+
+#for cit
+chown system system /proc/tp_selftest
+
 service fuse_usbotg /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbotg /storage/usbotg
     class late_start
     disabled
-
 
 service panel-info-sh /system/vendor/bin/sh /vendor/etc/init.panel_info.sh
     class core

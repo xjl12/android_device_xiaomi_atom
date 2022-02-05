@@ -1,0 +1,12 @@
+[
+  {
+    "repository": "Mediatek-OSS/device_mediatek_common",
+    "target_path": "device/mediatek/common",
+    "branch": "twelve"
+  },
+	{
+    "repository": "android_device_mediatek_sepolicy",
+    "target_path": "device/mediatek/sepolicy",
+    "branch": "dot11"
+  }
+]

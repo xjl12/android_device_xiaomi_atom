@@ -1,8 +1,0 @@
-[
-  {
-    "repository": "device_mediatek_common",
-    "target_path": "device/mediatek/common",
-    "branch": "eleven",
-    "remote": "pixel"
-  },
-]
