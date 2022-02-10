@@ -8,7 +8,6 @@
     <bool name="config_supportsScreenOffInDisplayFingerprint">true</bool>
     <bool name="config_haveHigherAspectRatioScreen">true</bool>
     <integer name="config_navBarInteractionMode">2</integer>
-    <string name="config_recentsComponentName">app.lawnchair/com.android.quickstep.RecentsActivity</string>
     <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
     
     <!--

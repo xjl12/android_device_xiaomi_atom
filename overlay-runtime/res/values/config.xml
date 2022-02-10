@@ -267,8 +267,5 @@
     <integer name="config_lightSensorWarmupTime">0</integer>
     <integer name="config_bluetooth_tx_cur_ma">0</integer>
     <integer name="config_shutdownBatteryTemperature">599</integer>
-
-
-    <string name="config_recentsComponentName">app.lawnchair/com.android.quickstep.RecentsActivity</string>
     <string name="config_ims_package">com.mediatek.ims</string>
 </resources>

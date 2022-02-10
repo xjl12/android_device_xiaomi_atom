@@ -34,6 +34,7 @@ PRODUCT_SHIPPING_API_LEVEL := 29
 
 # VNDK
 PRODUCT_TARGET_VNDK_VERSION := 30
+PRODUCT_EXTRA_VNDK_VERSIONS := 30
 
 # Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
@@ -125,7 +126,6 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-    lineage.biometrics.fingerprint.inscreen@1.0-service.kona \
     vendor.goodix.hardware.biometrics.fingerprint@2.1 \
     vendor.xiaomi.hardware.fingerprintextension@1.0  \
     vendor.xiaomi.hardware.touchfeature@1.0 \
@@ -170,11 +170,7 @@ PRODUCT_PACKAGES += \
 
 # Fstab
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/fstab.mt6873:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6873  \
-    $(LOCAL_PATH)/rootdir/etc/fstab.emmc:$(TARGET_COPY_OUT_RAMDISK)/fstab.emmc
-
-# Parts
-PRODUCT_PACKAGES += XiaomiParts
+    $(LOCAL_PATH)/rootdir/etc/fstab.mt6873:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6873
 
 # HIDL
 PRODUCT_PACKAGES += \
