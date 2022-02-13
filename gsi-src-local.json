@@ -1,14 +1,14 @@
 {
     "images":[
       {
-         "name":"Android 12本地体验包 ",
+         "name":"Android 12本地包 ",
          "os_version":"12",
          "cpu_abi": "arm64-v8a",
          "details":"安装/sdcard/dsu.zip，请提前准备好文件",
          "uri":"file:///storage/emulated/0/dsu.zip"
       },
       {
-         "name":"Android 11本地体验包 ",
+         "name":"Android 11本地包 ",
          "os_version":"11",
          "cpu_abi": "arm64-v8a",
          "details":"安装/sdcard/dsu.zip，请提前准备好文件",
