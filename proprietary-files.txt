@@ -12,7 +12,7 @@ vendor/lib/libbluetooth_mtk_pure.so
 vendor/lib/libbluetooth_mtk.so
 
 bin/vtservice
-etc/init/init.vtservice.rc
+#etc/init/init.vtservice.rc
 lib/libcomutils.so
 lib/libimsma.so
 lib/libimsma_adapt.so
