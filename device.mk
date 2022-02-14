@@ -65,7 +65,10 @@ PRODUCT_PACKAGES += \
     libnbaio_mono \
     libaudiofoundation \
     libaudiofoundation.vendor \
-    libtinycompress.vendor
+    libtinycompress.vendor \
+    tinymix \
+    setup_MTK_In-Call_volume_adjust.sh \
+    init.mtkincalladj.rc 
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_policy_configuration.xml \

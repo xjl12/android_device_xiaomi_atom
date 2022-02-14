@@ -1,0 +1,9 @@
+on boot
+    start incalladj
+
+# Start in-call volume adjusting for headset
+service incalladj /system/bin/setup_MTK_In-Call_volume_adjust.sh
+	class main
+	user root
+	seclabel u:r:su:s0
+	oneshot

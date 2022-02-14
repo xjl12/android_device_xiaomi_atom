@@ -1,0 +1,16 @@
+# Ignore prebuilt files, generate them from the stock ROM when use them
+prebuilt/bootimg
+prebuilt/EngineerMode/EngineerMode.apk
+prebuilt/EngineerMode/jni/arm
+prebuilt/EngineerMode/jni/arm64
+prebuilt/IFAAService/IFAAService.apk
+prebuilt/images
+prebuilt/ImsService/ImsService.apk
+prebuilt/mediatek-common/mediatek-common.jar
+prebuilt/mediatek-ims-base/mediatek-ims-base.jar
+prebuilt/mediatek-ims-common/mediatek-ims-common.jar
+prebuilt/mediatek-telecom-common/mediatek-telecom-common.jar
+prebuilt/mediatek-telephony-base/mediatek-telephony-base.jar
+prebuilt/mediatek-framework/mediatek-framework.jar
+prebuilt/sink/libsink.so
+prebuilt/SoterService/SoterService.apk
