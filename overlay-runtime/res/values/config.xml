@@ -268,4 +268,18 @@
     <integer name="config_bluetooth_tx_cur_ma">0</integer>
     <integer name="config_shutdownBatteryTemperature">599</integer>
     <string name="config_ims_package">com.mediatek.ims</string>
+
+        <!-- The properties of a UDFPS sensor in pixels, in the order listed below: -->
+    <integer-array name="config_udfps_sensor_props" translatable="false" >
+      <!--
+        <item>sensorLocationX</item>
+        <item>sensorLocationY</item>
+        <item>sensorRadius</item>
+      -->
+        <item>445</item>
+        <item>2025</item>
+        <item>94</item>
+    </integer-array>
+     <!-- How long it takes for the HW to start illuminating after the illumination is requested. -->
+    <integer name="config_udfps_illumination_transition_ms">0</integer>
 </resources>
