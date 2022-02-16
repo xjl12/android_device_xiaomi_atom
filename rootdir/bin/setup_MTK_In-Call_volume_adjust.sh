@@ -7,6 +7,9 @@ sleep 10
 chcurrent=$(/system/bin/tinymix "ADDA_DL_GAIN" --v)
 # used gain = chcurrent + our offset < max value by tinymix "ADDA_DL_GAIN"
 chused=65535
+# 817 is catched in Redmi 10X 5G, It maybe not suitable for every device
+speaker_max=817
+newchvol_speaker=$speaker_max
 # choose your min variant FIXME: maybe need rewrite script for using our min variant
 #chmin=99
 # start value need less than $callmin
@@ -49,18 +52,53 @@ do
       # check choosen volume level FIXME: write HEX to DEX in one line
       callcurrent=$(/system/bin/service call audio 16 i32 0 | /system/bin/awk -F ' ' '{print $3}' | sed 's/0*//')
       callcurrent=$(echo "$((16#$callcurrent))")
+      voice_channel=$(/system/bin/tinymix "ADDA_DL_CH1 PCM_2_CAP_CH1" --v)
+      if [ $voice_channel == "Off" ]
+      then
+        speaker_cur=$(/system/bin/tinymix "Digital PCM Volume" --v)
+        if [ $speaker_cur != $newchvol_speaker ]
+        then
+          /system/bin/tinymix "Digital PCM Volume" $newchvol_speaker
+        fi
+      fi
       if [ "$callcurrentold" != "$callcurrent" ]
 	    then
           # calculate and write the new channel volume via parabolic function & rewrite max Db for small speaker
           newchvol=$(/system/bin/expr $callcurrent \* $callcurrent \* $interval)
-          /system/bin/tinymix "ADDA_DL_GAIN" $newchvol
-	  /system/bin/tinymix "Handset_PGA_GAIN" 8Db
-          /system/bin/log -t MTKInCallDirtyFix "Hardware In-Call Volume: $newchvol"
+          # log_val = ln( e - 1 + $callcurrent / 5 )
+          case $callcurrent in 
+          1 )
+            log_val=651
+            ;;
+          2 )
+            log_val=751
+            ;;
+          3 )
+            log_val=841
+            ;;
+          4 )
+            log_val=924
+            ;;
+          * )
+            log_val=1000
+            ;;
+          esac
+          newchvol_speaker=$(/system/bin/expr $log_val \* $speaker_max / 1000)
+          if [ $voice_channel == "On" ]
+          then
+            /system/bin/tinymix "ADDA_DL_GAIN" $newchvol
+            /system/bin/log -t MTKInCallDirtyFix "Headset!"
+          else
+            /system/bin/tinymix "Digital PCM Volume" $newchvol_speaker
+            /system/bin/log -t MTKInCallDirtyFix "Speaker!"
+          fi
+	        /system/bin/tinymix "Handset_PGA_GAIN" 8Db
+          /system/bin/log -t MTKInCallDirtyFix "Hardware In-Call Volume: $newchvol and $newchvol_speaker"
 
-	  callcurrentold=$callcurrent
+	        callcurrentold=$callcurrent
       fi
-	  callstatus=$(/system/bin/tinymix "Speech_SCP_CALL_STATE" --v)
-	  done
+	    callstatus=$(/system/bin/tinymix "Speech_SCP_CALL_STATE" --v)
+	done
      #restore $callcurrentold and chcurrent
        /system/bin/tinymix "ADDA_DL_GAIN" $chcurrent
        callcurrentold=0
