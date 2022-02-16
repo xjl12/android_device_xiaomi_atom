@@ -39,7 +39,6 @@ PRODUCT_EXTRA_VNDK_VERSIONS := 30
 # Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_BUILD_SUPER_PARTITION := false
-
     
 # Audio
 PRODUCT_PACKAGES += \
@@ -100,12 +99,14 @@ PRODUCT_PACKAGES += \
 
 # Sensors
 PRODUCT_PACKAGES += \
-    libsensorndkbridge
+    libsensorndkbridge \
+    android.frameworks.sensorservice@1.0
 
 # Thermal
 PRODUCT_PACKAGES += \
     android.hardware.thermal@1.0-impl \
-    android.hardware.thermal@2.0-impl
+    android.hardware.thermal@2.0-impl \
+    android.hardware.thermal@1.0.vendor
 
 # TinyXML
 PRODUCT_PACKAGES += \

@@ -1,5 +1,6 @@
 #!/bin/sh
 ### Begonia In-call volume fix by TTTT555 ###
+### Modified by xjl12 : Support handfree volume change ###
 while [ "$(getprop sys.boot_completed | tr -d '\r')" != "1" ]; do sleep 1; done
 sleep 10
 
