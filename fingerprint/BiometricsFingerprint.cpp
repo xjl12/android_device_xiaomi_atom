@@ -25,16 +25,12 @@
 #define FINGERPRINT_ERROR_VENDOR 8
 
 #define COMMAND_NIT 10
-#define PARAM_NIT_UDFPS 3
+#define PARAM_NIT_UDFPS 1
 #define PARAM_NIT_NONE 0
 
 #define DISPPARAM_PATH "/sys/class/drm/card0-DSI-1/disp_param"
-#define DISPPARAM_HBM_UDFPS_ON "0x1d007ff"
-#define DISPPARAM_HBM_UDFPS_OFF "0x20f0000"
-
-#define UDFPS_STATUS_PATH "/sys/class/touch/tp_dev/fod_status"
-#define UDFPS_STATUS_ON 1
-#define UDFPS_STATUS_OFF 0
+#​define​ ​DISPPARAM_HBM_UDFPS_ON​ ​"​0x20000​" 
+#​define​ ​DISPPARAM_HBM_UDFPS_OFF​ ​"​0xE0000​"
 
 namespace android {
 namespace hardware {
@@ -100,14 +96,12 @@ Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
 
 Return<void> BiometricsFingerprint::onFingerDown(uint32_t, uint32_t, float, float) {
     set(DISPPARAM_PATH, DISPPARAM_HBM_UDFPS_ON);
-    set(UDFPS_STATUS_PATH, UDFPS_STATUS_ON);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_UDFPS);
     return Void();
 }
 
 Return<void> BiometricsFingerprint::onFingerUp() {
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
-    set(UDFPS_STATUS_PATH, UDFPS_STATUS_OFF);
     set(DISPPARAM_PATH, DISPPARAM_HBM_UDFPS_OFF);
     return Void();
 }
