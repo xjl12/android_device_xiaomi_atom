@@ -49,9 +49,9 @@ BOARD_KERNEL_TAGS_OFFSET := 0x0bc08000
 BOARD_KERNEL_OFFSET := 0x00008000
 BOARD_KERNEL_IMAGE_NAME := Image.gz
 TARGET_KERNEL_ARCH := arm64
-#TARGET_KERNEL_HEADERS := kernel/xiaomi/atom
-#TARGET_KERNEL_SOURCE := kernel/xiaomi/mt6873
-#TARGET_KERNEL_CONFIG := atom_user_defconfig
+TARGET_KERNEL_HEADERS := kernel/xiaomi/mt6873
+TARGET_KERNEL_SOURCE := kernel/xiaomi/mt6873
+TARGET_KERNEL_CONFIG := atom_user_defconfig
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/bootimg/kernel
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/bootimg/dtb
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/bootimg/dtbo.img
@@ -117,7 +117,7 @@ BOARD_MAIN_PARTITION_LIST := system product vendor
 BOARD_SUPER_PARTITION_ERROR_LIMIT := 9124708352
 
 # FOD
-TARGET_SURFACEFLINGER_FOD_LIB := //$(DEVICE_PATH):libfod_extension.atom
+TARGET_SURFACEFLINGER_UDFPS_LIB := //$(DEVICE_PATH):libudfps_extension.xiaomi_atom
 
 # HIDL
 DEVICE_MATRIX_FILE += $(DEVICE_PATH)/compatibility_matrix.xml

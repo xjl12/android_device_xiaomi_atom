@@ -39,6 +39,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     -->
     <integer name="config_udfps_hbm_type">0</integer>
 
+    <!-- Udfps vendor code -->
+    <integer name="config_udfps_vendor_code">22</integer>
+
     <!-- The radius of the enrollment progress bar, in dp -->
-    <integer name="config_udfpsEnrollProgressBar" translatable="false">68</integer>
+    <integer name="config_udfpsEnrollProgressBar" translatable="false">100</integer>
 </resources>

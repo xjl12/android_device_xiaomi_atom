@@ -1,0 +1,4 @@
+service fps_hal /system/bin/hw/android.hardware.biometrics.fingerprint@2.3-service.xiaomi_atom
+    class late_start
+    user system
+    group system input uhid wakelock

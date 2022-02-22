@@ -114,7 +114,7 @@ PRODUCT_PACKAGES += \
 
 # UDFPS
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.3-service
+    android.hardware.biometrics.fingerprint@2.3-service.xiaomi_atom
 
 # Vibrator
 PRODUCT_PACKAGES += \
