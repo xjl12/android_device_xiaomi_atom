@@ -63,6 +63,7 @@ BiometricsFingerprint::BiometricsFingerprint() {
     touchFeatureService = ITouchFeature::getService();
     xiaomiFingerprintService = IXiaomiFingerprint::getService();
     xiaomiDisplayFeatureService = IDisplayFeature::getService();
+    xiaomiDisplayFeatureService->setFeature(0, 20, 1, 255);
 }
 
 Return<uint64_t> BiometricsFingerprint::setNotify(const sp<IBiometricsFingerprintClientCallback>& clientCallback) {
@@ -144,6 +145,7 @@ Return<void> BiometricsFingerprint::onFingerUp() {
 */
 Return<void> BiometricsFingerprint::onShowUdfpsOverlay() {
     LOG(ERROR) << "onShowUdfpsOverlay()";
+    xiaomiDisplayFeatureService->setFeature(0, 20, 0, 255);
     xiaomiDisplayFeatureService->setFeature(0, 17, 1, 1);
     touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 2);
     return Void();
@@ -153,6 +155,7 @@ Return<void> BiometricsFingerprint::onHideUdfpsOverlay() {
     LOG(ERROR) << "onHideUdfpsOverlay()";
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
     set(DISPPARAM_PATH, DISPPARAM_HBM_UDFPS_OFF);
+    xiaomiDisplayFeatureService->setFeature(0, 20, 1, 255);
     touchFeatureService->resetTouchMode(TOUCH_FOD_ENABLE);
     xiaomiDisplayFeatureService->setFeature(0, 17, 0, 1);
     return Void();
