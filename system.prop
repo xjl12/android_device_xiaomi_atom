@@ -65,3 +65,7 @@ ro.vendor.audio.soundtrigger.lowpower=true
 vendor.hbm.enable=true
 persist.vendor.dc_backlight.enable=false
 
+# Octavi custom stuff
+ro.octavi.maintainer=乐者必成
+ro.octavi.hw.cam=48MP:16MP
+ro.octavi.hw.cpu=天玑 820 (7nm)
