@@ -5,9 +5,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/dot_atom.mk
+    $(LOCAL_DIR)/octavi_atom.mk
 
 COMMON_LUNCH_CHOICES := \
-    dot_atom-user \
-    dot_atom-userdebug \
-    dot_atom-eng
+    octavi_atom-user \
+    octavi_atom-userdebug \
+    octavi_atom-eng

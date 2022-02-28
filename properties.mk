@@ -353,7 +353,6 @@ PRODUCT_PROPERTY_OVERRIDES +=  \
     ro.carrier=unknown \
     ro.config.media_vol_default=10 \
     ro.config.vc_call_vol_default=4 \
-    ro.control_privapp_permissions=enforce \
     ro.crypto.volume.filenames_mode=aes-256-cts \
     ro.frp.pst=/dev/block/by-name/frp \
     ro.hardware.egl=meow \
