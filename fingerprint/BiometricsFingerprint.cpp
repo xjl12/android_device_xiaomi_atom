@@ -23,6 +23,7 @@
 #include <fstream>
 #include <cmath>
 #include <thread>
+#include <sys/stat.h>
 
 #define FINGERPRINT_ERROR_VENDOR 8
 
@@ -33,8 +34,12 @@
 #define TOUCH_FOD_ENABLE 10
 
 #define DISPPARAM_PATH "/sys/class/drm/card0-DSI-1/disp_param"
+#define BRIGHTNESS_PATH "/sys/class/leds/lcd-backlight/brightness"
 #define DISPPARAM_HBM_UDFPS_ON  "0x20000" 
 #define DISPPARAM_HBM_UDFPS_OFF "0xE0000"
+
+static uint32_t brightness=50;
+static bool isEnrol = false;
 
 namespace android {
 namespace hardware {
@@ -50,11 +55,38 @@ static void set(const std::string& path, const T& value) {
     LOG(ERROR) << "Set " << path << value;
 }
 
-static void threadboost(sp<IXiaomiFingerprint> txiaomiFingerprintService){
-    LOG(ERROR) << "Thread start";
-    usleep(200000);
-    set(DISPPARAM_PATH, DISPPARAM_HBM_UDFPS_ON);
-    txiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_UDFPS);
+static void thread_brightness_lock(){
+    LOG(ERROR) << "thread_brightness_lock start";
+    if (isEnrol)
+    {
+        usleep(270000);
+        set(DISPPARAM_PATH, DISPPARAM_HBM_UDFPS_ON);
+    }
+    else
+    {
+        int value = brightness * 8 + 8;
+        set(BRIGHTNESS_PATH, value);
+        chmod(BRIGHTNESS_PATH, S_IRUSR | S_IRGRP | S_IROTH);
+        usleep(3000000);
+        chmod(BRIGHTNESS_PATH, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+    }
+}
+
+static void getBrightness(){
+    LOG(ERROR) << "getBrightness start";
+    char *output = NULL;
+    size_t size;
+    FILE *cmd = popen("settings get system screen_brightness","r");
+    if(cmd==NULL)return;
+    usleep(600000);
+    if(getline(&output,&size,cmd) != -1){
+        LOG(ERROR) << "ouput is: " << output << "size:" << size;
+        if(*output>='0'&&*output<='9')
+            brightness=atoi(output);
+    }
+    pclose(cmd);
+    if(output != NULL) free(output);
+    LOG(ERROR) << "Brightness: " << brightness;
 }
 
 BiometricsFingerprint::BiometricsFingerprint() {
@@ -77,6 +109,9 @@ Return<uint64_t> BiometricsFingerprint::preEnroll() {
 
 Return<RequestStatus> BiometricsFingerprint::enroll(const hidl_array<uint8_t, 69>& hat, uint32_t gid, uint32_t timeoutSec) {
     LOG(ERROR) << "enroll()";
+    xiaomiDisplayFeatureService->setFeature(0, 20, 0, 255);
+    isEnrol = true;
+    std::thread(thread_brightness_lock).detach();
     return biometrics_2_1_service->enroll(hat, gid, timeoutSec);
 }
 
@@ -148,14 +183,19 @@ Return<void> BiometricsFingerprint::onShowUdfpsOverlay() {
     xiaomiDisplayFeatureService->setFeature(0, 20, 0, 255);
     xiaomiDisplayFeatureService->setFeature(0, 17, 1, 1);
     touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 2);
+    std::thread(getBrightness).detach();
     return Void();
 }
 
 Return<void> BiometricsFingerprint::onHideUdfpsOverlay() {
     LOG(ERROR) << "onHideUdfpsOverlay()";
+    if(isEnrol){
+        isEnrol = false;
+        set(DISPPARAM_PATH, DISPPARAM_HBM_UDFPS_OFF);
+        xiaomiDisplayFeatureService->setFeature(0, 20, 1, 255);
+    }
+    std::thread(thread_brightness_lock).detach();
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
-    set(DISPPARAM_PATH, DISPPARAM_HBM_UDFPS_OFF);
-    xiaomiDisplayFeatureService->setFeature(0, 20, 1, 255);
     touchFeatureService->resetTouchMode(TOUCH_FOD_ENABLE);
     xiaomiDisplayFeatureService->setFeature(0, 17, 0, 1);
     return Void();

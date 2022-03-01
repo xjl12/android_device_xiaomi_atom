@@ -1,0 +1,47 @@
+From 11683e4fc4877cf39186a39d7d97e67aa9418d4f Mon Sep 17 00:00:00 2001
+From: xjl12 <1062256455@qq.com>
+Date: Tue, 1 Mar 2022 23:57:00 +0800
+Subject: [PATCH] xjl12-fingerprint
+
+---
+ .../systemui/biometrics/UdfpsController.java    | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
+index f7233fdfd379..d216177d92ad 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
+@@ -668,7 +668,8 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
+         return WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                 | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+-                | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
++                | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
++                | WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+     }
+ 
+     @Nullable
+@@ -781,6 +782,20 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
+         }
+         // avoid announcing window title
+         mCoreLayoutParams.accessibilityTitle = " ";
++        int brightness = Settings.System.getInt(mContext.getContentResolver(),
++                            Settings.System.SCREEN_BRIGHTNESS, 100);
++        double dim;
++        if (brightness >= 62) {
++            dim = 1.0 - Math.pow(brightness / 255.0 * 430.0 / 600.0, 0.485);
++        } else if (brightness < 62 && brightness >=31) {
++            dim = 1.0 - Math.pow(brightness / 255.0 * 430.0 / 600.0, 0.530);
++        } else if (brightness > 7) {
++            dim = 1.0 - Math.pow(brightness / 209.0, 0.525);
++        }else{
++            dim = 1.0 - Math.pow(brightness / 209.0, 0.475);
++        }
++        mCoreLayoutParams.dimAmount = (float) dim;
++        mCoreLayoutParams.screenBrightness = 1.0f;
+         return mCoreLayoutParams;
+     }
+ 
+-- 
+2.32.0
+
