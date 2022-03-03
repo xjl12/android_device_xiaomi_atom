@@ -156,14 +156,13 @@ Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
 Return<void> BiometricsFingerprint::onFingerDown(uint32_t a, uint32_t b, float c, float d) {
     LOG(ERROR) << "onFingerDown " << a << ", "  << b << ", " << c << ", " << d;
     acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
-    std::thread(threadboost,xiaomiFingerprintService).detach();
+    xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_UDFPS);
     return Void();
 }
 
 Return<void> BiometricsFingerprint::onFingerUp() {
     LOG(ERROR) << "onFingerUp()";
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
-    set(DISPPARAM_PATH, DISPPARAM_HBM_UDFPS_OFF);
     release_wake_lock(LOG_TAG);
     return Void();
 }

@@ -320,3 +320,6 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
 $(call inherit-product, vendor/xiaomi/atom/atom-vendor.mk)
+
+$(call inherit-product-if-exists, vendor/lawnchair/lawnchair.mk)
+$(call inherit-product-if-exists, vendor/gms/products/gms.mk)
