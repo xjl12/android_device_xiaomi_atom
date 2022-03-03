@@ -179,7 +179,6 @@ Return<void> BiometricsFingerprint::onFingerUp() {
 */
 Return<void> BiometricsFingerprint::onShowUdfpsOverlay() {
     LOG(ERROR) << "onShowUdfpsOverlay()";
-    xiaomiDisplayFeatureService->setFeature(0, 20, 0, 255);
     xiaomiDisplayFeatureService->setFeature(0, 17, 1, 1);
     touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 2);
     std::thread(getBrightness).detach();
