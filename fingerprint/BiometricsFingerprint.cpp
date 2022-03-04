@@ -39,7 +39,8 @@
 #define DISPPARAM_HBM_UDFPS_OFF "0xE0000"
 
 static uint32_t brightness=50;
-static bool isEnrol = false;
+static bool isEnrol = false,threadRunning=false,showing=false,isAutoBright=true;
+static char *command_buf = new char[100];
 
 namespace android {
 namespace hardware {
@@ -56,7 +57,8 @@ static void set(const std::string& path, const T& value) {
 }
 
 static void thread_brightness_lock(){
-    LOG(ERROR) << "thread_brightness_lock start";
+    if(threadRunning) return;
+    threadRunning = true;
     if (isEnrol)
     {
         usleep(270000);
@@ -67,26 +69,14 @@ static void thread_brightness_lock(){
         int value = brightness * 8 + 8;
         set(BRIGHTNESS_PATH, value);
         chmod(BRIGHTNESS_PATH, S_IRUSR | S_IRGRP | S_IROTH);
-        usleep(3000000);
+        sprintf(command_buf,"settings put system screen_brightness %d",brightness);
+        system(command_buf);
+        LOG(ERROR) << command_buf;
+        for(value = 0;value < 550 && showing == false;value++) usleep(5000);
+        if(showing == false && isAutoBright) system("settings put system screen_brightness_mode 1");
         chmod(BRIGHTNESS_PATH, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
     }
-}
-
-static void getBrightness(){
-    LOG(ERROR) << "getBrightness start";
-    char *output = NULL;
-    size_t size;
-    FILE *cmd = popen("settings get system screen_brightness","r");
-    if(cmd==NULL)return;
-    usleep(600000);
-    if(getline(&output,&size,cmd) != -1){
-        LOG(ERROR) << "ouput is: " << output << "size:" << size;
-        if(*output>='0'&&*output<='9')
-            brightness=atoi(output);
-    }
-    pclose(cmd);
-    if(output != NULL) free(output);
-    LOG(ERROR) << "Brightness: " << brightness;
+    threadRunning = false;
 }
 
 BiometricsFingerprint::BiometricsFingerprint() {
@@ -177,16 +167,26 @@ Return<void> BiometricsFingerprint::onFingerUp() {
  * 
  * @author xjl12
 */
-Return<void> BiometricsFingerprint::onShowUdfpsOverlay() {
-    LOG(ERROR) << "onShowUdfpsOverlay()";
+Return<void> BiometricsFingerprint::onShowUdfpsOverlay(uint32_t curbrightness) {
+    if(curbrightness < 100000){
+        brightness = curbrightness;
+        isAutoBright = true;
+    }
+    else{
+        brightness = curbrightness - 100000;
+        if(threadRunning == false || isAutoBright == false)
+            isAutoBright = false;
+    }
+    showing = true;
+    LOG(ERROR) << "onShowUdfpsOverlay()" << brightness << (isAutoBright ? " AutoBright:True":" AutoBright:False");
     xiaomiDisplayFeatureService->setFeature(0, 17, 1, 1);
     touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 2);
-    std::thread(getBrightness).detach();
     return Void();
 }
 
 Return<void> BiometricsFingerprint::onHideUdfpsOverlay() {
     LOG(ERROR) << "onHideUdfpsOverlay()";
+    showing = false;
     if(isEnrol){
         isEnrol = false;
         set(DISPPARAM_PATH, DISPPARAM_HBM_UDFPS_OFF);

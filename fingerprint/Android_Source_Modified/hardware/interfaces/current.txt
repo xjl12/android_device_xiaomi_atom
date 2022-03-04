@@ -1,0 +1,3 @@
+# Note: Adding following lines to the end of the original file.
+# Modified
+49ad6f6aed77e147b384a195a4df19de0b073e932b3ee0729104eb229344e301 android.hardware.biometrics.fingerprint@2.3::IBiometricsFingerprint

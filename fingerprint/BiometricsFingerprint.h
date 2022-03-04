@@ -64,7 +64,7 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
     Return<void> onFingerUp() override;
 
     // @xjl12 patched
-    Return<void> onShowUdfpsOverlay() override;
+    Return<void> onShowUdfpsOverlay(uint32_t curbrightness) override;
     Return<void> onHideUdfpsOverlay() override;
 
 private:
