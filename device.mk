@@ -66,8 +66,8 @@ PRODUCT_PACKAGES += \
     libaudiofoundation.vendor \
     libtinycompress.vendor \
     tinymix \
-    setup_MTK_In-Call_volume_adjust.sh \
-    init.mtkincalladj.rc 
+    setup_MTK_In-Call_volume_adjust.sh
+    #init.mtkincalladj.rc 
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_policy_configuration.xml \
@@ -123,7 +123,7 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    Snap \
+    Camera2 \
     android.hardware.camera.provider@2.4.vendor \
     android.hardware.camera.provider@2.5.vendor \
     android.hardware.camera.provider@2.6.vendor \
