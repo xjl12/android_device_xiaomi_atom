@@ -85,7 +85,8 @@ BiometricsFingerprint::BiometricsFingerprint() {
     touchFeatureService = ITouchFeature::getService();
     xiaomiFingerprintService = IXiaomiFingerprint::getService();
     xiaomiDisplayFeatureService = IDisplayFeature::getService();
-    xiaomiDisplayFeatureService->setFeature(0, 20, 1, 255);
+    xiaomiDisplayFeatureService->setFeature(0, 20, 1, 255);  // DC Display Mode on
+    touchFeatureService->setTouchMode(14, 1); // Double Tap to wake up
 }
 
 Return<uint64_t> BiometricsFingerprint::setNotify(const sp<IBiometricsFingerprintClientCallback>& clientCallback) {
@@ -180,7 +181,7 @@ Return<void> BiometricsFingerprint::onShowUdfpsOverlay(uint32_t curbrightness) {
     showing = true;
     LOG(ERROR) << "onShowUdfpsOverlay()" << brightness << (isAutoBright ? " AutoBright:True":" AutoBright:False");
     xiaomiDisplayFeatureService->setFeature(0, 17, 1, 1);
-    touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 2);
+    touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 1);
     return Void();
 }
 
@@ -194,7 +195,7 @@ Return<void> BiometricsFingerprint::onHideUdfpsOverlay() {
     }
     std::thread(thread_brightness_lock).detach();
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
-    touchFeatureService->resetTouchMode(TOUCH_FOD_ENABLE);
+    touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 0);
     xiaomiDisplayFeatureService->setFeature(0, 17, 0, 1);
     return Void();
 }
