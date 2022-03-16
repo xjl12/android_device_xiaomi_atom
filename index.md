@@ -1,12 +1,6 @@
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?8a3608795648935457c4799145ab9d75";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
+<head>
+<script src="https://hm.baidu.com/hm.js?8a3608795648935457c4799145ab9d75" async="async"></script>
+</head>
 
 # 专为 Redmi 10X 5G 打造的 Octavi OS 12
 
@@ -16,12 +10,32 @@ var _hmt = _hmt || [];
 致敬本项目的[上游项目](https://github.com/Project-Cezanne/android_device_xiaomi_cezanne)中各位前辈的工作
 
 ![赞助方式](https://xjl12.gitee.io/shou_kuang_ma_1.jpg)
+
+
 感谢以下网友的[**资助**](https://xjl12.gitee.io)😘
-| 支付宝 | 微信   |
-| :---:  | :---: |
-|   *静  |  C*. |
-|  **宇  |  A*l |
-|  **芳  |      |
+
+<table>
+<thead>
+<tr>
+<th align="center">支付宝</th>
+<th align="center">微信</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">*静</td>
+<td align="center">C*.</td>
+</tr>
+<tr>
+<td align="center">**宇</td>
+<td align="center">A*l</td>
+</tr>
+<tr>
+<td align="center">**芳</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
 
 ## 安装步骤
 1. 首先备份数据并通过小米官方[解锁设备](https://www.miui.com/unlock/)
