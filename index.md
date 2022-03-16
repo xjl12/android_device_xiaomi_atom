@@ -1,5 +1,6 @@
 <head>
-<script src="https://hm.baidu.com/hm.js?8a3608795648935457c4799145ab9d75" async="async"></script>
+    <script src="https://hm.baidu.com/hm.js?8a3608795648935457c4799145ab9d75" async="async"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xjl12/count@4/count" async="async"></script>
 </head>
 
 # 专为 Redmi 10X 5G 打造的 Octavi OS 12
