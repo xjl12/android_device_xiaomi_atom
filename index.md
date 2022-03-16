@@ -1,3 +1,13 @@
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8a3608795648935457c4799145ab9d75";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
 # 专为 Redmi 10X 5G 打造的 Octavi OS 12
 
 ***
@@ -7,8 +17,8 @@
 
 ![赞助方式](https://xjl12.gitee.io/shou_kuang_ma_1.jpg)
 感谢以下网友的[**资助**](https://xjl12.gitee.io)😘
-| 支付宝 | 微信  |
-| ---   | ---   |
+| 支付宝 | 微信   |
+| :---:  | :---: |
 |   *静  |  C*. |
 |  **宇  |  A*l |
 |  **芳  |      |
@@ -21,7 +31,7 @@
     > [OrangeFox](https://github.com/ymdzq/OFRP-device_xiaomi_bomb/releases)或其他可用的Android 11 TWRP Recovery 镜像  
     > vbmeta 镜像    
     > [百度网盘](https://pan.baidu.com/s/1z4lBBNVvYPMRvRpqe-eJVg)（密码：atom）            
-    > [阿里云盘](https://www.aliyundrive.com/s/Kx8Cu1LLoCh)（密码：v85l，文件需要转换后才能用）
+    > [阿里云盘](https://service-5pbou4lr-1257232761.sh.apigw.tencentcs.com/release/Ali)（实验性）
 3. 重启至Recovery模式，若Data分区已加密或不清楚状况则格式化Data分区，若未加密只需清除/data而无需清除/data/media
 4. 刷入MIUI开发版22.1.19（推荐使用同版本的官改）
 5. 刷入OctaviOS 12刷机包 
