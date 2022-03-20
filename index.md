@@ -42,6 +42,9 @@
 </tbody>
 </table>
 
+## QQ频道（中国版电报）
+![RSS](https://xjl12.gitee.io/android_device_xiaomi_atom/rss.jpg)
+
 ## 安装步骤
 1. 首先备份数据并通过小米官方[解锁设备](https://www.miui.com/unlock/)
 2. 下载以下文件
@@ -72,6 +75,7 @@
    fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img
    fastboot reboot
    ```
+
 ## Redmi 10X Pro (bomb)
 理论上可以安装到Pro机型，但未经实际测试，
 注意底包选择Pro的[MIUI-22.1.19](https://bigota.d.miui.com/22.1.19/miui_BOMB_22.1.19_2f7ea53a62_11.0.zip)或对应版本的官改
