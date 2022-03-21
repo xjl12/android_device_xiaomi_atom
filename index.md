@@ -10,7 +10,7 @@
 ## 感谢
 致敬本项目的[上游项目](https://github.com/Project-Cezanne/android_device_xiaomi_cezanne)中各位前辈的工作
 
-![赞助方式](https://xjl12.gitee.io/shou_kuang_ma_1.jpg)
+![赞助方式](skm.webp)
 
 
 感谢以下网友的[**资助**](https://xjl12.gitee.io)😘
@@ -33,7 +33,7 @@
 </tr>
 <tr>
 <td align="center">**芳</td>
-<td align="center"></td>
+<td align="center">*文</td>
 </tr>
 <tr>
 <td align="center">*鹏</td>
@@ -44,6 +44,9 @@
 
 ## QQ频道（中国版电报）
 ![RSS](https://xjl12.gitee.io/android_device_xiaomi_atom/rss.jpg)
+
+## 下载过程中帮忙填一下[问卷](https://www.wjx.cn/vm/r2FAdxW.aspx)支持下，谢谢！
+![WJX](wjx.webp)
 
 ## 安装步骤
 1. 首先备份数据并通过小米官方[解锁设备](https://www.miui.com/unlock/)
