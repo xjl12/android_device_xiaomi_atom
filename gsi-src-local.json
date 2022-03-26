@@ -1,11 +1,19 @@
 {
     "images":[
       {
-         "name":"Android 12本地包 ",
+         "name":"Miui 本地包 ",
          "os_version":"12",
          "cpu_abi": "arm64-v8a",
          "details":"安装/sdcard/dsu.zip，请提前准备好文件",
          "uri":"file:///storage/emulated/0/dsu.zip"
+      },
+      "images":[
+      {
+         "name":"Miui 在线包 ",
+         "os_version":"12",
+         "cpu_abi": "arm64-v8a",
+         "details":"将从网络下载安装包3GB，请注意流量消耗",
+         "uri":"https://service-5pbou4lr-1257232761.sh.apigw.tencentcs.com/release/Ali/dsu.zip"
       },
       {
          "name":"Android 11本地包 ",
