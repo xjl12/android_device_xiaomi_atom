@@ -37,13 +37,13 @@
 </tr>
 <tr>
 <td align="center">*鹏</td>
-<td align="center"></td>
+<td align="center">*届</td>
 </tr>
 </tbody>
 </table>
 
 ## QQ频道（中国版电报）
-![RSS](https://xjl12.gitee.io/android_device_xiaomi_atom/rss.jpg)
+搜索：Redmi 10X 5G 加入
 
 ## 下载过程中帮忙填一下[问卷](https://www.wjx.cn/vm/r2FAdxW.aspx)支持下，谢谢！
 ![WJX](/android_device_xiaomi_atom/wjx.webp)
