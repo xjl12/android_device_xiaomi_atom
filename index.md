@@ -60,7 +60,6 @@
     > [OrangeFox](https://github.com/ymdzq/OFRP-device_xiaomi_bomb/releases)或其他可用的Android 11 TWRP Recovery 镜像  
     > vbmeta 镜像    
     > [百度网盘](https://pan.baidu.com/s/1z4lBBNVvYPMRvRpqe-eJVg)（密码：atom）            
-    > [个人云盘](https://service-5pbou4lr-1257232761.sh.apigw.tencentcs.com/release/Ali)（实验性）
 3. 重启至Recovery模式，若Data分区已加密或不清楚状况则格式化Data分区，若未加密只需清除/data而无需清除/data/media
 4. 刷入MIUI开发版22.1.19（推荐使用同版本的官改）
 5. 刷入OctaviOS 12刷机包 
