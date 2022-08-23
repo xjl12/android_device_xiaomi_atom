@@ -24,15 +24,15 @@
 </thead>
 <tbody>
 <tr>
-<td align="center">*静</td>
+<td align="center">**杰</td>
 <td align="center">C*.</td>
 </tr>
 <tr>
-<td align="center">**宇</td>
+<td align="center">*静</td>
 <td align="center">A*l</td>
 </tr>
 <tr>
-<td align="center">**芳</td>
+<td align="center">**宇</td>
 <td align="center">*文</td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 <td align="center">*届</td>
 </tr>
 <tr>
-<td align="center"></td>
+<td align="center">**芳</td>
 <td align="center">A*B</td>
 </tr>
 </tbody>
