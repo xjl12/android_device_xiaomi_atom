@@ -49,9 +49,6 @@
 ## QQ频道（中国版电报）
 搜索：Redmi 10X 5G 加入
 
-## 下载过程中帮忙填一下[问卷](https://www.wjx.cn/vm/r2FAdxW.aspx)支持下，谢谢！
-![WJX](/android_device_xiaomi_atom/wjx.webp)
-
 ## 安装步骤
 1. 首先备份数据并通过小米官方[解锁设备](https://www.miui.com/unlock/)
 2. 下载以下文件
