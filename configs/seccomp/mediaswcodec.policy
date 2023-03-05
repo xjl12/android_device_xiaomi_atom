@@ -1,0 +1,2 @@
+#Mediatek used system call
+clock_nanosleep: 1

@@ -1,0 +1,22 @@
+#Mediatek used system call
+getpid: 1
+gettid: 1
+sendto: 1
+pselect6: 1
+sched_getparam: 1
+sched_getscheduler: 1
+mlock: 1
+munlock: 1
+recvfrom: 1
+sched_getaffinity: 1
+sched_setaffinity: 1
+sched_getaffinity: 1
+flock: 1
+fchownat: 1
+fchmodat: 1
+fsync: 1
+sysinfo: 1
+setsockopt: 1
+setrlimit: 1
+eventfd2: 1
+unlinkat: 1

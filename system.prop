@@ -1,5 +1,4 @@
 # audio
-ro.camera.sound.forced=0
 ro.audio.silent=0
 
 # Brand
@@ -14,6 +13,7 @@ ro.vendor.whitepoint_calibration_enable=false
 ro.vendor.histogram.enable=false
 sys.displayfeature_hidl=true
 vendor.displayfeature.entry.enable=true
+
 
 # Perf
 ro.mtk_perf_simple_start_win=1
@@ -63,9 +63,4 @@ ro.logd.size=2M
 ro.vendor.audio.soundtrigger=mtk
 ro.vendor.audio.soundtrigger.lowpower=true
 vendor.hbm.enable=true
-persist.vendor.dc_backlight.enable=false
-
-# Octavi custom stuff
-ro.octavi.maintainer=乐者必成
-ro.octavi.hw.cam=48MP:16MP
-ro.octavi.hw.cpu=天玑 820 (7nm)
+persist.vendor.dc_backlight.enable=true

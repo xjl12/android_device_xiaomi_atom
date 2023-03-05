@@ -1,44 +1,21 @@
 lib64/libaptXHD_encoder.so
 lib64/libaptX_encoder.so
 
-vendor/lib64/libbluetooth_audio_session_mediatek.so
-vendor/lib64/libbluetoothem_mtk.so
-vendor/lib64/libbluetooth_mtk_pure.so
-vendor/lib64/libbluetooth_mtk.so
-
-vendor/lib/libbluetooth_audio_session_mediatek.so
-vendor/lib/libbluetoothem_mtk.so
-vendor/lib/libbluetooth_mtk_pure.so
-vendor/lib/libbluetooth_mtk.so
-
-bin/vtservice
 #etc/init/init.vtservice.rc
-lib/libcomutils.so
-lib/libimsma.so
-lib/libimsma_adapt.so
-lib/libimsma_rtp.so
-lib/libimsma_socketwrapper.so
-lib/libmtk_vt_service.so
-lib/libmtk_vt_wrapper.so
-lib/libsignal.so
-lib/libsource.so
 lib/libsysenv_system.so
 lib/libvcodec_cap.so
 lib/libvcodec_capenc.so
-lib/libvt_avsync.so
 system_ext/lib/vendor.mediatek.hardware.videotelephony@1.0.so
-system_ext/lib/vendor.mediatek.hardware.mtkradioex@1.0.so
 
 lib64/libmtk_vt_wrapper.so
 lib64/libsysenv_system.so
 lib64/libvcodec_cap.so
 lib64/libvcodec_capenc.so
 system_ext/lib64/vendor.mediatek.hardware.videotelephony@1.0.so
-system_ext/lib64/vendor.mediatek.hardware.mtkradioex@1.0.so
 
 framework/mediatek-gwsdv2.jar
 framework/mediatek-ims-extension-plugin.jar
+framework/mediatek-ims-legacy.jar
 framework/mediatek-services.jar
 framework/mediatek-wfo-legacy.jar
-framework/mediatek-framework-net.jar
-framework/mediatek-ims-legacy.jar
+

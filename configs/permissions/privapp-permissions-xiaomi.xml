@@ -1,0 +1,10 @@
+<permissions>
+ <privapp-permissions package="org.lineageos.settings">
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+    </privapp-permissions>
+    
+     <privapp-permissions package="org.lineageos.snap">
+        <permission name="lineage.permission.PREVENT_POWER_KEY"/>
+        <permission name="android.permission.START_ACTIVITIES_FROM_BACKGROUND"/>
+    </privapp-permissions>
+</permissions>

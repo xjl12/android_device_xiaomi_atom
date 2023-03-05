@@ -1,0 +1,7 @@
+[
+  {
+    "repository": "Mediatek-OSS/device_mediatek_common",
+    "target_path": "device/mediatek/common",
+    "branch": "thirteen"
+  }
+]

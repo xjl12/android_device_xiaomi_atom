@@ -9,6 +9,9 @@
 
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+# Disable APEX compression
+# Keep this after including updatable_apex.mk
+PRODUCT_COMPRESSED_APEX := false
 
 # Inherit properties
 include $(LOCAL_PATH)/properties.mk
@@ -18,8 +21,11 @@ PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay
 
-# Top Overlay for vendor based on MIUI
+# AAPT
+PRODUCT_AAPT_CONFIG := normal
+PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
+# Top Overlay for vendor based on MIUI
 PRODUCT_PACKAGES += treble-overlay-xiaomi-redmi10x5g
 
 # Soong namespaces
@@ -33,8 +39,8 @@ TARGET_BOOT_ANIMATION_RES := 1080
 PRODUCT_SHIPPING_API_LEVEL := 29
 
 # VNDK
-PRODUCT_TARGET_VNDK_VERSION := 30
-PRODUCT_EXTRA_VNDK_VERSIONS := 30
+PRODUCT_TARGET_VNDK_VERSION := 31
+PRODUCT_EXTRA_VNDK_VERSIONS := 31
 
 # Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
@@ -46,7 +52,6 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.common@6.0-util \
     android.hardware.soundtrigger@2.2-impl \
     android.hardware.bluetooth.audio@2.0-impl \
-    audio.a2dp.default \
     audio.bluetooth.default \
     audio.r_submix.default \
     audio.usb.default \
@@ -65,8 +70,9 @@ PRODUCT_PACKAGES += \
     libaudiofoundation \
     libaudiofoundation.vendor \
     libtinycompress.vendor \
-    tinymix \
-    setup_MTK_In-Call_volume_adjust.sh
+    tinymix
+    #audio.a2dp.default
+    #setup_MTK_In-Call_volume_adjust.sh
     #init.mtkincalladj.rc 
 
 PRODUCT_COPY_FILES += \
@@ -91,6 +97,8 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
+    android.hardware.bluetooth@1.0.vendor \
+    android.hardware.bluetooth@1.1.vendor \
     btremoted \
     libldacBT_dec \
     libbt-vendor \
@@ -111,10 +119,6 @@ PRODUCT_PACKAGES += \
 # TinyXML
 PRODUCT_PACKAGES += \
     libtinyxml
-
-# UDFPS
-PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.3-service.xiaomi_atom
 
 # Vibrator
 PRODUCT_PACKAGES += \
@@ -146,9 +150,7 @@ PRODUCT_PACKAGES += \
     vendor.goodix.hardware.biometrics.fingerprint@2.1 \
     vendor.xiaomi.hardware.fingerprintextension@1.0  \
     vendor.xiaomi.hardware.touchfeature@1.0 \
-    vendor.xiaomi.hardware.displayfeature@1.0  \
-    IFAAService  \
-    SoterService
+    vendor.xiaomi.hardware.displayfeature@1.0
 
 
 # Display
@@ -165,6 +167,10 @@ PRODUCT_PACKAGES += \
 
 # DRM
 PRODUCT_PACKAGES += \
+    android.hardware.drm@1.0.vendor \
+    android.hardware.drm@1.1.vendor \
+    android.hardware.drm@1.2.vendor \
+    android.hardware.drm@1.3.vendor \
     android.hardware.drm@1.0-impl:64 \
     android.hardware.drm@1.0-service-lazy \
     android.hardware.drm@1.3-service.clearkey
@@ -198,9 +204,13 @@ PRODUCT_PACKAGES += \
     libhwbinder \
     libhwbinder.vendor    
 
+# Permissions
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/permissions/privapp-permissions-mediatek.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-mediatek.xml \
-    $(LOCAL_PATH)/permissions/privapp-permissions-xiaomi.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-xiaomi.xml \
+    $(LOCAL_PATH)/configs/permissions/privapp-permissions-mediatek.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-mediatek.xml \
+    $(LOCAL_PATH)/configs/permissions/privapp-permissions-xiaomi.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-xiaomi.xml \
+    $(LOCAL_PATH)/configs/seccomp/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
+    $(LOCAL_PATH)/configs/seccomp/mediaextractor.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy \
+    $(LOCAL_PATH)/configs/seccomp/mediaswcodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaswcodec.policy
 
 # IMS
 PRODUCT_PACKAGES += \
@@ -211,12 +221,12 @@ PRODUCT_PACKAGES += \
 	libsink \
 	libem_support_jni \
 	mediatek-common \
-        mediatek-framework \
-    	mediatek-ims-base \
-    	mediatek-ims-common \
-    	mediatek-telecom-common \
-    	mediatek-telephony-base \
-    	mediatek-telephony-common
+    mediatek-framework \
+    mediatek-ims-base \
+    mediatek-ims-common \
+    mediatek-telecom-common \
+    mediatek-telephony-base \
+    mediatek-telephony-common
 
 	
 PRODUCT_BOOT_JARS += \
@@ -250,6 +260,7 @@ PRODUCT_PACKAGES += \
 # UDFPS
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.3-service
+#   android.hardware.biometrics.fingerprint@2.3-service.xiaomi_atom
 
 # Vendor Init
 PRODUCT_PACKAGES += \
@@ -261,7 +272,22 @@ PRODUCT_PACKAGES += \
 # WiFi
 PRODUCT_PACKAGES += \
     TetheringConfigOverlay \
-    WifiResCommon
+    WifiResCommon \
+    libkeystore-wifi-hidl \
+    libkeystore-engine-wifi-hidl \
+    android.hardware.wifi@1.0.vendor \
+    android.hardware.wifi@1.1.vendor \
+    android.hardware.wifi@1.2.vendor \
+    android.hardware.wifi@1.3.vendor \
+    android.hardware.wifi@1.4.vendor \
+    android.hardware.wifi@1.5.vendor \
+    android.hardware.wifi.supplicant@1.0.vendor \
+    android.hardware.wifi.supplicant@1.1.vendor \
+    android.hardware.wifi.supplicant@1.2.vendor \
+    android.hardware.wifi.supplicant@1.3.vendor \
+    android.hardware.wifi.hostapd@1.0.vendor \
+    android.hardware.wifi.hostapd@1.1.vendor \
+    android.hardware.wifi.hostapd@1.2.vendor
 
 # WiFi Display
 PRODUCT_PACKAGES += \
@@ -330,5 +356,4 @@ PRODUCT_COPY_FILES += \
 
 $(call inherit-product, vendor/xiaomi/atom/atom-vendor.mk)
 
-$(call inherit-product-if-exists, vendor/lawnchair/lawnchair.mk)
-$(call inherit-product-if-exists, vendor/gms/products/gms.mk)
+# $(call inherit-product-if-exists, vendor/gms/products/gms.mk)
