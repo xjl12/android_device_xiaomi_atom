@@ -1,0 +1,37 @@
+From 5d02511184123fcb694bcfe18175b339f63daafb Mon Sep 17 00:00:00 2001
+From: xjl12 <1062256455@qq.com>
+Date: Sun, 5 Mar 2023 20:06:27 +0800
+Subject: [PATCH] Fix up PixelExperience permission
+
+Change-Id: Ie81229529f1d8922850244cc378f5b41bb589c30
+---
+ data/etc/com.android.settings.xml | 1 +
+ data/etc/com.android.systemui.xml | 2 ++
+ 2 files changed, 3 insertions(+)
+
+diff --git a/data/etc/com.android.settings.xml b/data/etc/com.android.settings.xml
+index 5dcc5998850b..11dcb425e033 100644
+--- a/data/etc/com.android.settings.xml
++++ b/data/etc/com.android.settings.xml
+@@ -62,5 +62,6 @@
+         <permission name="android.permission.RESTART_WIFI_SUBSYSTEM"/>
+         <permission name="android.permission.READ_SAFETY_CENTER_STATUS" />
+         <permission name="android.permission.SEND_SAFETY_CENTER_UPDATE" />
++	<permission name="lineageos.permission.MANAGE_LIVEDISPLAY" />
+     </privapp-permissions>
+ </permissions>
+diff --git a/data/etc/com.android.systemui.xml b/data/etc/com.android.systemui.xml
+index e0e13f59b706..71e4a76c1ac0 100644
+--- a/data/etc/com.android.systemui.xml
++++ b/data/etc/com.android.systemui.xml
+@@ -82,5 +82,7 @@
+         <permission name="android.permission.READ_SAFETY_CENTER_STATUS" />
+         <permission name="android.permission.SET_UNRESTRICTED_KEEP_CLEAR_AREAS" />
+         <permission name="android.permission.READ_SEARCH_INDEXABLES" />
++	<permission name="lineageos.permission.HARDWARE_ABSTRACTION_ACCESS" />
++	<permission name="lineageos.permission.MANAGE_LIVEDISPLAY" />
+     </privapp-permissions>
+ </permissions>
+-- 
+2.39.2
+

@@ -1,8 +1,14 @@
 # audio
+ro.adb.secure=0
 ro.audio.silent=0
 
 # Brand
 Build.BRAND=MTK
+
+# IMS
+persist.dbg.volte_avail_ovr=1
+persist.dbg.vt_avail_ovr=1
+persist.dbg.wfc_avail_ovr=1
 
 # Display
 ro.opengles.version=196610
@@ -13,7 +19,16 @@ ro.vendor.whitepoint_calibration_enable=false
 ro.vendor.histogram.enable=false
 sys.displayfeature_hidl=true
 vendor.displayfeature.entry.enable=true
+ro.surface_flinger.has_wide_color_display=true
+ro.surface_flinger.has_HDR_display=true
+ro.surface_flinger.use_color_management=true
 
+# Dalvik
+dalvik.vm.dex2oat64.enabled=true
+
+# Telephony
+ro.telephony.default_network=33,33,33,33
+persist.vendor.data.iwlan.enable=true
 
 # Perf
 ro.mtk_perf_simple_start_win=1
@@ -64,3 +79,8 @@ ro.vendor.audio.soundtrigger=mtk
 ro.vendor.audio.soundtrigger.lowpower=true
 vendor.hbm.enable=true
 persist.vendor.dc_backlight.enable=true
+
+# ZRAM writeback
+ro.zram.mark_idle_delay_mins=60
+ro.zram.first_wb_delay_mins=1440
+ro.zram.periodic_wb_delay_hours=24

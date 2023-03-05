@@ -13,10 +13,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 # Keep this after including updatable_apex.mk
 PRODUCT_COMPRESSED_APEX := false
 
-# Inherit properties
-include $(LOCAL_PATH)/properties.mk
-PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
-
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay
@@ -25,8 +21,14 @@ DEVICE_PACKAGE_OVERLAYS += \
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
+# Setup dalvik vm configs
+$(call inherit-product, frameworks/native/build/phone-xhdpi-8192-dalvik-heap.mk)
+
 # Top Overlay for vendor based on MIUI
 PRODUCT_PACKAGES += treble-overlay-xiaomi-redmi10x5g
+
+# PE Special Overlay
+PRODUCT_PACKAGES += NoCutoutOverlay
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
@@ -48,14 +50,22 @@ PRODUCT_BUILD_SUPER_PARTITION := false
     
 # Audio
 PRODUCT_PACKAGES += \
+    android.hardware.audio.service \
+    android.hardware.audio@6.0-impl \
+    android.hardware.audio.effect@6.0-impl \
     android.hardware.audio.effect@5.0-impl \
     android.hardware.audio.common@6.0-util \
     android.hardware.soundtrigger@2.2-impl \
     android.hardware.bluetooth.audio@2.0-impl \
     audio.bluetooth.default \
+    audio.primary.default \
+    audio.primary.msmnile \
     audio.r_submix.default \
     audio.usb.default \
+    audio.usbv2.default \
     audio_policy.stub \
+    libbatterylistener \
+    libvolumelistener \
     libaudiopreprocessing \
     libbundlewrapper \
     libdownmix \
@@ -70,6 +80,7 @@ PRODUCT_PACKAGES += \
     libaudiofoundation \
     libaudiofoundation.vendor \
     libtinycompress.vendor \
+    libaudio-resampler \
     tinymix
     #audio.a2dp.default
     #setup_MTK_In-Call_volume_adjust.sh
@@ -99,6 +110,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0.vendor \
     android.hardware.bluetooth@1.1.vendor \
+    android.hardware.bluetooth.audio-impl \
     btremoted \
     libldacBT_dec \
     libbt-vendor \
@@ -107,8 +119,13 @@ PRODUCT_PACKAGES += \
 
 # Sensors
 PRODUCT_PACKAGES += \
-    libsensorndkbridge \
-    android.frameworks.sensorservice@1.0
+    android.hardware.sensors@1.0-impl \
+    android.hardware.sensors@1.0-service \
+    android.hardware.sensors@2.0 \
+    android.hardware.sensors@2.1 \
+    android.frameworks.sensorservice@1.0 \
+    android.frameworks.sensorservice@1.0.vendor \
+    libsensorndkbridge
 
 # Thermal
 PRODUCT_PACKAGES += \
@@ -128,6 +145,7 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     Camera2 \
+    vendor.xiaomi.hardware.motor@1.0.vendor \
     android.hardware.camera.provider@2.4.vendor \
     android.hardware.camera.provider@2.5.vendor \
     android.hardware.camera.provider@2.6.vendor \
@@ -136,22 +154,21 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.device@3.4.vendor \
     android.hardware.camera.device@3.5.vendor \
     android.hardware.camera.device@3.6.vendor
-    
+  
 
 PRODUCT_COPY_FILES += \
     hardware/interfaces/camera/provider/2.4/default/android.hardware.camera.provider@2.4-service_64.rc:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/init/android.hardware.camera.provider@2.4-service_64.rc
 
-# Fastbootd
+# Codec2
 PRODUCT_PACKAGES += \
-    fastbootd
+    libcodec2_vndk.vendor \
+    libcodec2_hidl@1.0.vendor \
+    libavservices_minijail_vendor \
+    libavservices_minijail_32 \
+    libavservices_minijail.vendor
 
-# Fingerprint
-PRODUCT_PACKAGES += \
-    vendor.goodix.hardware.biometrics.fingerprint@2.1 \
-    vendor.xiaomi.hardware.fingerprintextension@1.0  \
-    vendor.xiaomi.hardware.touchfeature@1.0 \
-    vendor.xiaomi.hardware.displayfeature@1.0
-
+# Dalvik
+PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := verify
 
 # Display
 PRODUCT_PACKAGES += \
@@ -162,8 +179,11 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl-2.1 \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
+    libdisplayconfig \
     libdrm.vendor \
     libvulkan
+
+
 
 # DRM
 PRODUCT_PACKAGES += \
@@ -173,7 +193,32 @@ PRODUCT_PACKAGES += \
     android.hardware.drm@1.3.vendor \
     android.hardware.drm@1.0-impl:64 \
     android.hardware.drm@1.0-service-lazy \
-    android.hardware.drm@1.3-service.clearkey
+    android.hardware.drm@1.3-service.clearkey \
+    android.hardware.drm@1.4-service.clearkey \
+    android.hardware.drm@1.4.vendor
+
+# Fastbootd
+PRODUCT_PACKAGES += \
+    fastbootd
+
+# Fingerprint
+PRODUCT_PACKAGES += \
+    vendor.goodix.hardware.biometrics.fingerprint@2.1 \
+    vendor.xiaomi.hardware.fingerprintextension@1.0  \
+    vendor.xiaomi.hardware.touchfeature@1.0 \
+    vendor.xiaomi.hardware.displayfeature@1.0 \
+    vendor.xiaomi.hardware.fingerprintextension@1.0.vendor \
+    android.hardware.biometrics.fingerprint@2.3-service 
+    # android.hardware.biometrics.fingerprint@2.3-service.xiaomi_atom
+
+# Fstab
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/etc/fstab.mt6873:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6873
+
+# GPS
+PRODUCT_PACKAGES += \
+    android.hardware.gnss@1.1.vendor \
+    android.hardware.gnss@2.1.vendor
 
 # Gatekeeper
 PRODUCT_PACKAGES += \
@@ -186,15 +231,6 @@ PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl.recovery \
     android.hardware.health@2.1-service
 
-# IR
-PRODUCT_PACKAGES += \
-    android.hardware.ir@1.0-impl \
-    android.hardware.ir@1.0-service
-
-# Fstab
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/fstab.mt6873:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6873
-
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
@@ -204,13 +240,10 @@ PRODUCT_PACKAGES += \
     libhwbinder \
     libhwbinder.vendor    
 
-# Permissions
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/permissions/privapp-permissions-mediatek.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-mediatek.xml \
-    $(LOCAL_PATH)/configs/permissions/privapp-permissions-xiaomi.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-xiaomi.xml \
-    $(LOCAL_PATH)/configs/seccomp/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
-    $(LOCAL_PATH)/configs/seccomp/mediaextractor.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy \
-    $(LOCAL_PATH)/configs/seccomp/mediaswcodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaswcodec.policy
+# IR
+PRODUCT_PACKAGES += \
+    android.hardware.ir@1.0-impl \
+    android.hardware.ir@1.0-service
 
 # IMS
 PRODUCT_PACKAGES += \
@@ -238,9 +271,6 @@ PRODUCT_BOOT_JARS += \
     mediatek-telephony-base \
     mediatek-telephony-common
 
-# RcsService
-PRODUCT_PACKAGES += \
-    RcsService
 # IFAA manager
 PRODUCT_PACKAGES += \
     org.ifaa.android.manager
@@ -253,47 +283,53 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/keylayout/mtk-kpd.kl:system/usr/keylayout/mtk-kpd.kl \
     $(LOCAL_PATH)/configs/keylayout/ACCDET_cen.kl:system/usr/keylayout/ACCDET_cen.kl
 
+# Keystore
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@4.1.vendor
+
 # Lights
 PRODUCT_PACKAGES += \
     lights.atom
 
-# UDFPS
+# Media
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.3-service
-#   android.hardware.biometrics.fingerprint@2.3-service.xiaomi_atom
+    libarbitrarybytes \
+    libc2dcolorconvert \
+    libmm-omxcore \
+    libOmxAacEnc \
+    libOmxAmrEnc \
+    libOmxCore \
+    libOmxEvrcEnc \
+    libOmxG711Enc \
+    libOmxQcelp13Enc \
+    libOmxVdec \
+    libOmxVenc \
+    libstagefrighthw
 
-# Vendor Init
-PRODUCT_PACKAGES += \
-    init.mt6873.rc \
-    init.mt6873.usb.rc \
-    fstab.mt6873 \
-    ueventd.mt6873.rc\
+PRODUCT_COPY_FILES += \
+   $(LOCAL_PATH)/configs/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+   $(LOCAL_PATH)/configs/media/media_codecs_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_c2.xml \
+   $(LOCAL_PATH)/configs/media/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
+   $(LOCAL_PATH)/configs/media/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml \
+   $(LOCAL_PATH)/configs/media/media_codecs_mediatek_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_mediatek_audio.xml \
+   $(LOCAL_PATH)/configs/media/media_codecs_mediatek_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_mediatek_video.xml \
+   $(LOCAL_PATH)/configs/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
+   $(LOCAL_PATH)/configs/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
 
-# WiFi
+# Net
 PRODUCT_PACKAGES += \
-    TetheringConfigOverlay \
-    WifiResCommon \
-    libkeystore-wifi-hidl \
-    libkeystore-engine-wifi-hidl \
-    android.hardware.wifi@1.0.vendor \
-    android.hardware.wifi@1.1.vendor \
-    android.hardware.wifi@1.2.vendor \
-    android.hardware.wifi@1.3.vendor \
-    android.hardware.wifi@1.4.vendor \
-    android.hardware.wifi@1.5.vendor \
-    android.hardware.wifi.supplicant@1.0.vendor \
-    android.hardware.wifi.supplicant@1.1.vendor \
-    android.hardware.wifi.supplicant@1.2.vendor \
-    android.hardware.wifi.supplicant@1.3.vendor \
-    android.hardware.wifi.hostapd@1.0.vendor \
-    android.hardware.wifi.hostapd@1.1.vendor \
-    android.hardware.wifi.hostapd@1.2.vendor
-
-# WiFi Display
-PRODUCT_PACKAGES += \
-    libnl
+    android.system.net.netd@1.1.vendor \
+    android.hardware.neuralnetworks@1.3.vendor \
+    libpcap.vendor
 
 # Permissions
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/permissions/privapp-permissions-mediatek.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-mediatek.xml \
+    $(LOCAL_PATH)/configs/permissions/privapp-permissions-xiaomi.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-xiaomi.xml \
+    $(LOCAL_PATH)/configs/seccomp/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
+    $(LOCAL_PATH)/configs/seccomp/mediaextractor.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy \
+    $(LOCAL_PATH)/configs/seccomp/mediaswcodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaswcodec.policy
+
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.audio.low_latency.xml \
     frameworks/native/data/etc/android.hardware.bluetooth.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth.xml \
@@ -335,24 +371,72 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml \
     frameworks/native/data/etc/android.software.verified_boot.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.verified_boot.xml \
     frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml \
-# Media
-PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/configs/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
-   $(LOCAL_PATH)/configs/media/media_codecs_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_c2.xml \
-   $(LOCAL_PATH)/configs/media/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
-   $(LOCAL_PATH)/configs/media/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml \
-   $(LOCAL_PATH)/configs/media/media_codecs_mediatek_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_mediatek_audio.xml \
-   $(LOCAL_PATH)/configs/media/media_codecs_mediatek_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_mediatek_video.xml \
-   $(LOCAL_PATH)/configs/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
-   $(LOCAL_PATH)/configs/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
-
-# Net
-PRODUCT_PACKAGES += \
-    libpcap.vendor
 
 # Public Libraries
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
+
+# RcsService
+PRODUCT_PACKAGES += \
+    com.android.ims.rcsmanager \
+    PresencePolling \
+    RcsService
+
+# RIL
+PRODUCT_PACKAGES += \
+    CarrierConfigOverlay \
+    android.hardware.radio@1.5.vendor \
+    android.hardware.radio.config@1.2.vendor \
+    android.hardware.radio.deprecated@1.0.vendor \
+    libprotobuf-cpp-full \
+    libril \
+    librilutils \
+    librmnetctl \
+    libxml2
+
+# Shim
+PRODUCT_PACKAGES += \
+    libwatermark_shim
+
+# USB
+PRODUCT_PACKAGES += \
+    android.hardware.usb@1.0-service
+
+# Vendor Init
+PRODUCT_PACKAGES += \
+    init.mt6873.rc \
+    init.mt6873.usb.rc \
+    fstab.mt6873 \
+    ueventd.mt6873.rc\
+
+# WiFi
+PRODUCT_PACKAGES += \
+    android.hardware.wifi@1.0-service \
+    hostapd \
+    libwpa_client \
+    wpa_supplicant \
+    TetheringConfigOverlay \
+    WifiResCommon \
+    libkeystore-wifi-hidl \
+    libkeystore-engine-wifi-hidl \
+    android.hardware.wifi@1.0.vendor \
+    android.hardware.wifi@1.1.vendor \
+    android.hardware.wifi@1.2.vendor \
+    android.hardware.wifi@1.3.vendor \
+    android.hardware.wifi@1.4.vendor \
+    android.hardware.wifi@1.5.vendor \
+    android.hardware.wifi.supplicant@1.0.vendor \
+    android.hardware.wifi.supplicant@1.1.vendor \
+    android.hardware.wifi.supplicant@1.2.vendor \
+    android.hardware.wifi.supplicant@1.3.vendor \
+    android.hardware.wifi.hostapd@1.0.vendor \
+    android.hardware.wifi.hostapd@1.1.vendor \
+    android.hardware.wifi.hostapd@1.2.vendor
+
+# WiFi Display
+PRODUCT_PACKAGES += \
+    libnl
+
 
 $(call inherit-product, vendor/xiaomi/atom/atom-vendor.mk)
 

@@ -30,18 +30,27 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -->
 <resources>
-    <!-- Enable doze mode -->
-    <bool name="doze_display_state_supported">true</bool>
-
-    <!-- HBM type of UDFPS overlay.
+  <!-- Enable doze mode -->
+  <bool name="doze_display_state_supported">true</bool>
+  <!-- Tiles to auto add to Quick Settings upon first change of a given secure setting.
+         The syntax is setting-name:spec. If the tile is a TileService, the spec should be specified
+         as custom(package/class). Relative class name is supported. -->
+  <string-array name="config_quickSettingsAutoAdd" translatable="false">
+    <item>accessibility_display_inversion_enabled:inversion</item>
+    <item>
+      wind_down_first_time_setup:custom(com.google.android.apps.wellbeing/.screen.ui.GrayscaleTileService)</item>
+    <item>
+      focus_mode_first_time_setup:custom(com.google.android.apps.wellbeing/.focusmode.quicksettings.FocusModeTileService)</item>
+  </string-array>
+  <!-- HBM type of UDFPS overlay.
             0 - GLOBAL HBM
             1 - LOCAL HBM
     -->
-    <integer name="config_udfps_hbm_type">0</integer>
+  <integer name="config_udfps_hbm_type">0</integer>
 
-    <!-- Udfps vendor code -->
-    <integer name="config_udfps_vendor_code">22</integer>
+  <!-- Udfps vendor code -->
+  <integer name="config_udfps_vendor_code">22</integer>
 
-    <!-- The radius of the enrollment progress bar, in dp -->
-    <integer name="config_udfpsEnrollProgressBar" translatable="false">100</integer>
+  <!-- The radius of the enrollment progress bar, in dp -->
+  <integer name="config_udfpsEnrollProgressBar" translatable="false">100</integer>
 </resources>

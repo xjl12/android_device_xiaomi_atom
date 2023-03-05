@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-#pragma once
+#ifndef ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_3_BIOMETRICSFINGERPRINT_H
+#define ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_3_BIOMETRICSFINGERPRINT_H
 
 #include <android/hardware/biometrics/fingerprint/2.3/IBiometricsFingerprint.h>
 #include <hidl/MQDescriptor.h>
@@ -64,8 +65,8 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
     Return<void> onFingerUp() override;
 
     // @xjl12 patched
-    Return<void> onShowUdfpsOverlay(uint32_t curbrightness) override;
-    Return<void> onHideUdfpsOverlay() override;
+    // Return<void> onShowUdfpsOverlay(uint32_t curbrightness) override;
+    // Return<void> onHideUdfpsOverlay() override;
 
 private:
     sp<IBiometricsFingerprint_2_1> biometrics_2_1_service;
@@ -80,3 +81,5 @@ private:
 }  // namespace biometrics
 }  // namespace hardware
 }  // namespace android
+
+#endif  // ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_3_BIOMETRICSFINGERPRINT_H

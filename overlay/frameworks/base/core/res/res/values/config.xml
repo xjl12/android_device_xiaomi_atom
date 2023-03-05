@@ -9,7 +9,28 @@
     <bool name="config_haveHigherAspectRatioScreen">true</bool>
     <integer name="config_navBarInteractionMode">2</integer>
     <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
-    
+    <!-- Enable Zram writeback feature to allow unused pages in zram be written to flash. -->
+    <bool name="config_zramWriteback">true</bool>
+    <!-- The properties of a UDFPS sensor in pixels, in the order listed below: -->
+    <integer-array name="config_udfps_sensor_props" translatable="false" >
+        <item>540</item>  <!-- <item>sensorLocationX</item> -->
+        <item>2120</item> <!-- <item>sensorLocationY</item> -->
+        <item>95</item>   <!-- <item>sensorRadius</item> -->
+    </integer-array>
+    <!-- How long it takes for the HW to start illuminating after the illumination is requested. -->
+    <integer name="config_udfps_illumination_transition_ms">0</integer>
+    <!-- Night display color temperature calibration -->
+    <string-array name="config_nightDisplayColorTemperatureCoefficients">
+        <!-- R a-coefficient --> <item>0.0</item>
+        <!-- R b-coefficient --> <item>0.0</item>
+        <!-- R y-intercept --> <item>1.0</item>
+        <!-- G a-coefficient --> <item>-0.000000014365268757</item>
+        <!-- G b-coefficient --> <item>0.000255092801250106</item>
+        <!-- G y-intercept --> <item>-0.064156942434907716</item>
+        <!-- B a-coefficient --> <item>-0.000000000910931179</item>
+        <!-- B b-coefficient --> <item>0.000207598323269139</item>
+        <!-- B y-intercept --> <item>-0.349361641294833436</item>
+    </string-array>
     <!--
 	
 		Config From MIUI V12.5.2.0 China Version
@@ -293,6 +314,13 @@
         <item>50.0</item>
         <item>90.0</item>
     </array>
+    <!-- List supported color modes. -->
+    <integer-array name="config_availableColorModes">
+        <item>0</item> <!-- COLOR_MODE_NATURAL -->
+        <item>1</item> <!-- COLOR_MODE_BOOSTED -->
+        <item>2</item> <!-- COLOR_MODE_SATURATED -->
+        <item>3</item> <!-- COLOR_MODE_AUTOMATIC -->
+    </integer-array>
     <bool name="config_automatic_brightness_available">true</bool>
     <bool name="config_setColorTransformAccelerated">true</bool>
     <bool name="config_supportAudioSourceUnprocessed">false</bool>
@@ -333,7 +361,7 @@
     <bool name="config_carrier_wfc_ims_available">false</bool>
     <bool name="config_speed_up_audio_on_mt_calls">false</bool>
     <bool name="config_carrier_volte_tty_supported">true</bool>
-    <bool name="config_supportDoubleTapWake">false</bool>
+    <bool name="config_supportDoubleTapWake">true</bool>
     <bool name="config_dynamic_bind_ims">true</bool>
     <bool name="config_eap_sim_based_auth_supported">true</bool>
     <bool name="config_powerDecoupleInteractiveModeFromDisplay">false</bool>

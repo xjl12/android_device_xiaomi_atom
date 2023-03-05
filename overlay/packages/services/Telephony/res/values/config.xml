@@ -19,8 +19,15 @@
 <!-- Phone app resources that may need to be customized
      for different hardware or product builds. -->
 <resources>
+     <!-- Determine whether we should show the "listen for instructions" screen after
+         successfully placing the OTA call -->
+    <integer name="OtaShowListeningScreen">1</integer>
+     <!-- Flag indicating if the phone is a world phone -->
+     <bool name="world_phone">true</bool>
     <!-- Flag indicating if hac is enabled -->
     <bool name="hac_enabled">true</bool>
+     <!-- Flag indicating if dtmf tone type is enabled -->
+     <bool name="dtmf_type_enabled">true</bool>
 
     <!-- String indicating the package name of the device ImsService implementation for MMTEL. -->
     <string name="config_ims_mmtel_package" translatable="false">com.mediatek.ims</string>
