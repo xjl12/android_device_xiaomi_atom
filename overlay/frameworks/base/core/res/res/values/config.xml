@@ -862,7 +862,7 @@
     <integer name="config_udfps_illumination_transition_ms">0</integer>
 
     <!-- Whether devices suports in-display fingerprint when screen is off -->
-    <bool name="config_supportsScreenOffUdfps">true</bool>
+    <!-- <bool name="config_supportsScreenOffUdfps">true</bool> -->
 
     <!-- Custom Config  -->
     <bool name="config_notifyClientOnFingerprintCancelSuccess">true</bool>
