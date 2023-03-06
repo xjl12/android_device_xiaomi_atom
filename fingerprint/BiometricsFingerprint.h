@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_3_BIOMETRICSFINGERPRINT_H
-#define ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_3_BIOMETRICSFINGERPRINT_H
+#pragma once
 
 #include <android/hardware/biometrics/fingerprint/2.3/IBiometricsFingerprint.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 #include <vendor/xiaomi/hardware/fingerprintextension/1.0/IXiaomiFingerprint.h>
 #include <vendor/xiaomi/hardware/touchfeature/1.0/ITouchFeature.h>
-#include <vendor/xiaomi/hardware/displayfeature/1.0/IDisplayFeature.h>
 
 namespace android {
 namespace hardware {
@@ -43,7 +41,6 @@ using ::android::hardware::Void;
 using ::android::sp;
 using ::vendor::xiaomi::hardware::fingerprintextension::V1_0::IXiaomiFingerprint;
 using ::vendor::xiaomi::hardware::touchfeature::V1_0::ITouchFeature;
-using ::vendor::xiaomi::hardware::displayfeature::V1_0::IDisplayFeature;
 
 struct BiometricsFingerprint : public IBiometricsFingerprint {
     BiometricsFingerprint();
@@ -65,14 +62,13 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
     Return<void> onFingerUp() override;
 
     // @xjl12 patched
-    // Return<void> onShowUdfpsOverlay(uint32_t curbrightness) override;
-    // Return<void> onHideUdfpsOverlay() override;
+    Return<void> onShowUdfpsOverlay() override;
+    Return<void> onHideUdfpsOverlay() override;
 
 private:
     sp<IBiometricsFingerprint_2_1> biometrics_2_1_service;
     sp<IXiaomiFingerprint> xiaomiFingerprintService;
     sp<ITouchFeature> touchFeatureService;
-    sp<IDisplayFeature> xiaomiDisplayFeatureService;
 };
 
 }  // namespace implementation
@@ -81,5 +77,3 @@ private:
 }  // namespace biometrics
 }  // namespace hardware
 }  // namespace android
-
-#endif  // ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_3_BIOMETRICSFINGERPRINT_H

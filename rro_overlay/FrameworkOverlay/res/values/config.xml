@@ -237,7 +237,9 @@
     <bool name="config_eap_sim_based_auth_supported">true</bool>
 
     <bool name="config_powerDecoupleInteractiveModeFromDisplay">false</bool>
-    <dimen name="status_bar_height_portrait">24dp</dimen>
+    <dimen name="status_bar_height_portrait">28dp</dimen>
+    <dimen name="status_bar_height_landscape">28dp</dimen>
+    <string name="config_mainBuiltInDisplayCutout">M 0,0 H -45 V 69 H 45 V 0 H 0 Z</string>
     <fraction name="config_autoBrightnessAdjustmentMaxGamma">300.0%</fraction>
     <fraction name="config_maximumScreenDimRatio">29.999996%</fraction>
     <integer name="config_autoBrightnessBrighteningLightDebounce">2000</integer>

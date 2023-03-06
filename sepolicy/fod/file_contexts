@@ -1,0 +1,2 @@
+# FOD HAL
+/system/bin/hw/android\.hardware\.biometrics\.fingerprint@2.3-service\.xiaomi_atom                         u:object_r:hal_fingerprint_default_exec:s0

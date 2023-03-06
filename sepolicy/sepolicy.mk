@@ -1,0 +1,1 @@
+BOARD_SEPOLICY_DIRS += device/xiaomi/atom/sepolicy/fod

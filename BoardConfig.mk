@@ -111,7 +111,6 @@ BOARD_MAIN_PARTITION_LIST := system product vendor
 BOARD_SUPER_PARTITION_ERROR_LIMIT := 9124708352
 
 # FOD
-TARGET_INPUTDISPATCHER_SKIP_EVENT_KEY := 338
 TARGET_SURFACEFLINGER_UDFPS_LIB := //$(DEVICE_PATH):libudfps_extension.xiaomi_atom
 TARGET_USES_FOD_ZPOS := true
 
@@ -185,6 +184,9 @@ USE_SENSOR_MULTI_HAL := true
 # VNDK
 BOARD_VNDK_VERSION := current
 
+# Sepolicy
+# include device/mediatek/sepolicy_vndr/SEPolicy.mk
+include device/xiaomi/atom/sepolicy/sepolicy.mk
 
 # Dont use QTI STACK
 TARGET_USE_QTI_BT_STACK :=  false

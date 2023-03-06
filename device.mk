@@ -208,8 +208,8 @@ PRODUCT_PACKAGES += \
     vendor.xiaomi.hardware.touchfeature@1.0 \
     vendor.xiaomi.hardware.displayfeature@1.0 \
     vendor.xiaomi.hardware.fingerprintextension@1.0.vendor \
-    android.hardware.biometrics.fingerprint@2.3-service 
-    # android.hardware.biometrics.fingerprint@2.3-service.xiaomi_atom
+    android.hardware.biometrics.fingerprint@2.3-service \
+    android.hardware.biometrics.fingerprint@2.3-service.xiaomi_atom
 
 # Fstab
 PRODUCT_COPY_FILES += \
