@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2015-2016 The CyanogenMod Project
+                   2017-2020 The LineageOS Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="org.lineageos.settings"
+    android:versionCode="1"
+    android:versionName="1.0"
+    android:sharedUserId="android.uid.system">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <protected-broadcast android:name="com.android.systemui.doze.pulse" />
+
+    <uses-sdk
+        android:minSdkVersion="24"
+        android:targetSdkVersion="30"/>
+
+    <application
+        android:label="@string/device_settings_app_name"
+        android:persistent="true">
+
+        <!-- Override duplicate authorities -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:replace="android:authorities" />
+
+        <receiver android:name=".BootCompletedReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".speaker.ClearSpeakerActivity" 
+            android:label="@string/clear_speaker_title"
+            android:theme="@style/Theme.SubSettingsBase">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.sound" />
+        </activity>
+
+        <service android:name=".doze.DozeService"
+                 android:permission="XiaomiDozeService">
+        </service>
+
+        <service android:name=".popupcamera.PopupCameraService"
+                 android:permission="PopupCameraService">
+        </service>
+
+        <activity
+            android:name=".doze.DozeSettingsActivity"
+            android:label="@string/ambient_display_title"
+            android:theme="@style/Theme.SubSettingsBase">
+        </activity>
+
+        <activity
+            android:name=".popupcamera.PopupCameraSettingsActivity"
+            android:label="@string/popup_title"
+            android:theme="@style/Theme.SubSettingsBase">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.system" />
+            <meta-data
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_settings_popup" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:resource="@string/summary_empty" />
+            <meta-data
+                android:name="com.android.settings.order"
+                android:value="-255" />
+        </activity>
+
+        <activity
+            android:name=".thermal.ThermalActivity"
+            android:label="@string/thermal_title"
+            android:theme="@style/Theme.SubSettingsBase">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.battery" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:resource="@string/thermal_summary" />
+            <meta-data
+                android:name="com.android.settings.order"
+                android:value="1" />
+        </activity>
+
+        <service
+            android:name=".thermal.ThermalService"
+            android:permission="ThermalService">
+        </service>
+
+        <service
+            android:name=".display.HBMTileService"
+            android:icon="@drawable/ic_hbm_tile"
+            android:label="@string/hbm_mode_title"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action
+                    android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".display.DisplaySettingsActivity"
+            android:label="@string/display_settings_title"
+            android:theme="@style/Theme.SubSettingsBase">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.display" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:resource="@string/display_settings_summary" />
+        </activity>
+
+        <service
+            android:name=".RefreshRateTileService"
+            android:icon="@drawable/ic_qs_refresh_rate"
+            android:label="@string/refresh_rate_tile_title"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

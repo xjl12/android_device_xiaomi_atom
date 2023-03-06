@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2020 The LineageOS Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <!-- Ambient settings -->
+    <string name="ambient_enable">使用环境显示</string>
+
+    <!-- Device specific settings -->
+    <string name="device_settings_app_name">设备设置</string>
+
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="summary_empty" translatable="false"></string>
+
+    <!--Display settings fragment -->
+    <string name="display_settings_title">自定义显示设置</string>
+    <string name="display_settings_summary">HBM高亮度模式</string>
+
+    <!-- HBM settings -->
+    <string name="hbm_mode_title">高亮度模式</string>
+    <string name="hbm_mode_summary">高亮度模式允许显示亮度高于最大值。 这有助于提高在阳光直射下的能见度。</string>
+    <string name="hbm_enable_summary_not_supported">当前内核不支持HBM高亮度模式。</string>
+
+    <!-- Refresh Rate Settings -->
+    <string name="refresh_rate_tile_title">屏幕刷新率</string>
+
+    <!-- Popup camera settings -->
+    <string name="popup_title">前置摄像头效果</string>
+    <string name="popup_led_title">摄像头 LED 灯</string>
+    <string name="popup_led_summary">在前置摄像头升起和收回时启用 LED 灯</string>
+    <string name="popup_led_color_title">呼吸灯颜色</string>
+    <string name="popup_led_color_blue">蓝色</string>
+    <string name="popup_led_color_green">绿色</string>
+    <string name="popup_led_color_cyan">青色</string>
+    <string name="popup_led_color_red">红色</string>
+    <string name="popup_led_color_purple">紫色</string>
+    <string name="popup_led_color_yellow">黄色</string>
+    <string name="popup_led_color_white">白色</string>
+    <string name="popup_sound_title">声音效果</string>
+    <string name="popup_sound_muqin">木琴</string>
+    <string name="popup_sound_yingyan">鹰眼</string>
+    <string name="popup_sound_mofa">魔法</string>
+    <string name="popup_sound_jijia">机甲</string>
+    <string name="popup_sound_chilun">齿轮</string>
+    <string name="popup_sound_cangmen">舱门</string>
+
+    <!-- Popup camera strings -->
+    <string name="popup_camera_tip">警告</string>
+    <string name="popup_camera_takeback_failed_calibrate">无法关闭前置摄像头。尝试校准电机中。</string>
+    <string name="popup_camera_popup_failed_calibrate">无法开启前置摄像头。尝试校准电机中。</string>
+    <string name="popup_camera_calibrate_running">校准期间不能使用前置摄像头。</string>
+    <string name="popup_camera_calibrate_now">校准</string>
+    <string name="popup_camera_calibrate_failed">无法校准</string>
+    <string name="popup_camera_calibrate_success">校准成功。你现在可以开启前置摄像头了。</string>
+
+    <!-- Thermal profiles -->
+    <string name="thermal_title">温控配置文件</string>
+    <string name="thermal_summary">调整每个应用的温控配置文件以获得最佳性能</string>
+    <string name="thermal_default">默认</string>
+    <string name="thermal_benchmark">基准测试</string>
+    <string name="thermal_browser">浏览器</string>
+    <string name="thermal_camera">相机</string>
+    <string name="thermal_dialer">拨号器</string>
+    <string name="thermal_gaming">游戏</string>
+
+    <!-- Clear Speaker -->
+    <string name="clear_speaker_title">清理扬声器</string>
+    <string name="clear_speaker_summary">播放一段约 30 秒的音频来清理扬声器</string>
+    <string name="clear_speaker_description">当扬声器被少量灰尘覆盖时，将音量调至最大运行 1-2 次。\n\n当扬声器充满灰尘时将扬声器朝下轻轻摇晃您的设备，运行 2-5 次。</string>
+</resources>
