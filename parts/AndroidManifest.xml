@@ -66,36 +66,10 @@
                  android:permission="XiaomiDozeService">
         </service>
 
-        <service android:name=".popupcamera.PopupCameraService"
-                 android:permission="PopupCameraService">
-        </service>
-
         <activity
             android:name=".doze.DozeSettingsActivity"
             android:label="@string/ambient_display_title"
             android:theme="@style/Theme.SubSettingsBase">
-        </activity>
-
-        <activity
-            android:name=".popupcamera.PopupCameraSettingsActivity"
-            android:label="@string/popup_title"
-            android:theme="@style/Theme.SubSettingsBase">
-            <intent-filter>
-                <action android:name="com.android.settings.action.IA_SETTINGS" />
-            </intent-filter>
-
-            <meta-data
-                android:name="com.android.settings.category"
-                android:value="com.android.settings.category.ia.system" />
-            <meta-data
-                android:name="com.android.settings.icon"
-                android:resource="@drawable/ic_settings_popup" />
-            <meta-data
-                android:name="com.android.settings.summary"
-                android:resource="@string/summary_empty" />
-            <meta-data
-                android:name="com.android.settings.order"
-                android:value="-255" />
         </activity>
 
         <activity

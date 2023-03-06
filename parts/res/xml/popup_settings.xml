@@ -18,13 +18,4 @@
         android:summary="%s"
         android:title="@string/popup_led_color_title" />
 
-    <ListPreference
-        android:defaultValue="0"
-        android:entries="@array/popupcamera_effects_entries"
-        android:entryValues="@array/popupcamera_effects_values"
-        android:icon="@drawable/ic_popup_sound"
-        android:key="popup_sound_effect"
-        android:summary="%s"
-        android:title="@string/popup_sound_title" />
-
 </PreferenceScreen>
