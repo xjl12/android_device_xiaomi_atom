@@ -1,5 +1,4 @@
 # audio
-ro.adb.secure=0
 ro.audio.silent=0
 
 # Brand
