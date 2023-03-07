@@ -210,7 +210,8 @@ PRODUCT_PACKAGES += \
 
 # Fstab
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/fstab.mt6873:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6873
+    $(LOCAL_PATH)/rootdir/fstab.mt6873:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6873 \
+    $(LOCAL_PATH)/rootdir/fstab.emmc:$(TARGET_COPY_OUT_RAMDISK)/fstab.emmc
 
 # GPS
 PRODUCT_PACKAGES += \
