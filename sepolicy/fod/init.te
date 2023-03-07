@@ -1,0 +1,6 @@
+allow init { 
+    hwservicemanager
+    hal_fingerprint_default
+    hal_touchfeature_xiaomi_default
+}:binder { call transfer };
+

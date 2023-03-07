@@ -1,0 +1,5 @@
+type hal_fingerprint_default, domain;
+type hal_touchfeature_xiaomi_default, domain;
+allow hal_fingerprint_default hal_fingerprint_default:binder { call transfer };
+binder_call(hal_fingerprint_default, system_suspend);
+binder_call(hal_fingerprint_default, hal_touchfeature_xiaomi_default);
