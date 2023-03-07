@@ -250,6 +250,9 @@ PRODUCT_PACKAGES += \
 	EngineerMode \
 	libsink \
 	libem_support_jni \
+    libem_aoltest_jni \
+    libem_audio_jni \
+    libem_wifi_jni \
 	mediatek-common \
     mediatek-framework \
     mediatek-ims-base \

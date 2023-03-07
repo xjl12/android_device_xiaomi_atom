@@ -1,14 +1,59 @@
 cc_prebuilt_library_shared {
-	name: "libem_support_jni",
+  name: "libem_support_jni",
   compile_multilib: "both",
   check_elf_files: false,
 	owner: "mtk",
 	target: {
 		android_arm: {
-			srcs: ["arm/libem_support_jni.so"],
+			srcs: ["arm/libem_support_jni.so",],
 		},
 		android_arm64: {
 			srcs: ["arm64/libem_support_jni.so"],
+		},
+	},
+}
+
+cc_prebuilt_library_shared {
+  name: "libem_aoltest_jni",
+  compile_multilib: "both",
+  check_elf_files: false,
+	owner: "mtk",
+	target: {
+		android_arm: {
+			srcs: ["arm/libem_aoltest_jni.so",],
+		},
+		android_arm64: {
+			srcs: ["arm64/libem_aoltest_jni.so"],
+		},
+	},
+}
+
+cc_prebuilt_library_shared {
+  name: "libem_audio_jni",
+  compile_multilib: "both",
+  check_elf_files: false,
+	owner: "mtk",
+	target: {
+		android_arm: {
+			srcs: ["arm/libem_audio_jni.so",],
+		},
+		android_arm64: {
+			srcs: ["arm64/libem_audio_jni.so"],
+		},
+	},
+}
+
+cc_prebuilt_library_shared {
+  name: "libem_wifi_jni",
+  compile_multilib: "both",
+  check_elf_files: false,
+	owner: "mtk",
+	target: {
+		android_arm: {
+			srcs: ["arm/libem_wifi_jni.so",],
+		},
+		android_arm64: {
+			srcs: ["arm64/libem_wifi_jni.so"],
 		},
 	},
 }
