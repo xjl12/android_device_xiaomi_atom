@@ -1,0 +1,28 @@
+From 36d309669f5799294ff4e59019c54b7ae86a3d13 Mon Sep 17 00:00:00 2001
+From: xjl12 <1062256455@qq.com>
+Date: Tue, 7 Mar 2023 20:26:27 +0800
+Subject: [PATCH] Mediatek IMS Fail
+
+Change-Id: Ibcb7717a5c35c1bdb5f89e99d48dcd4bc7a8b57c
+---
+ core/java/android/os/storage/StorageManager.java | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/core/java/android/os/storage/StorageManager.java b/core/java/android/os/storage/StorageManager.java
+index 497bfa6380bc..1c79e64f0ca1 100644
+--- a/core/java/android/os/storage/StorageManager.java
++++ b/core/java/android/os/storage/StorageManager.java
+@@ -1680,6 +1680,10 @@ public class StorageManager {
+         return false;
+     }
+ 
++    public static boolean inCryptKeeperBounce() {
++        return false;
++    }
++
+     /** {@hide}
+      * Is this device encrypted?
+      * <p>
+-- 
+2.39.2
+
