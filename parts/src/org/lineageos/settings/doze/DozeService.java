@@ -23,11 +23,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.util.Log;
+
+import org.lineageos.settings.utils.FileUtils;
 
 public class DozeService extends Service {
     private static final String TAG = "DozeService";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
+    private static final String HBM = "udfps_need_hbm";
+    private static final String HBM_NODE = "/sys/class/drm/card0-DSI-1/disp_param";
 
     private ProximitySensor mProximitySensor;
     private PickupSensor mPickupSensor;
@@ -90,6 +95,8 @@ public class DozeService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                int hbmEnabled_i = Settings.System.getInt(context.getContentResolver(), HBM, 0);
+                FileUtils.writeLine(HBM_NODE, hbmEnabled_i == 1 ? "0x20000" : "0xE0000");
                 onDisplayOn();
             } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 onDisplayOff();
