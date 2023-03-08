@@ -45,7 +45,4 @@
     <!-- Whether to disable Night Light feature during UDFPS unlock -->
     <bool name="config_udfpsDisableNightLight">true</bool>
 
-    <!-- Whether devices suports in-display fingerprint when screen is off -->
-    <bool name="config_supportsScreenOffUdfps">true</bool>
-
 </resources>

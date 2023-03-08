@@ -19,6 +19,7 @@
 #include "BiometricsFingerprint.h"
 
 #include <android-base/logging.h>
+#include <hardware_legacy/power.h>
 #include <fstream>
 #include <cmath>
 #include <thread>
@@ -26,7 +27,7 @@
 #define FINGERPRINT_ERROR_VENDOR 8
 
 #define COMMAND_NIT 10
-#define PARAM_NIT_FOD 3
+#define PARAM_NIT_UDFPS 1
 #define PARAM_NIT_NONE 0
 
 #define TOUCH_FOD_ENABLE 10
@@ -34,6 +35,8 @@
 #define DISPPARAM_PATH "/sys/class/drm/card0-DSI-1/disp_param"
 #define DISPPARAM_HBM_FOD_ON "0x20000"
 #define DISPPARAM_HBM_FOD_OFF "0xE0000"
+
+static uint32_t sleep_time=70000;
 
 namespace android {
 namespace hardware {
@@ -46,18 +49,20 @@ template <typename T>
 static void set(const std::string& path, const T& value) {
     std::ofstream file(path);
     file << value;
+    file.close();
 }
 
-static void threadboost(sp<IXiaomiFingerprint> txiaomiFingerprintService){
-    usleep(50000);
+static void threadboost(){
+    usleep(sleep_time);
     set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_ON);
-    txiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_FOD);
 }
 
 BiometricsFingerprint::BiometricsFingerprint() {
     biometrics_2_1_service = IBiometricsFingerprint_2_1::getService();
+    LOG(ERROR) << "Start!";
     touchFeatureService = ITouchFeature::getService();
     xiaomiFingerprintService = IXiaomiFingerprint::getService();
+    touchFeatureService->setTouchMode(14, 1); // Double Tap to wake up
 }
 
 Return<uint64_t> BiometricsFingerprint::setNotify(const sp<IBiometricsFingerprintClientCallback>& clientCallback) {
@@ -65,6 +70,7 @@ Return<uint64_t> BiometricsFingerprint::setNotify(const sp<IBiometricsFingerprin
 }
 
 Return<uint64_t> BiometricsFingerprint::preEnroll() {
+    sleep_time = 300000;
     return biometrics_2_1_service->preEnroll();
 }
 
@@ -73,6 +79,7 @@ Return<RequestStatus> BiometricsFingerprint::enroll(const hidl_array<uint8_t, 69
 }
 
 Return<RequestStatus> BiometricsFingerprint::postEnroll() {
+    sleep_time = 70000;
     return biometrics_2_1_service->postEnroll();
 }
 
@@ -105,19 +112,22 @@ Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
 }
 
 Return<void> BiometricsFingerprint::onFingerDown(uint32_t, uint32_t, float, float) {
-    std::thread(threadboost,xiaomiFingerprintService).detach();
-    touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 1);
+    // set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_ON);
+    acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
+    xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_UDFPS);
+    LOG(ERROR) << "onFingerDown()";
     return Void();
 }
 
 Return<void> BiometricsFingerprint::onFingerUp() {
-    set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_OFF);
-    touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 0);
+    LOG(ERROR) << "onFingerUp()";
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
+    release_wake_lock(LOG_TAG);
     return Void();
 }
 
 Return<void> BiometricsFingerprint::onHideUdfpsOverlay() {
+    LOG(ERROR) << "onHideUdfpsOverlay()";
     set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_OFF);
     touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 0);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
@@ -125,6 +135,8 @@ Return<void> BiometricsFingerprint::onHideUdfpsOverlay() {
 }
 
 Return<void> BiometricsFingerprint::onShowUdfpsOverlay() {
+    std::thread(threadboost).detach();
+    LOG(ERROR) << "onShowUdfpsOverlay()";
     touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 1);
     return Void();
 }
