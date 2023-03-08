@@ -33,7 +33,7 @@
     <integer name="config_maxVisibleNotificationIconsWhenDark">7</integer>
 
     <!-- Color of the UDFPS pressed view -->
-    <color name="config_udfpsColor">#00ffffff</color>
+    <color name="config_udfpsColor">#ffffffff</color>
 
     <!-- HBM type of UDFPS overlay.
             0 - GLOBAL HBM

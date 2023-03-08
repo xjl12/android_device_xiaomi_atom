@@ -40,7 +40,6 @@ ro.sys.usb.storage.type=mtp
 ro.sys.usb.bicr=no
 ro.sys.usb.charging.only=no
 persist.vendor.quick.charge=1
-persist.sys.usb.config=adb
 
 # WiFi
 wifi.interface=wlan0

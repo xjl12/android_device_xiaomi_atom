@@ -59,7 +59,6 @@ BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
 
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_CMDLINE += androidboot.init_fatal_reboot_target=recovery
 
 # Platform
@@ -189,7 +188,6 @@ TARGET_USES_PREBUILT_VENDOR_SEPOLICY := true
 BOARD_VNDK_VERSION := current
 
 # Sepolicy
-include device/mediatek/sepolicy_vndr/SEPolicy.mk
 include device/xiaomi/atom/sepolicy/sepolicy.mk
 
 # Dont use QTI STACK

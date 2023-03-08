@@ -1,4 +1,5 @@
 type hal_fingerprint_default, domain;
+type hal_fingerprint_default_exec, exec_type, vendor_file_type, file_type;
 type hal_touchfeature_xiaomi_default, domain;
 type hal_touchfeature_xiaomi_hwservice, hwservice_manager_type;
 allow hal_fingerprint_default hal_fingerprint_default:binder { call transfer };

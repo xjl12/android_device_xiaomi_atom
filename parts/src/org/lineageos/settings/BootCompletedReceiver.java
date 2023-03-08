@@ -30,7 +30,7 @@ import androidx.preference.PreferenceManager;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final String TAG = "XiaomiParts";
     private static final String HBM_ENABLE_KEY = "hbm_mode";
     private static final String HBM_NODE = "/sys/class/drm/card0-DSI-1/disp_param";

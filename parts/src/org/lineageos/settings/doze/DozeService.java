@@ -30,7 +30,7 @@ import org.lineageos.settings.utils.FileUtils;
 
 public class DozeService extends Service {
     private static final String TAG = "DozeService";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final String HBM = "udfps_need_hbm";
     private static final String HBM_NODE = "/sys/class/drm/card0-DSI-1/disp_param";
 
