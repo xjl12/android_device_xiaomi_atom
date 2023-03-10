@@ -52,11 +52,6 @@ static void set(const std::string& path, const T& value) {
     file.close();
 }
 
-static void threadboost(){
-    usleep(sleep_time);
-    set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_ON);
-}
-
 BiometricsFingerprint::BiometricsFingerprint() {
     biometrics_2_1_service = IBiometricsFingerprint_2_1::getService();
     LOG(ERROR) << "Start!";
@@ -66,6 +61,7 @@ BiometricsFingerprint::BiometricsFingerprint() {
 }
 
 Return<uint64_t> BiometricsFingerprint::setNotify(const sp<IBiometricsFingerprintClientCallback>& clientCallback) {
+    LOG(ERROR) << "setNotify()";
     return biometrics_2_1_service->setNotify(clientCallback);
 }
 
@@ -84,6 +80,7 @@ Return<RequestStatus> BiometricsFingerprint::postEnroll() {
 }
 
 Return<uint64_t> BiometricsFingerprint::getAuthenticatorId() {
+    LOG(ERROR) << "getAuthenticatorId()";
     return biometrics_2_1_service->getAuthenticatorId();
 }
 
@@ -92,6 +89,7 @@ Return<RequestStatus> BiometricsFingerprint::cancel() {
 }
 
 Return<RequestStatus> BiometricsFingerprint::enumerate() {
+    LOG(ERROR) << "enumerate()";
     return biometrics_2_1_service->enumerate();
 }
 
@@ -112,7 +110,7 @@ Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
 }
 
 Return<void> BiometricsFingerprint::onFingerDown(uint32_t, uint32_t, float, float) {
-    // set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_ON);
+    set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_ON);
     acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_UDFPS);
     LOG(ERROR) << "onFingerDown()";
@@ -135,7 +133,6 @@ Return<void> BiometricsFingerprint::onHideUdfpsOverlay() {
 }
 
 Return<void> BiometricsFingerprint::onShowUdfpsOverlay() {
-    std::thread(threadboost).detach();
     LOG(ERROR) << "onShowUdfpsOverlay()";
     touchFeatureService->setTouchMode(TOUCH_FOD_ENABLE, 1);
     return Void();

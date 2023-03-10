@@ -28,9 +28,6 @@ $(call inherit-product, frameworks/native/build/phone-xhdpi-8192-dalvik-heap.mk)
 # Top Overlay for vendor based on MIUI
 PRODUCT_PACKAGES += treble-overlay-xiaomi-redmi10x5g
 
-# PE Special Overlay
-PRODUCT_PACKAGES += NoCutoutOverlay
-
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     device/xiaomi/atom \
