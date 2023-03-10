@@ -1,0 +1,79 @@
+# AOD
+debug.force_no_blanking=true
+
+# Audio
+persist.audio.button_jack.profile=volume
+persist.audio.button_jack.switch=0
+ro.audio.silent=0
+ro.config.vc_call_vol_steps=7
+vendor.audio.spkcal.copy.inhal=true
+
+# Bluetooth
+bluetooth.device.class_of_device=90,2,12
+bluetooth.profile.a2dp.source.enabled=true
+bluetooth.profile.avrcp.target.enabled=true
+bluetooth.profile.bas.client.enabled=true
+bluetooth.profile.gatt.enabled=true
+bluetooth.profile.hfp.ag.enabled=true
+bluetooth.profile.hid.device.enabled=true
+bluetooth.profile.hid.host.enabled=true
+bluetooth.profile.map.server.enabled=true
+bluetooth.profile.opp.enabled=true
+bluetooth.profile.pan.nap.enabled=true
+bluetooth.profile.pan.panu.enabled=true
+bluetooth.profile.pbap.server.enabled=true
+bluetooth.profile.sap.server.enabled=true
+
+# Camera
+persist.camera.dualcal.state=-1
+persist.vendor.camera.privapp.list=org.lineageos.aperture.org.codeaurora.snapcam,com.android.camera,com.google.camera
+vendor.camera.aux.packagelist=org.lineageos.aperture,org.codeaurora.snapcam,com.android.camera,com.google.camera
+vendor.camera.aux.packageexcludelist=org.telegram.messenger,com.microsoft.teams,com.discord
+
+# Charger
+ro.charger.enable_suspend=true
+persist.vendor.quick.charge=1
+
+# Dex
+persist.bg.dexopt.enable=true
+
+# Radio
+persist.radio.apm_sim_not_pwdn=1
+
+# Watchdog
+persist.sys.oom_crash_on_watchdog=true
+persist.sys.watchdog_enhanced=true
+
+# Performance
+ro.mtk_perf_fast_start_win=1
+ro.mtk_perf_response_time=1
+ro.mtk_perf_simple_start_win=1
+
+# Blurs
+ro.surface_flinger.supports_background_blur=1
+
+# Charger
+ro.charger.enable_suspend=true
+
+# Disable blur on app launch
+ro.launcher.blur.appLaunch=1
+
+# Iorap
+persist.device_config.runtime_native_boot.iorap_readahead_enable=true
+
+# MIUI Camera Lab Options
+camera.lab.options=true
+
+# ZRAM
+ro.zram.mark_idle_delay_mins=60
+ro.zram.first_wb_delay_mins=1440
+ro.zram.periodic_wb_delay_hours=24
+
+# Zygote
+persist.device_config.runtime_native.usap_pool_enabled=true
+
+# Encryption
+ro.crypto.dm_default_key.options_format.version=2
+ro.crypto.volume.filenames_mode=aes-256-cts
+ro.crypto.volume.metadata.method=dm-default-key
+ro.crypto.volume.options=::v2

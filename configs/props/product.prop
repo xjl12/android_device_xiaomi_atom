@@ -1,0 +1,15 @@
+# Phase Offsets
+debug.sf.use_phase_offsets_as_durations=1
+debug.sf.late.sf.duration=27600000
+debug.sf.late.app.duration=20000000
+debug.sf.early.sf.duration=27600000
+debug.sf.early.app.duration=20000000
+debug.sf.earlyGl.sf.duration=27600000
+debug.sf.earlyGl.app.duration=20000000
+debug.sf.hwc.min.duration=17000000
+
+debug.sf.color_transform.status=false
+debug.sf.disable_backpressure=1
+
+# Privapp permissions whitelisting
+ro.control_privapp_permissions=log

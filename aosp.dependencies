@@ -1,7 +1,20 @@
 [
-  {
-    "repository": "Mediatek-OSS/device_mediatek_common",
-    "target_path": "device/mediatek/common",
-    "branch": "thirteen"
-  }
+ {
+   "repository"  : "device_mediatek_sepolicy_vndr",
+   "target_path" : "device/mediatek/sepolicy_vndr",
+   "remote"      : "pixel",
+   "branch"      : "thirteen"
+ },
+ {
+   "repository"  : "hardware_xiaomi",
+   "target_path" : "hardware/xiaomi",
+   "remote"      : "pixel",
+   "branch"      : "thirteen"
+ },
+ {
+   "repository"  : "xiaomi-mt6885-devs/android_kernel_xiaomi_mt6885",
+   "target_path" : "kernel/xiaomi/atom",
+   "remote"      : "github",
+   "branch"      : "lineage-20.0"
+ }
 ]
