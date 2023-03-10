@@ -85,10 +85,7 @@ PRODUCT_PACKAGES += \
     libaudiofoundation.vendor \
     libtinycompress.vendor \
     libaudio-resampler \
-    tinymix \
-    audio.a2dp.hw
-    #setup_MTK_In-Call_volume_adjust.sh
-    #init.mtkincalladj.rc 
+    tinymix 
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_device.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_device.xml \
@@ -154,7 +151,7 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    Camera2 \
+    Aperture \
     vendor.xiaomi.hardware.motor@1.0.vendor \
     android.hardware.camera.provider@2.4.vendor \
     android.hardware.camera.provider@2.5.vendor \
@@ -419,8 +416,6 @@ PRODUCT_PACKAGES += \
     android.hardware.radio.config@1.2.vendor \
     android.hardware.radio.deprecated@1.0.vendor \
     libprotobuf-cpp-full \
-    libprotobuf-cpp-full-vendorcompat \
-    libprotobuf-cpp-lite-vendorcompat \
     libril \
     librilutils \
     librmnetctl \

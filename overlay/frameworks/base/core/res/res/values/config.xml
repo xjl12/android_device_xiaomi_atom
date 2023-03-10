@@ -576,7 +576,7 @@
     <!-- Whether the display cutout region of the main built-in display should be forced to
         black in software (to avoid aliasing or emulate a cutout that is not physically existent).
     -->
-    <bool name="config_fillMainBuiltInDisplayCutout">true</bool>
+    <bool name="config_fillMainBuiltInDisplayCutout">false</bool>
 
     <!-- If true, the display will be shifted around in ambient mode. -->
     <bool name="config_enableBurnInProtection">true</bool>
@@ -883,4 +883,8 @@
         <!-- B b-coefficient --> <item>0.000207598323269139</item>
         <!-- B y-intercept --> <item>-0.349361641294833436</item>
     </string-array>
+    <!-- Notch location in the device -->
+	<string name="config_mainBuiltInDisplayCutout">M 0,0 H -45 V 69 H 45 V 0 H 0 Z</string>
+    <!-- Default paddings for content around the corners. -->
+    <dimen name="rounded_corner_content_padding">95dp</dimen>
  </resources>

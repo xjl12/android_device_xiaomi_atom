@@ -37,6 +37,10 @@ persist.vendor.quick.charge=1
 # Dex
 persist.bg.dexopt.enable=true
 
+# Debug
+ro.sys.usb.charging.only=no
+persist.vendor.quick.charge=1
+
 # Radio
 persist.radio.apm_sim_not_pwdn=1
 
