@@ -1,0 +1,2 @@
+type batteryd;
+allow batteryd vendor_default_prop:property_service { set } ;

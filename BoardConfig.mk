@@ -141,8 +141,11 @@ BOARD_USES_METADATA_PARTITION := true
 TARGET_COPY_OUT_SYSTEM_EXT := system/system_ext
 TARGET_COPY_OUT_VENDOR := vendor
 TARGET_COPY_OUT_PRODUCT := product
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 BOARD_ROOT_EXTRA_FOLDERS += metadata
+
+# Properties
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/configs/props/system.prop
+TARGET_PRODUCT_PROP += $(DEVICE_PATH)/configs/props/product.prop
 
 # Power
 TARGET_USES_INTERACTION_BOOST := true
@@ -183,12 +186,11 @@ USE_SENSOR_MULTI_HAL := true
 
 # SELinux
 TARGET_USES_PREBUILT_VENDOR_SEPOLICY := true
+include device/mediatek/sepolicy_vndr/SEPolicy.mk
+include device/xiaomi/atom/sepolicy/sepolicy.mk
 
 # VNDK
 BOARD_VNDK_VERSION := current
-
-# Sepolicy
-include device/xiaomi/atom/sepolicy/sepolicy.mk
 
 # Dont use QTI STACK
 TARGET_USE_QTI_BT_STACK :=  false

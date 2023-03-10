@@ -1,0 +1,25 @@
+From 82745156b2db5bc2f121609ad81e4f145b851f13 Mon Sep 17 00:00:00 2001
+From: xjl12 <1062256455@qq.com>
+Date: Thu, 9 Mar 2023 09:55:55 +0800
+Subject: [PATCH] Fix sepolicy conflict
+
+Change-Id: I60320d66ca26fd496575f6b80e0286cdf4d6b492
+---
+ vendor/hal_fingerprint_default.te | 5 -----
+ 1 file changed, 5 deletions(-)
+ delete mode 100644 vendor/hal_fingerprint_default.te
+
+diff --git a/vendor/hal_fingerprint_default.te b/vendor/hal_fingerprint_default.te
+deleted file mode 100644
+index 638b6030c..000000000
+--- a/vendor/hal_fingerprint_default.te
++++ /dev/null
+@@ -1,5 +0,0 @@
+-type hal_fingerprint_default, domain;
+-hal_server_domain(hal_fingerprint_default, hal_fingerprint)
+-
+-type hal_fingerprint_default_exec, exec_type, vendor_file_type, file_type;
+-init_daemon_domain(hal_fingerprint_default)
+-- 
+2.39.2
+
