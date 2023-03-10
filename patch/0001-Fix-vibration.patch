@@ -1,0 +1,32 @@
+From 2d814ece34303be8e363372f8cfcdb004725aeb3 Mon Sep 17 00:00:00 2001
+From: xjl12 <1062256455@qq.com>
+Date: Fri, 10 Mar 2023 16:47:30 +0800
+Subject: [PATCH] Fix vibration
+
+Change-Id: Ie7b2567bf49ad47834a5f2299c8d04727ce3afc0
+---
+ services/vibratorservice/VibratorHalController.cpp | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/services/vibratorservice/VibratorHalController.cpp b/services/vibratorservice/VibratorHalController.cpp
+index c1795f5c32..0cc8a6f3c7 100644
+--- a/services/vibratorservice/VibratorHalController.cpp
++++ b/services/vibratorservice/VibratorHalController.cpp
+@@ -58,7 +58,13 @@ std::shared_ptr<HalWrapper> connectHal(std::shared_ptr<CallbackScheduler> schedu
+         ALOGV("Successfully connected to Vibrator HAL AIDL service.");
+         return std::make_shared<AidlHalWrapper>(std::move(scheduler), aidlHal);
+     }
+-
++    
++    aidlHal = waitForVintfService<Aidl::IVibrator>(String16("vibratorfeature"));
++    if (aidlHal) {
++        ALOGV("Successfully connected to Xiaomi Vibrator HAL AIDL service.");
++        return std::make_shared<AidlHalWrapper>(std::move(scheduler), aidlHal);
++    }
++    
+     sp<V1_0::IVibrator> halV1_0 = V1_0::IVibrator::getService();
+     if (halV1_0 == nullptr) {
+         ALOGV("Vibrator HAL service not available.");
+-- 
+2.39.2
+
