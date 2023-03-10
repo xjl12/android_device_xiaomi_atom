@@ -188,6 +188,7 @@ USE_SENSOR_MULTI_HAL := true
 TARGET_USES_PREBUILT_VENDOR_SEPOLICY := true
 include device/mediatek/sepolicy_vndr/SEPolicy.mk
 include device/xiaomi/atom/sepolicy/sepolicy.mk
+SELINUX_IGNORE_NEVERALLOWS := true
 
 # VNDK
 BOARD_VNDK_VERSION := current
