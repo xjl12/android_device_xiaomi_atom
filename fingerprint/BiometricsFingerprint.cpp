@@ -22,7 +22,6 @@
 #include <hardware_legacy/power.h>
 #include <fstream>
 #include <cmath>
-#include <thread>
 
 #define FINGERPRINT_ERROR_VENDOR 8
 
@@ -110,17 +109,17 @@ Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
 }
 
 Return<void> BiometricsFingerprint::onFingerDown(uint32_t, uint32_t, float, float) {
-    set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_ON);
     acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_UDFPS);
+    set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_ON);
     LOG(ERROR) << "onFingerDown()";
     return Void();
 }
 
 Return<void> BiometricsFingerprint::onFingerUp() {
-    LOG(ERROR) << "onFingerUp()";
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
     release_wake_lock(LOG_TAG);
+    LOG(ERROR) << "onFingerUp()";
     return Void();
 }
 

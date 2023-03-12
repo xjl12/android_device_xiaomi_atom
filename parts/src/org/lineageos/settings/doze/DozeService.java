@@ -15,92 +15,140 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.doze;
+ package org.lineageos.settings.doze;
 
-import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.IBinder;
-import android.provider.Settings;
-import android.util.Log;
+ import android.app.Service;
+ import android.content.BroadcastReceiver;
+ import android.content.Context;
+ import android.content.Intent;
+ import android.content.IntentFilter;
+ import android.database.ContentObserver;
+ import android.os.Handler;
+ import android.os.IBinder;
+ import android.provider.Settings;
+ import android.util.Log;
+ import java.net.HttpURLConnection;
+ import java.net.URL;
+ 
+ import org.lineageos.settings.utils.FileUtils;
+ 
+ public class DozeService extends Service {
+     private static final String TAG = "DozeService";
+     private static final boolean DEBUG = false;
+     private static final String HBM_SWITCH = "udfps_need_hbm";
+     private static final String UDFPS_SWITCH = "udfps_view_state";
+     private static final String HBM_NODE = "/sys/class/drm/card0-DSI-1/disp_param";
+ 
+     private ProximitySensor mProximitySensor;
+     private PickupSensor mPickupSensor;
+     private HBMObserver hbmObserver;
+ 
+     @Override
+     public void onCreate() {
+         if (DEBUG) Log.d(TAG, "Creating service");
+         mProximitySensor = new ProximitySensor(this);
+         mPickupSensor = new PickupSensor(this);
+ 
+         IntentFilter screenStateFilter = new IntentFilter();
+         screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
+         screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
+         registerReceiver(mScreenStateReceiver, screenStateFilter);
 
-import org.lineageos.settings.utils.FileUtils;
+         hbmObserver = new HBMObserver(new Handler());
+         getContentResolver().registerContentObserver(Settings.System.getUriFor(HBM_SWITCH),false,hbmObserver);
+     }
+ 
+     @Override
+     public int onStartCommand(Intent intent, int flags, int startId) {
+         if (DEBUG) Log.d(TAG, "Starting service");
+         return START_STICKY;
+     }
+ 
+     @Override
+     public void onDestroy() {
+         if (DEBUG) Log.d(TAG, "Destroying service");
+         super.onDestroy();
+         this.unregisterReceiver(mScreenStateReceiver);
+         this.getContentResolver().unregisterContentObserver(hbmObserver);
+         mProximitySensor.disable();
+         mPickupSensor.disable();
+     }
+ 
+     @Override
+     public IBinder onBind(Intent intent) {
+         return null;
+     }
+ 
+     private void onDisplayOn() {
+         if (DEBUG) Log.d(TAG, "Display on");
+         if (Settings.System.getInt(getContentResolver(), UDFPS_SWITCH, 0) == 1)
+            FileUtils.writeLine(HBM_NODE, "0x20000");
+         if (DozeUtils.isPickUpEnabled(this)) {
+             mPickupSensor.disable();
+         }
+         if (DozeUtils.isHandwaveGestureEnabled(this) ||
+                 DozeUtils.isPocketGestureEnabled(this)) {
+             mProximitySensor.disable();
+         }
+     }
+ 
+     private void onDisplayOff() {
+         if (DEBUG) Log.d(TAG, "Display off");
+         if (DozeUtils.isPickUpEnabled(this)) {
+             mPickupSensor.enable();
+         }
+         if (DozeUtils.isHandwaveGestureEnabled(this) ||
+                 DozeUtils.isPocketGestureEnabled(this)) {
+             mProximitySensor.enable();
+         }
+     }
+ 
+     private final BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
+         @Override
+         public void onReceive(Context context, Intent intent) {
+             if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                 onDisplayOn();
+             } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                 onDisplayOff();
+             }
+         }
+     };
 
-public class DozeService extends Service {
-    private static final String TAG = "DozeService";
-    private static final boolean DEBUG = false;
-    private static final String HBM = "udfps_need_hbm";
-    private static final String HBM_NODE = "/sys/class/drm/card0-DSI-1/disp_param";
+     class HBMObserver extends ContentObserver {
 
-    private ProximitySensor mProximitySensor;
-    private PickupSensor mPickupSensor;
+         private Thread mThread = null;
 
-    @Override
-    public void onCreate() {
-        if (DEBUG) Log.d(TAG, "Creating service");
-        mProximitySensor = new ProximitySensor(this);
-        mPickupSensor = new PickupSensor(this);
+         public HBMObserver(Handler handler) {
+             super(handler);
+         }
 
-        IntentFilter screenStateFilter = new IntentFilter();
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        registerReceiver(mScreenStateReceiver, screenStateFilter);
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (DEBUG) Log.d(TAG, "Starting service");
-        return START_STICKY;
-    }
-
-    @Override
-    public void onDestroy() {
-        if (DEBUG) Log.d(TAG, "Destroying service");
-        super.onDestroy();
-        this.unregisterReceiver(mScreenStateReceiver);
-        mProximitySensor.disable();
-        mPickupSensor.disable();
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    private void onDisplayOn() {
-        if (DEBUG) Log.d(TAG, "Display on");
-        if (DozeUtils.isPickUpEnabled(this)) {
-            mPickupSensor.disable();
-        }
-        if (DozeUtils.isHandwaveGestureEnabled(this) ||
-                DozeUtils.isPocketGestureEnabled(this)) {
-            mProximitySensor.disable();
-        }
-    }
-
-    private void onDisplayOff() {
-        if (DEBUG) Log.d(TAG, "Display off");
-        if (DozeUtils.isPickUpEnabled(this)) {
-            mPickupSensor.enable();
-        }
-        if (DozeUtils.isHandwaveGestureEnabled(this) ||
-                DozeUtils.isPocketGestureEnabled(this)) {
-            mProximitySensor.enable();
-        }
-    }
-
-    private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                int hbmEnabled_i = Settings.System.getInt(context.getContentResolver(), HBM, 0);
-                FileUtils.writeLine(HBM_NODE, hbmEnabled_i == 1 ? "0x20000" : "0xE0000");
-                onDisplayOn();
-            } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                onDisplayOff();
-            }
-        }
-    };
-}
+         @Override
+         public void onChange(boolean selfChange) {
+             int hbmEnabled_i = Settings.System.getInt(getContentResolver(), HBM_SWITCH, 0);
+             if(DEBUG) Log.d(TAG, "hbmEnabled: " + hbmEnabled_i);
+             if (hbmEnabled_i == 0) {
+                 FileUtils.writeLine(HBM_NODE, "0xE0000");
+                if(mThread!=null && mThread.isAlive()) {
+                    mThread.interrupt();
+                    mThread = null;
+                }
+                return;
+             }
+             if(mThread==null || !mThread.isAlive()) mThread = new Thread(new Runnable() {
+                 @Override
+                 public void run() {
+                     try {
+                         Thread.sleep(230);
+                     } catch (InterruptedException e) {
+                         return;
+                     }
+                     int hbmEnabled_ii = Settings.System.getInt(getContentResolver(), HBM_SWITCH, 0);
+                     if (DEBUG) Log.d(TAG, "Thread: hbmEnabled: " + hbmEnabled_ii);
+                     FileUtils.writeLine(HBM_NODE, hbmEnabled_ii == 1 ? "0x20000" : "0xE0000");
+                 }
+             });
+             mThread.start();
+         }
+     }
+ }
+ 
