@@ -1,12 +1,12 @@
-# AOD
-debug.force_no_blanking=true
-
-# Audio
+# audio
 persist.audio.button_jack.profile=volume
 persist.audio.button_jack.switch=0
 ro.audio.silent=0
 ro.config.vc_call_vol_steps=7
 vendor.audio.spkcal.copy.inhal=true
+
+# Brand
+Build.BRAND=MTK
 
 # Bluetooth
 ro.bluetooth.a2dp_offload.supported=false
@@ -30,11 +30,15 @@ bluetooth.profile.pan.panu.enabled=true
 bluetooth.profile.pbap.server.enabled=true
 bluetooth.profile.sap.server.enabled=true
 
+# Blurs
+ro.surface_flinger.supports_background_blur=1
+
 # Camera
 persist.camera.dualcal.state=-1
 persist.vendor.camera.privapp.list=org.lineageos.aperture.org.codeaurora.snapcam,com.android.camera,com.google.camera
 vendor.camera.aux.packagelist=org.lineageos.aperture,org.codeaurora.snapcam,com.android.camera,com.google.camera
 vendor.camera.aux.packageexcludelist=org.telegram.messenger,com.microsoft.teams,com.discord
+camera.lab.options=true
 
 # Charger
 ro.charger.enable_suspend=true
@@ -43,47 +47,83 @@ persist.vendor.quick.charge=1
 # Dex
 persist.bg.dexopt.enable=true
 
-# Debug
+# IMS
+persist.dbg.volte_avail_ovr=1
+persist.dbg.vt_avail_ovr=1
+persist.dbg.wfc_avail_ovr=1
+
+# Display
+ro.opengles.version=196610
+ro.zygote.preload.enable=0
+ro.vendor.colorpick_adjust=true
+ro.vendor.all_modes.colorpick_adjust=true
+ro.vendor.whitepoint_calibration_enable=false
+ro.vendor.histogram.enable=false
+sys.displayfeature_hidl=true
+vendor.displayfeature.entry.enable=true
+ro.surface_flinger.has_wide_color_display=true
+ro.surface_flinger.has_HDR_display=true
+ro.surface_flinger.use_color_management=true
+
+# Dalvik
+dalvik.vm.dex2oat64.enabled=true
+
+# Iorap
+persist.device_config.runtime_native_boot.iorap_readahead_enable=true
+persist.device_config.runtime_native.usap_pool_enabled=true
+
+# Telephony
+ro.telephony.default_network=33,33,33,33
+persist.vendor.data.iwlan.enable=true
+
+# Perf
+ro.mtk_perf_simple_start_win=1
+ro.mtk_perf_fast_start_win=1
+ro.mtk_perf_response_time=1
+
+# USB
+ro.sys.usb.mtp.whql.enable=0
+ro.sys.usb.storage.type=mtp
+ro.sys.usb.bicr=no
 ro.sys.usb.charging.only=no
 persist.vendor.quick.charge=1
-
-# Radio
-persist.radio.apm_sim_not_pwdn=1
 
 # Watchdog
 persist.sys.oom_crash_on_watchdog=true
 persist.sys.watchdog_enhanced=true
 
-# Performance
-ro.mtk_perf_fast_start_win=1
-ro.mtk_perf_response_time=1
-ro.mtk_perf_simple_start_win=1
+# WiFi
+wifi.interface=wlan0
+wifi.tethering.interface=ap0
+wifi.direct.interface=p2p0
+ro.vendor.net.enable_dual_wifi=1
+wifi.interface=wlan0
+ro.mediatek.wlan.wsc=1
+ro.mediatek.wlan.p2p=1
+mediatek.wlan.ctia=0
 
-# Blurs
-ro.surface_flinger.supports_background_blur=1
+# RIL
+ro.vendor.radio.5g=3
+ro.vendor.radio.features_common=2
+vendor.rild.libpath=mtk-ril.so
+vendor.rild.libargs=-d /dev/ttyC0
 
-# Charger
-ro.charger.enable_suspend=true
+#Added from MIUI
+#inspired by @HuaLiMao-Code
+ro.vendor.xiaomi.bl.poll=true
+ro.vendor.display.type=oled
+ro.vendor.gcp.enable=true
+ro.vendor.cabc.enable=true
+ro.vendor.fod.dimlayer.enable=true
+ro.vendor.net.enable_sla=1
+ro.kernel.zio=38,108,105,16
+ro.logd.size=2M
+ro.vendor.audio.soundtrigger=mtk
+ro.vendor.audio.soundtrigger.lowpower=true
+vendor.hbm.enable=true
+persist.vendor.dc_backlight.enable=true
 
-# Disable blur on app launch
-ro.launcher.blur.appLaunch=1
-
-# Iorap
-persist.device_config.runtime_native_boot.iorap_readahead_enable=true
-
-# MIUI Camera Lab Options
-camera.lab.options=true
-
-# ZRAM
+# ZRAM writeback
 ro.zram.mark_idle_delay_mins=60
 ro.zram.first_wb_delay_mins=1440
 ro.zram.periodic_wb_delay_hours=24
-
-# Zygote
-persist.device_config.runtime_native.usap_pool_enabled=true
-
-# Encryption
-ro.crypto.dm_default_key.options_format.version=2
-ro.crypto.volume.filenames_mode=aes-256-cts
-ro.crypto.volume.metadata.method=dm-default-key
-ro.crypto.volume.options=::v2
