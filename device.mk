@@ -26,7 +26,9 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 $(call inherit-product, frameworks/native/build/phone-xhdpi-8192-dalvik-heap.mk)
 
 # Top Overlay for vendor based on MIUI
-PRODUCT_PACKAGES += treble-overlay-xiaomi-redmi10x5g
+PRODUCT_PACKAGES += \
+    treble-overlay-xiaomi-redmi10x5g \
+    SystemUIOverlay
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \

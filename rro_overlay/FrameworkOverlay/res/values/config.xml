@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Frome MIUI /product/overlay/DevicesAndroidOverlay-->
-    <dimen name="rounded_corner_radius_bottom">98.0px</dimen>
-    <dimen name="rounded_corner_radius_top">98.0px</dimen>
-    <dimen name="status_bar_height_portrait">69.0px</dimen>
-    <dimen name="system_app_widget_background_radius">16.72998dip</dimen>
-    <dimen name="system_app_widget_inner_radius">8.72998dip</dimen>
-
+    <dimen name="status_bar_height_portrait">75px</dimen>
     <bool name="config_dozePulsePickup">false</bool>
-    <dimen name="status_bar_height_landscape">69.0px</dimen>
+    <dimen name="status_bar_height_landscape">75px</dimen>
     <fraction name="config_maximumScreenDimRatio">29.999996%</fraction>
     <!-- Important to overlay vendor package-->
     <integer name="config_screenBrightnessSettingMaximum">255</integer>

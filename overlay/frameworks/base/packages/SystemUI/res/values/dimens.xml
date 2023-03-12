@@ -12,12 +12,12 @@
     <!-- Margin on the right side of the system icon group on Keyguard. -->
     <dimen name="system_icons_keyguard_padding_end">8dp</dimen>
 
-    <!-- the padding of the rounded corner -->
-    <dimen name="rounded_corner_content_padding">10dp</dimen>
-
     <!-- Margin on the left side of the carrier text on Keyguard -->
     <dimen name="keyguard_carrier_text_margin">25dp</dimen>
 
     <!-- the padding of the rounded corner -->
     <dimen name="rounded_corner_radius">132px</dimen>
+
+    <!-- Default paddings for content around the corners. -->
+    <dimen name="rounded_corner_content_padding">76px</dimen>
 </resources>
