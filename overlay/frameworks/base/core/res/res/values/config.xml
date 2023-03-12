@@ -884,7 +884,5 @@
         <!-- B y-intercept --> <item>-0.349361641294833436</item>
     </string-array>
     <!-- Notch location in the device -->
-	<string name="config_mainBuiltInDisplayCutout">M 0,0 H -45 V 69 H 45 V 0 H 0 Z</string>
-    <!-- Default paddings for content around the corners. -->
-    <dimen name="rounded_corner_content_padding">95dp</dimen>
+	<string name="config_mainBuiltInDisplayCutout">M 0,0 H -50 V 75 H 50 V 0 H 0 Z</string>
  </resources>
