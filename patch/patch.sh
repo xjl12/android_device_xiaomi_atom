@@ -6,6 +6,7 @@ cd ../../../framework/base
 git am $PATCH_LOC/framework/base/0002-PE-Fingerprint-fix.patch
 git am $PATCH_LOC/framework/base/0003-Mediatek-IMS-Fail.patch
 git am $PATCH_LOC/framework/base/0004-UDFPS-better-user-experience-author-xjl12.patch
+git am $PATCH_LOC/framework/base/0005-UdfpsView-patch-by-xjl12.patch
 cd ../native
 git am $PATCH_LOC/framework/native/0001-Fix-vibration.patch
 cd ../../packages/modules/Bluetooth
