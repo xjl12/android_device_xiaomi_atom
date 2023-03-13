@@ -1,0 +1,47 @@
+From 36cbedb431b57a868b9a7efa7fd9b4f109d4985f Mon Sep 17 00:00:00 2001
+From: SagarMakhar <sagarmakhar@gmail.com>
+Date: Sat, 20 Aug 2022 00:12:00 +0800
+Subject: [PATCH] Add show|hide udfps view callbacks to
+ IBiometricsFingerprint@2.3 [2/2]
+
+Change-Id: Ib8d77b139795769a22f54d780f0c1d7906f708cd
+Signed-off-by: SagarMakhar <sagarmakhar@gmail.com>
+---
+ biometrics/fingerprint/2.3/IBiometricsFingerprint.hal | 10 ++++++++++
+ current.txt                                           |  3 +++
+ 2 files changed, 13 insertions(+)
+
+diff --git a/biometrics/fingerprint/2.3/IBiometricsFingerprint.hal b/biometrics/fingerprint/2.3/IBiometricsFingerprint.hal
+index 378b56453..3f44a1cdd 100644
+--- a/biometrics/fingerprint/2.3/IBiometricsFingerprint.hal
++++ b/biometrics/fingerprint/2.3/IBiometricsFingerprint.hal
+@@ -67,4 +67,14 @@ interface IBiometricsFingerprint extends @2.2::IBiometricsFingerprint {
+      * previously caused a "finger down" event will be reported.
+      */
+     onFingerUp();
++
++    /**
++     * Called when an Udfps overlay is shown
++     */
++    onShowUdfpsOverlay();
++
++    /**
++     * Called when an Udfps overlay is hidden
++     */
++    onHideUdfpsOverlay();
+ };
+diff --git a/current.txt b/current.txt
+index afde7b17f..6a2b8e9e7 100644
+--- a/current.txt
++++ b/current.txt
+@@ -929,4 +929,7 @@ b7ce2d87841585551b082fca6d099622e63b7099e0d8013f687ea1a1dc35c4dc android.hardwar
+ 1bac6a7c8136dfb0414fe5639eec115aa2d12927e64a0642a43fb53225f099b2 android.hardware.wifi@1.6::IWifiStaIface
+ 0a800e010e8eb6eecdfdc96f04fd2ae2f417a79a74a7c0eec3a9f539199bccd4 android.hardware.wifi@1.6::types
+ 
++# Modified
++34e9846b11f31baa5fdb0276ff6b5e22d256e65728ec5340fc57847619088294 android.hardware.biometrics.fingerprint@2.3::IBiometricsFingerprint
++
+ # There will be no more HIDL HALs. Use AIDL instead.
+-- 
+2.37.2
+

@@ -13,3 +13,5 @@ cd ../../packages/modules/Bluetooth
 git am $PATCH_LOC/packages/modules/Bluetooth/0003-audio_hal_interface-Optionally-use-sysbta-HAL.patch
 cd ../../../system/sepolicy
 git am $PATCH_LOC/system/sepolicy/0001-Fix-sepolicy-conflict.patch
+cd ../../hardware/interfaces
+git am $PATCH_LOC/hardware/interfaces/0001-Add-show-hide-udfps-view-callbacks-to-IBiometricsFin.patch
