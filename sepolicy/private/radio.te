@@ -1,0 +1,1 @@
+allow radio default_android_service:service_manager { find };

@@ -1,2 +1,3 @@
 type mtk_hal_sensors, domain;
 binder_call(mtk_hal_sensors, system_suspend);
+allow mtk_hal_sensors system_suspend_hwservice:hwservice_manager { find };

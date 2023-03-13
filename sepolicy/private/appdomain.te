@@ -1,0 +1,12 @@
+type teei_hal_wechat;
+type hal_mlipay_default, domain;
+type teei_hal_wechat_hwservice, hwservice_manager_type;
+type hal_mlipay_hwservice, hwservice_manager_type;
+allow appdomain teei_hal_wechat_hwservice:hwservice_manager { find };
+allow appdomain hal_mlipay_hwservice:hwservice_manager { find };
+system_vendor_config_prop(vendor_payment_security_prop);
+system_vendor_config_prop(vendor_fp_prop);
+get_prop(appdomain, vendor_fp_prop);
+get_prop(appdomain, vendor_payment_security_prop);
+binder_call(appdomain, hal_mlipay_default);
+binder_call(appdomain, teei_hal_wechat);
