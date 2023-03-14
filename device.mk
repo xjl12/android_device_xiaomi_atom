@@ -22,9 +22,6 @@ DEVICE_PACKAGE_OVERLAYS += \
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
-# Setup dalvik vm configs
-$(call inherit-product, frameworks/native/build/phone-xhdpi-8192-dalvik-heap.mk)
-
 # Top Overlay for vendor based on MIUI
 PRODUCT_PACKAGES += \
     treble-overlay-xiaomi-redmi10x5g \

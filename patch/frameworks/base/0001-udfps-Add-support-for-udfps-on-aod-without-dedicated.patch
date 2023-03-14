@@ -1,0 +1,364 @@
+From 86dce30944476c84b8c2d542f9980623f32e4103 Mon Sep 17 00:00:00 2001
+From: TheScarastic <warabhishek@gmail.com>
+Date: Thu, 19 Jan 2023 18:41:33 +0800
+Subject: [PATCH 1/3] udfps: Add support for udfps on aod without dedicated
+ sensor
+
+[markakash]: See, Google updated the onAcquiredGood to something more generic (onAcquired, with an acquiredInfo parameter)
+so the UdfpsOverlay can turn off HBM for the appropriate acquiredInfo messages. We are bascially adapting vendorCode to this method
+Change-Id: I4aa39efe3714bcc40ab3da862809ca9c8974c6bd
+
+This is squashed with the following commit:
+Author: TheScarastic <warabhishek@gmail.com>
+Date:   Sun Aug 21 18:40:57 2022 +0700
+
+    udfps: Make AOD vendor code overlayable.
+
+    Change-Id: If1aff1d0abb158487f7c99eba95124a2a9372c4f
+
+Test: test udfps on AOD without dedicated sensor
+
+Change-Id: I00253f31c41a35de84c82bbb4d01efd66c2c07e5
+Signed-off-by: Akash Srivastava <akashniki@gmail.com>
+---
+ .../app/cloudsearch/ICloudSearchManager.aidl  | 33 +++++++++++++++++++
+ .../ICloudSearchManagerCallback.aidl          | 31 +++++++++++++++++
+ .../app/cloudsearch/SearchRequest.aidl        | 19 +++++++++++
+ .../app/cloudsearch/SearchResponse.aidl       | 19 +++++++++++
+ .../android/app/cloudsearch/SearchResult.aidl | 19 +++++++++++
+ .../BiometricFingerprintConstants.java        |  3 --
+ .../fingerprint/IUdfpsOverlayController.aidl  |  2 +-
+ .../SystemUI/res/values/lineage_config.xml    |  3 ++
+ .../systemui/biometrics/UdfpsController.java  | 17 +++++++++-
+ .../aidl/FingerprintAuthenticationClient.java |  2 +-
+ .../aidl/FingerprintEnrollClient.java         |  2 +-
+ .../hidl/FingerprintAuthenticationClient.java | 11 +++++++
+ 12 files changed, 154 insertions(+), 7 deletions(-)
+ create mode 100644 core/java/android/app/cloudsearch/ICloudSearchManager.aidl
+ create mode 100644 core/java/android/app/cloudsearch/ICloudSearchManagerCallback.aidl
+ create mode 100644 core/java/android/app/cloudsearch/SearchRequest.aidl
+ create mode 100644 core/java/android/app/cloudsearch/SearchResponse.aidl
+ create mode 100644 core/java/android/app/cloudsearch/SearchResult.aidl
+
+diff --git a/core/java/android/app/cloudsearch/ICloudSearchManager.aidl b/core/java/android/app/cloudsearch/ICloudSearchManager.aidl
+new file mode 100644
+index 000000000000..18f8fc476191
+--- /dev/null
++++ b/core/java/android/app/cloudsearch/ICloudSearchManager.aidl
+@@ -0,0 +1,33 @@
++/**
++ * Copyright (c) 2022, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package android.app.cloudsearch;
++
++import android.app.cloudsearch.SearchRequest;
++import android.app.cloudsearch.SearchResponse;
++import android.app.cloudsearch.ICloudSearchManagerCallback;
++
++/**
++ * Used by {@link CloudSearchManager} to tell system server to do search.
++ *
++ * @hide
++ */
++oneway interface ICloudSearchManager {
++  void search(in SearchRequest request, in ICloudSearchManagerCallback callBack);
++
++  void returnResults(in IBinder token, in String requestId,
++                     in SearchResponse response);
++}
+diff --git a/core/java/android/app/cloudsearch/ICloudSearchManagerCallback.aidl b/core/java/android/app/cloudsearch/ICloudSearchManagerCallback.aidl
+new file mode 100644
+index 000000000000..84771dd4a19b
+--- /dev/null
++++ b/core/java/android/app/cloudsearch/ICloudSearchManagerCallback.aidl
+@@ -0,0 +1,31 @@
++/**
++ * Copyright (c) 2022, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package android.app.cloudsearch;
++
++import android.app.cloudsearch.SearchResponse;
++
++
++/**
++ * Callback used by system server to notify invoker of {@link CloudSearchManager} of the result
++ *
++ * @hide
++ */
++oneway interface ICloudSearchManagerCallback {
++  void onSearchSucceeded(in SearchResponse response);
++
++  void onSearchFailed(in SearchResponse response);
++}
+diff --git a/core/java/android/app/cloudsearch/SearchRequest.aidl b/core/java/android/app/cloudsearch/SearchRequest.aidl
+new file mode 100644
+index 000000000000..9f2cdb888bdf
+--- /dev/null
++++ b/core/java/android/app/cloudsearch/SearchRequest.aidl
+@@ -0,0 +1,19 @@
++/**
++ * Copyright (c) 2022, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package android.app.cloudsearch;
++
++parcelable SearchRequest;
+diff --git a/core/java/android/app/cloudsearch/SearchResponse.aidl b/core/java/android/app/cloudsearch/SearchResponse.aidl
+new file mode 100644
+index 000000000000..2064d112c6b9
+--- /dev/null
++++ b/core/java/android/app/cloudsearch/SearchResponse.aidl
+@@ -0,0 +1,19 @@
++/**
++ * Copyright (c) 2022, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package android.app.cloudsearch;
++
++parcelable SearchResponse;
+\ No newline at end of file
+diff --git a/core/java/android/app/cloudsearch/SearchResult.aidl b/core/java/android/app/cloudsearch/SearchResult.aidl
+new file mode 100644
+index 000000000000..daebfbf3307f
+--- /dev/null
++++ b/core/java/android/app/cloudsearch/SearchResult.aidl
+@@ -0,0 +1,19 @@
++/**
++ * Copyright (c) 2022, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package android.app.cloudsearch;
++
++parcelable SearchResult;
+\ No newline at end of file
+diff --git a/core/java/android/hardware/biometrics/BiometricFingerprintConstants.java b/core/java/android/hardware/biometrics/BiometricFingerprintConstants.java
+index 257ad7162e9e..93b856250007 100644
+--- a/core/java/android/hardware/biometrics/BiometricFingerprintConstants.java
++++ b/core/java/android/hardware/biometrics/BiometricFingerprintConstants.java
+@@ -334,9 +334,6 @@ public interface BiometricFingerprintConstants {
+             case FINGERPRINT_ACQUIRED_IMMOBILE:
+             case FINGERPRINT_ACQUIRED_TOO_BRIGHT:
+             case FINGERPRINT_ACQUIRED_VENDOR:
+-                // Disable the UDFPS mode because the image capture has finished. The overlay
+-                // can be hidden later, once the authentication result arrives.
+-                return true;
+             case FINGERPRINT_ACQUIRED_UNKNOWN:
+             default:
+                 // Keep the UDFPS mode in case of an unknown message.
+diff --git a/core/java/android/hardware/fingerprint/IUdfpsOverlayController.aidl b/core/java/android/hardware/fingerprint/IUdfpsOverlayController.aidl
+index dbb8e40f3a71..8adda2f88c8a 100644
+--- a/core/java/android/hardware/fingerprint/IUdfpsOverlayController.aidl
++++ b/core/java/android/hardware/fingerprint/IUdfpsOverlayController.aidl
+@@ -31,7 +31,7 @@ oneway interface IUdfpsOverlayController {
+     // Check acquiredInfo for the acquired type (BiometricFingerprintConstants#FingerprintAcquired).
+     // Check BiometricFingerprintConstants#shouldTurnOffHbm for whether the acquiredInfo
+     // should turn off HBM.
+-    void onAcquired(int sensorId, int acquiredInfo);
++    void onAcquired(int sensorId, int acquiredInfo, int vendorCode);
+ 
+     // Notifies of enrollment progress changes.
+     void onEnrollmentProgress(int sensorId, int remaining);
+diff --git a/packages/SystemUI/res/values/lineage_config.xml b/packages/SystemUI/res/values/lineage_config.xml
+index 7509dfd2dcba..7cc2357fb61b 100644
+--- a/packages/SystemUI/res/values/lineage_config.xml
++++ b/packages/SystemUI/res/values/lineage_config.xml
+@@ -31,6 +31,9 @@
+     <!-- Color of the UDFPS pressed view -->
+     <color name="config_udfpsColor">#ffffffff</color>
+ 
++    <!-- Udfps vendor code -->
++    <integer name="config_udfpsVendorCode">0</integer>
++
+     <!-- Doze: does the double tap sensor need a proximity check? -->
+     <bool name="doze_double_tap_proximity_check">false</bool>
+ 
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
+index 70aa6a3aa06e..c514d5516177 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
+@@ -19,6 +19,8 @@ package com.android.systemui.biometrics;
+ import static android.hardware.biometrics.BiometricFingerprintConstants.FINGERPRINT_ACQUIRED_GOOD;
+ import static android.hardware.biometrics.BiometricOverlayConstants.REASON_AUTH_KEYGUARD;
+ 
++import static android.hardware.biometrics.BiometricFingerprintConstants.FINGERPRINT_ACQUIRED_VENDOR;
++
+ import static com.android.internal.util.Preconditions.checkNotNull;
+ import static com.android.systemui.classifier.Classifier.LOCK_ICON;
+ import static com.android.systemui.classifier.Classifier.UDFPS_AUTHENTICATION;
+@@ -54,6 +56,7 @@ import com.android.internal.annotations.VisibleForTesting;
+ import com.android.internal.util.LatencyTracker;
+ import com.android.keyguard.FaceAuthApiRequestReason;
+ import com.android.keyguard.KeyguardUpdateMonitor;
++import com.android.systemui.R;
+ import com.android.systemui.animation.ActivityLaunchAnimator;
+ import com.android.systemui.biometrics.dagger.BiometricsBackground;
+ import com.android.systemui.dagger.SysUISingleton;
+@@ -165,6 +168,7 @@ public class UdfpsController implements DozeReceiver {
+     private boolean mOnFingerDown;
+     private boolean mAttemptedToDismissKeyguard;
+     private final Set<Callback> mCallbacks = new HashSet<>();
++    private final int mUdfpsVendorCode;
+ 
+     @VisibleForTesting
+     public static final VibrationAttributes UDFPS_VIBRATION_ATTRIBUTES =
+@@ -232,7 +236,7 @@ public class UdfpsController implements DozeReceiver {
+         @Override
+         public void onAcquired(
+                 int sensorId,
+-                @BiometricFingerprintConstants.FingerprintAcquired int acquiredInfo
++                @BiometricFingerprintConstants.FingerprintAcquired int acquiredInfo, int vendorCode
+         ) {
+             if (BiometricFingerprintConstants.shouldDisableUdfpsDisplayMode(acquiredInfo)) {
+                 boolean acquiredGood = acquiredInfo == FINGERPRINT_ACQUIRED_GOOD;
+@@ -251,6 +255,16 @@ public class UdfpsController implements DozeReceiver {
+                         mOverlay.onAcquiredGood();
+                     }
+                 });
++            } else {
++                boolean acquiredVendor = acquiredInfo == FINGERPRINT_ACQUIRED_VENDOR;
++                if (!acquiredVendor || (!mStatusBarStateController.isDozing() && mScreenOn)) {
++                    return;
++                }
++                if (vendorCode == mUdfpsVendorCode) {
++                    mPowerManager.wakeUp(mSystemClock.uptimeMillis(),
++                            PowerManager.WAKE_REASON_GESTURE, TAG);
++                    onAodInterrupt(0, 0, 0, 0);
++                }
+             }
+         }
+ 
+@@ -659,6 +673,7 @@ public class UdfpsController implements DozeReceiver {
+ 
+         udfpsHapticsSimulator.setUdfpsController(this);
+         udfpsShell.setUdfpsOverlayController(mUdfpsOverlayController);
++        mUdfpsVendorCode = mContext.getResources().getInteger(R.integer.config_udfpsVendorCode);
+     }
+ 
+     /**
+diff --git a/services/core/java/com/android/server/biometrics/sensors/fingerprint/aidl/FingerprintAuthenticationClient.java b/services/core/java/com/android/server/biometrics/sensors/fingerprint/aidl/FingerprintAuthenticationClient.java
+index b3f42be41cd7..5ff4496e1553 100644
+--- a/services/core/java/com/android/server/biometrics/sensors/fingerprint/aidl/FingerprintAuthenticationClient.java
++++ b/services/core/java/com/android/server/biometrics/sensors/fingerprint/aidl/FingerprintAuthenticationClient.java
+@@ -257,7 +257,7 @@ class FingerprintAuthenticationClient extends AuthenticationClient<AidlSession>
+     public void onAcquired(@FingerprintAcquired int acquiredInfo, int vendorCode) {
+         // For UDFPS, notify SysUI with acquiredInfo, so that the illumination can be turned off
+         // for most ACQUIRED messages. See BiometricFingerprintConstants#FingerprintAcquired
+-        mSensorOverlays.ifUdfps(controller -> controller.onAcquired(getSensorId(), acquiredInfo));
++        mSensorOverlays.ifUdfps(controller -> controller.onAcquired(getSensorId(), acquiredInfo, vendorCode));
+         super.onAcquired(acquiredInfo, vendorCode);
+         if (mSensorProps.isAnySidefpsType()) {
+             final boolean shouldLookForVendor =
+diff --git a/services/core/java/com/android/server/biometrics/sensors/fingerprint/aidl/FingerprintEnrollClient.java b/services/core/java/com/android/server/biometrics/sensors/fingerprint/aidl/FingerprintEnrollClient.java
+index 612d90670888..d43e91c2c78e 100644
+--- a/services/core/java/com/android/server/biometrics/sensors/fingerprint/aidl/FingerprintEnrollClient.java
++++ b/services/core/java/com/android/server/biometrics/sensors/fingerprint/aidl/FingerprintEnrollClient.java
+@@ -134,7 +134,7 @@ class FingerprintEnrollClient extends EnrollClient<AidlSession> implements Udfps
+                 vibrateSuccess();
+             }
+             mSensorOverlays.ifUdfps(
+-                    controller -> controller.onAcquired(getSensorId(), acquiredInfo));
++                    controller -> controller.onAcquired(getSensorId(), acquiredInfo, vendorCode));
+         }
+ 
+         mSensorOverlays.ifUdfps(controller -> {
+diff --git a/services/core/java/com/android/server/biometrics/sensors/fingerprint/hidl/FingerprintAuthenticationClient.java b/services/core/java/com/android/server/biometrics/sensors/fingerprint/hidl/FingerprintAuthenticationClient.java
+index 7ed1a514f9bc..c5a9295fa4c2 100644
+--- a/services/core/java/com/android/server/biometrics/sensors/fingerprint/hidl/FingerprintAuthenticationClient.java
++++ b/services/core/java/com/android/server/biometrics/sensors/fingerprint/hidl/FingerprintAuthenticationClient.java
+@@ -59,6 +59,7 @@ class FingerprintAuthenticationClient extends AuthenticationClient<IBiometricsFi
+     private static final String TAG = "Biometrics/FingerprintAuthClient";
+ 
+     private final LockoutFrameworkImpl mLockoutFrameworkImpl;
++    @Nullable private final IUdfpsOverlayController mUdfpsOverlayController;
+     @NonNull private final SensorOverlays mSensorOverlays;
+     @NonNull private final FingerprintSensorPropertiesInternal mSensorProps;
+     @NonNull private final CallbackWithProbe<Probe> mALSProbeCallback;
+@@ -83,6 +84,7 @@ class FingerprintAuthenticationClient extends AuthenticationClient<IBiometricsFi
+                 isStrongBiometric, taskStackListener, lockoutTracker, allowBackgroundAuthentication,
+                 true /* shouldVibrate */, false /* isKeyguardBypassEnabled */);
+         setRequestId(requestId);
++        mUdfpsOverlayController = udfpsOverlayController;
+         mLockoutFrameworkImpl = lockoutTracker;
+         mSensorOverlays = new SensorOverlays(udfpsOverlayController, sidefpsController);
+         mSensorProps = sensorProps;
+@@ -107,6 +109,15 @@ class FingerprintAuthenticationClient extends AuthenticationClient<IBiometricsFi
+         return new ClientMonitorCompositeCallback(mALSProbeCallback, callback);
+     }
+ 
++    @Override
++    public void onAcquired(int acquiredInfo, int vendorCode) {
++        super.onAcquired(acquiredInfo, vendorCode);
++        try {
++            mUdfpsOverlayController.onAcquired(getSensorId(), acquiredInfo, vendorCode);
++        } catch (Exception e) {
++        }
++    }
++
+     @Override
+     public void onAuthenticated(BiometricAuthenticator.Identifier identifier,
+             boolean authenticated, ArrayList<Byte> token) {
+-- 
+2.39.1
+

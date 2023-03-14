@@ -43,14 +43,6 @@ diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControll
 index 878cbdbbd02e..30e12ae0cb1e 100644
 --- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
 +++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
-@@ -48,7 +48,6 @@ import android.os.VibrationAttributes;
- import android.os.VibrationEffect;
- import android.provider.Settings;
- import android.os.UserHandle;
--import android.provider.Settings;
- import android.util.Log;
- import android.util.RotationUtils;
- import android.view.LayoutInflater;
 @@ -65,7 +64,6 @@ import com.android.keyguard.KeyguardUpdateMonitor;
  import com.android.systemui.R;
  import com.android.systemui.animation.ActivityLaunchAnimator;
@@ -92,42 +84,6 @@ index 878cbdbbd02e..30e12ae0cb1e 100644
                  int i, dimAmount;
                  for (i = 0; i < mBrightnessAlphaArray.length; i++) {
                      if (mBrightnessAlphaArray[i][0] >= curBrightness) break;
-diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt
-index 69da6ec54dc1..9d9d9d0ddb4a 100644
---- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt
-+++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt
-@@ -28,12 +28,14 @@ import android.hardware.biometrics.BiometricOverlayConstants.ShowReason
- import android.hardware.fingerprint.FingerprintManager
- import android.hardware.fingerprint.IUdfpsOverlayControllerCallback
- import android.os.RemoteException
-+import android.provider.Settings
- import android.util.Log
- import android.util.RotationUtils
- import android.view.LayoutInflater
- import android.view.MotionEvent
- import android.view.Surface
- import android.view.View
-+import android.view.WindowInsets
- import android.view.WindowManager
- import android.view.accessibility.AccessibilityManager
- import android.view.accessibility.AccessibilityManager.TouchExplorationStateChangeListener
-@@ -93,7 +95,7 @@ class UdfpsControllerOverlay(
-     private var overlayTouchListener: TouchExplorationStateChangeListener? = null
- 
-     private val coreLayoutParams = WindowManager.LayoutParams(
--        WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG,
-+        WindowManager.LayoutParams.TYPE_NAVIGATION_BAR_PANEL,
-         0 /* flags set in computeLayoutParams() */,
-         PixelFormat.TRANSLUCENT
-     ).apply {
-@@ -111,6 +113,7 @@ class UdfpsControllerOverlay(
- 
-     fun updateDimAmount(newDimAmount: Float): Float {
-         coreLayoutParams.dimAmount = newDimAmount
-+
-         windowManager.updateViewLayout(overlayView, coreLayoutParams)
-         return newDimAmount
-     }
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsKeyguardView.java b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsKeyguardView.java
 index bc274a0af95f..617ee9537480 100644
 --- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsKeyguardView.java
