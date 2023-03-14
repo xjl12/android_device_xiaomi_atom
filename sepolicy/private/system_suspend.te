@@ -1,0 +1,10 @@
+type sysfs_battery_supply;
+type sysfs_usb_supply;
+allow system_suspend sysfs_batteryinfo:dir { read open };
+allow system_suspend sysfs_batteryinfo:file { getattr open read };
+allow system_suspend sysfs_battery_supply:dir { read open };
+allow system_suspend sysfs_battery_supply:file { getattr open read };
+allow system_suspend sysfs:dir { read open };
+allow system_suspend sysfs:file { getattr open read };
+allow system_suspend sysfs_usb_supply:dir { read open };
+allow system_suspend sysfs_usb_supply:file { getattr open read };

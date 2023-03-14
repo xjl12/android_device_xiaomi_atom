@@ -1,0 +1,25 @@
+type vendor_mtk_atm_mdmode_prop;
+allow vendor_init proc:file { write create };
+allow vendor_init default_prop:file { getattr map open read };
+allow vendor_init proc:dir add_name;
+allow vendor_init proc_cpufreq:dir add_name;
+allow vendor_init proc_cpufreq:file create;
+allow vendor_init proc_perfmgr:dir add_name;
+allow vendor_init proc_perfmgr:file create;
+allow vendor_init sysfs:dir add_name;
+allow vendor_init sysfs:file create;
+allow vendor_init sysfs_android_usb:dir add_name;
+allow vendor_init sysfs_android_usb:file create;
+allow vendor_init sysfs_devices_block:dir add_name;
+allow vendor_init sysfs_devices_block:file create;
+allow vendor_init sysfs_devices_system_cpu:dir add_name;
+allow vendor_init sysfs_devices_system_cpu:file create;
+allow vendor_init sysfs_dm:dir add_name;
+allow vendor_init sysfs_dm:file create;
+allow vendor_init sysfs_net:dir add_name;
+allow vendor_init sysfs_net:file create;
+allow vendor_init sysfs_zram:dir add_name;
+allow vendor_init sysfs_zram:file create;
+allow vendor_init vendor_mtk_atm_mdmode_prop:property_service set;
+allow vendor_init vts_status_prop:file read;
+

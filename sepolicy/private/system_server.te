@@ -1,0 +1,2 @@
+allow system_server sysfs:file { getattr open read };
+allow system_server vendor_default_prop:file { getattr map open read };

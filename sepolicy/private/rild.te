@@ -1,0 +1,2 @@
+type rild;
+allow rild vendor_default_prop:property_service set;

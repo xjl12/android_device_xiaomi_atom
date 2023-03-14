@@ -1,0 +1,4 @@
+allow em_app content_capture_service:service_manager find;
+allow em_app game_service:service_manager find;
+allow em_app netstats_service:service_manager find;
+

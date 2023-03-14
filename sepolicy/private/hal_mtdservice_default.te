@@ -1,0 +1,12 @@
+type hal_mtdservice_default;
+type persist_subsys_file;
+type vendor_fingerprint_data_file;
+type mediadrm_vendor_data_file;
+type camera_persist_file;
+allow hal_mtdservice_default file_contexts_file:file { read getattr open };
+allow hal_mtdservice_default persist_subsys_file:dir { getattr };
+allow hal_mtdservice_default vendor_fingerprint_data_file:dir { getattr };
+allow hal_mtdservice_default media_rw_data_file:file { getattr };
+allow hal_mtdservice_default camera_persist_file:dir { getattr };
+allow hal_mtdservice_default hal_mtdservice_default:capability { dac_read_search dac_override sys_admin };
+allow hal_mtdservice_default mediadrm_vendor_data_file:dir search;

@@ -1,0 +1,2 @@
+type gsm0710muxd;
+allow gsm0710muxd ctl_stop_prop:property_service set;

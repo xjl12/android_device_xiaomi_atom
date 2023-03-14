@@ -1,0 +1,2 @@
+type hal_vibratorfeature_default;
+allow hal_vibratorfeature_default sysfs_vibrator:file { getattr };

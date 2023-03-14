@@ -1,0 +1,2 @@
+type proc_cpufreq;
+allow proc_cpufreq proc:filesystem associate;

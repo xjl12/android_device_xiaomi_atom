@@ -1,0 +1,4 @@
+type mtk_hal_audio;
+type persist_data_file;
+allow mtk_hal_audio persist_data_file:dir { search };
+allow mtk_hal_audio persist_data_file:file { getattr open read };

@@ -1,0 +1,3 @@
+type mnld;
+type sysfs_led_lcd_bl;
+allow mnld sysfs_led_lcd_bl:file { getattr open read };

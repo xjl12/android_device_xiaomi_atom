@@ -1,6 +1,14 @@
+type init_shell;
 allow init { 
     hwservicemanager
     hal_fingerprint_default
     hal_touchfeature_xiaomi_default
 }:binder { call transfer };
-
+allow init socket_device:sock_file { create setattr };
+allow init sysfs:dir add_name;
+allow init sysfs:file create;
+allow init sysfs_devices_block:dir add_name;
+allow init sysfs_devices_block:file { open write };
+allow init sysfs_dm:dir add_name;
+allow init sysfs_led_lcd_bl:file setattr;
+allow init_shell toolbox_exec:file { execute execute_no_trans getattr map open read };

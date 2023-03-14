@@ -1,0 +1,4 @@
+type mtk_hal_nvramagent;
+allow mtk_hal_nvramagent proc_cmdline:file { getattr open read };
+allow mtk_hal_nvramagent sysfs_dt_firmware_android:dir search;
+allow mtk_hal_nvramagent sysfs_dt_firmware_android:file { getattr open read };

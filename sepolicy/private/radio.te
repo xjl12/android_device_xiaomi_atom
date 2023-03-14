@@ -1,1 +1,2 @@
 allow radio default_android_service:service_manager { find };
+allow radio system_mtk_vodata_prop:file { getattr map open read };

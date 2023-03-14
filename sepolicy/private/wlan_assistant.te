@@ -1,0 +1,3 @@
+type wlan_assistant;
+allow wlan_assistant gsi_public_metadata_file:file { getattr open read };
+allow wlan_assistant radio_prop:property_service set;

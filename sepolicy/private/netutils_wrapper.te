@@ -1,0 +1,6 @@
+type ccci_vts_device;
+type ccci_wifi_proxy_device;
+type ccci_device;
+allow netutils_wrapper ccci_vts_device:chr_file { read write };
+allow netutils_wrapper ccci_wifi_proxy_device:chr_file { read write };
+allow netutils_wrapper ccci_device:chr_file { read write };

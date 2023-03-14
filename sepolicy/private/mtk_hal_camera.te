@@ -1,0 +1,3 @@
+type mtk_hal_camera;
+allow mtk_hal_camera default_prop:file { read getattr map open };
+allow mtk_hal_camera proc_stat:file { read open };

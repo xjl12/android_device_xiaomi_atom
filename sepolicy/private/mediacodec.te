@@ -1,0 +1,2 @@
+type mediacodec;
+allow mediacodec default_prop:file { getattr map open read };

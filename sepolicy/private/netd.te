@@ -1,0 +1,4 @@
+allow netd proc_net:dir add_name;
+allow netd proc_net:file create;
+allow netd sysfs_net:dir add_name;
+allow netd sysfs_net:file create;

@@ -1,0 +1,3 @@
+type ccci_mdinit;
+type sysfs_boot_mode;
+allow ccci_mdinit sysfs_boot_mode:file { open read };

@@ -1,0 +1,2 @@
+type mtk_hal_light;
+allow mtk_hal_light default_prop:file { getattr map open read };
