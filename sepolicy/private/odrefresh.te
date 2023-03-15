@@ -27,6 +27,7 @@ type vendor_mtk_wfc_serv_prop;
 type vendor_panel_info_prop;
 type vendor_slad_prop;
 type vendor_touchfeature_prop;
+type device_config_tethering_prop;
 
 allow odrefresh aac_drc_prop:file { getattr map open };
 allow odrefresh ab_update_gki_prop:file { getattr map open };

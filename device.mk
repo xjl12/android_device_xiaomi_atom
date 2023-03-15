@@ -230,7 +230,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
     android.hardware.health@2.1-impl.recovery \
-    android.hardware.health@2.1-service
+    android.hardware.health@2.1-service \
+    android.hardware.health@2.0
 
 # HIDL
 PRODUCT_PACKAGES += \
@@ -285,7 +286,14 @@ PRODUCT_COPY_FILES += \
 
 # Keystore
 PRODUCT_PACKAGES += \
-    android.hardware.keymaster@4.1.vendor
+    android.hardware.keymaster@4.0-service \
+    android.hardware.keymaster@4.0.vendor \
+    libkeymaster4.vendor:64 \
+    libkeymaster4support.vendor:64 \
+    libkeymaster_portable.vendor:64 \
+    libkeymaster_messages.vendor:64 \
+    libsoft_attestation_cert.vendor:64 \
+    libpuresoftkeymasterdevice.vendor:64
 
 # Lights
 PRODUCT_PACKAGES += \
