@@ -26,15 +26,17 @@
 
     <!--Display settings fragment -->
     <string name="display_settings_title">Custom Display Settings</string>
-    <string name="display_settings_summary">HBM</string>
+    <string name="display_settings_summary">DC &amp; HBM</string>
 
     <!-- HBM settings -->
     <string name="hbm_mode_title">High Brightness Mode</string>
     <string name="hbm_mode_summary">High Brightness Mode allows the display panel brightness to go above the maximum stock value. Which helps in improving visibility in direct sunlight</string>
     <string name="hbm_enable_summary_not_supported">HBM is not currently supported by the kernel</string>
 
-    <!-- Refresh Rate Settings -->
-    <string name="refresh_rate_tile_title">Refresh Rate</string>
+    <!-- DC settings -->
+    <string name="dc_dimming_mode_title">DC Dimming Mode</string>
+    <string name="dc_dimming_mode_summary">Turn on the low brightness DC dimming function to stop flickering, some screen display functions will be affected.</string>
+    <string name="dc_dimming_mode_not_supported">The current system does not support anti-flicker mode.</string>
 
     <!-- Popup camera settings -->
     <string name="popup_title">Front camera effects</string>

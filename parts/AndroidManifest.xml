@@ -130,15 +130,5 @@
                 android:name="com.android.settings.summary"
                 android:resource="@string/display_settings_summary" />
         </activity>
-
-        <service
-            android:name=".RefreshRateTileService"
-            android:icon="@drawable/ic_qs_refresh_rate"
-            android:label="@string/refresh_rate_tile_title"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE"/>
-            </intent-filter>
-        </service>
     </application>
 </manifest>

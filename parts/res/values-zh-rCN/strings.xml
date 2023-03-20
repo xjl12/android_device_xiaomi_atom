@@ -26,15 +26,17 @@
 
     <!--Display settings fragment -->
     <string name="display_settings_title">自定义显示设置</string>
-    <string name="display_settings_summary">HBM高亮度模式</string>
+    <string name="display_settings_summary">DC调光、HBM高亮度模式</string>
 
     <!-- HBM settings -->
     <string name="hbm_mode_title">高亮度模式</string>
     <string name="hbm_mode_summary">高亮度模式允许显示亮度高于最大值。 这有助于提高在阳光直射下的能见度。</string>
     <string name="hbm_enable_summary_not_supported">当前内核不支持HBM高亮度模式。</string>
 
-    <!-- Refresh Rate Settings -->
-    <string name="refresh_rate_tile_title">屏幕刷新率</string>
+    <!-- DC settings -->
+    <string name="dc_dimming_mode_title">防闪烁模式</string>
+    <string name="dc_dimming_mode_summary">开启低亮度DC调光功能以阻止闪烁，部分屏幕显示功能会受到影响。</string>
+    <string name="dc_dimming_mode_not_supported">当前系统不支持防闪烁模式。</string>
 
     <!-- Popup camera settings -->
     <string name="popup_title">前置摄像头效果</string>

@@ -23,39 +23,58 @@
  import android.content.Intent;
  import android.content.IntentFilter;
  import android.database.ContentObserver;
+ import android.os.Binder;
  import android.os.Handler;
  import android.os.IBinder;
  import android.provider.Settings;
  import android.util.Log;
+ import androidx.preference.PreferenceManager;
+ import android.content.SharedPreferences;
  import java.net.HttpURLConnection;
  import java.net.URL;
  
  import org.lineageos.settings.utils.FileUtils;
+
+ import vendor.xiaomi.hardware.displayfeature.V1_0.IDisplayFeature;
  
  public class DozeService extends Service {
      private static final String TAG = "DozeService";
      private static final boolean DEBUG = false;
      private static final String HBM_SWITCH = "udfps_need_hbm";
      private static final String UDFPS_SWITCH = "udfps_view_state";
+     private static final String DC_ENABLE_KEY = "dc_dimming_mode";
      private static final String HBM_NODE = "/sys/class/drm/card0-DSI-1/disp_param";
  
      private ProximitySensor mProximitySensor;
      private PickupSensor mPickupSensor;
      private HBMObserver hbmObserver;
+     private UdfpsViewObserver udfpsViewObserver;
+     private IDisplayFeature mDisplayFeature;
+     private DCBinder mBinder;
+     private SharedPreferences sharedPrefs;
  
      @Override
      public void onCreate() {
-         if (DEBUG) Log.d(TAG, "Creating service");
+         if (DEBUG)
+             Log.d(TAG, "Creating service");
          mProximitySensor = new ProximitySensor(this);
          mPickupSensor = new PickupSensor(this);
- 
+
          IntentFilter screenStateFilter = new IntentFilter();
          screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
          screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
          registerReceiver(mScreenStateReceiver, screenStateFilter);
 
          hbmObserver = new HBMObserver(new Handler());
-         getContentResolver().registerContentObserver(Settings.System.getUriFor(HBM_SWITCH),false,hbmObserver);
+         getContentResolver().registerContentObserver(Settings.System.getUriFor(HBM_SWITCH), false, hbmObserver);
+
+         udfpsViewObserver = new UdfpsViewObserver(new Handler());
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+         if (sharedPrefs.getBoolean(DC_ENABLE_KEY, false)) {
+             getContentResolver().registerContentObserver(Settings.System.getUriFor(UDFPS_SWITCH), false,
+                     udfpsViewObserver);
+         }
+         mBinder = new DCBinder();
      }
  
      @Override
@@ -72,17 +91,31 @@
          this.getContentResolver().unregisterContentObserver(hbmObserver);
          mProximitySensor.disable();
          mPickupSensor.disable();
+         if (sharedPrefs.getBoolean(DC_ENABLE_KEY, false)) {
+            getContentResolver().unregisterContentObserver(udfpsViewObserver);
+        }
      }
  
      @Override
      public IBinder onBind(Intent intent) {
-         return null;
+         return mBinder;
      }
  
      private void onDisplayOn() {
          if (DEBUG) Log.d(TAG, "Display on");
          if (Settings.System.getInt(getContentResolver(), UDFPS_SWITCH, 0) == 1)
-            FileUtils.writeLine(HBM_NODE, "0x20000");
+        {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(120);
+                    } catch(Exception e) {}
+                    if (Settings.System.getInt(getContentResolver(), HBM_SWITCH, 0) == 1)
+                        FileUtils.writeLine(HBM_NODE, "0x20000");
+                }
+            }).start();
+        }
          if (DozeUtils.isPickUpEnabled(this)) {
              mPickupSensor.disable();
          }
@@ -125,30 +158,62 @@
          @Override
          public void onChange(boolean selfChange) {
              int hbmEnabled_i = Settings.System.getInt(getContentResolver(), HBM_SWITCH, 0);
-             if(DEBUG) Log.d(TAG, "hbmEnabled: " + hbmEnabled_i);
+             if (DEBUG)
+                 Log.d(TAG, "hbmEnabled: " + hbmEnabled_i);
              if (hbmEnabled_i == 0) {
                  FileUtils.writeLine(HBM_NODE, "0xE0000");
-                if(mThread!=null && mThread.isAlive()) {
-                    mThread.interrupt();
-                    mThread = null;
-                }
-                return;
-             }
-             if(mThread==null || !mThread.isAlive()) mThread = new Thread(new Runnable() {
-                 @Override
-                 public void run() {
-                     try {
-                         Thread.sleep(230);
-                     } catch (InterruptedException e) {
-                         return;
-                     }
-                     int hbmEnabled_ii = Settings.System.getInt(getContentResolver(), HBM_SWITCH, 0);
-                     if (DEBUG) Log.d(TAG, "Thread: hbmEnabled: " + hbmEnabled_ii);
-                     FileUtils.writeLine(HBM_NODE, hbmEnabled_ii == 1 ? "0x20000" : "0xE0000");
+                 if (mThread != null && mThread.isAlive()) {
+                     mThread.interrupt();
+                     mThread = null;
                  }
-             });
+                 return;
+             }
+             if (mThread == null || !mThread.isAlive())
+                 mThread = new Thread(new Runnable() {
+                     @Override
+                     public void run() {
+                         try {
+                             Thread.sleep(230);
+                         } catch (InterruptedException e) {
+                             return;
+                         }
+                         int hbmEnabled_ii = Settings.System.getInt(getContentResolver(), HBM_SWITCH, 0);
+                         if (DEBUG)
+                             Log.d(TAG, "Thread: hbmEnabled: " + hbmEnabled_ii);
+                         FileUtils.writeLine(HBM_NODE, hbmEnabled_ii == 1 ? "0x20000" : "0xE0000");
+                     }
+                 });
              mThread.start();
          }
+     }
+     
+     class UdfpsViewObserver extends ContentObserver {
+         public UdfpsViewObserver(Handler handle) {
+             super(handle);
+         }
+
+         @Override
+         public void onChange(boolean selfChange) {
+             boolean flag = Settings.System.getInt(getContentResolver(), UDFPS_SWITCH, 0) == 0;
+             if (DEBUG)
+                 Log.d(TAG, "UdfpsView state changed. Change dc dimming status!");
+             try {
+                 mDisplayFeature = IDisplayFeature.getService();
+                 mDisplayFeature.setFeature(0, 20, flag ? 1 : 0, 255);
+             } catch (Exception e) {
+                 Log.e(TAG, "Error on call xiaomiDisplayFeature!",e);
+             }
+         }
+     }
+     
+     public class DCBinder extends Binder {
+         public void onDCSwitch(boolean isopen) {
+            if (isopen) 
+                getContentResolver().registerContentObserver(Settings.System.getUriFor(UDFPS_SWITCH), false,
+                        udfpsViewObserver);
+            else
+                getContentResolver().unregisterContentObserver(udfpsViewObserver);
+        }
      }
  }
  

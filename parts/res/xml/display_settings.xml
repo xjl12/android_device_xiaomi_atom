@@ -17,6 +17,11 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
+        android:key="dc_dimming_mode"
+        android:defaultValue="false"
+        android:title="@string/dc_dimming_mode_title"
+        android:summary="@string/dc_dimming_mode_summary" />
+    <SwitchPreference
         android:key="hbm_mode"
         android:defaultValue="false"
         android:title="@string/hbm_mode_title"

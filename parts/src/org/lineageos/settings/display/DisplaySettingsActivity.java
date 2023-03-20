@@ -18,6 +18,12 @@
 package org.lineageos.settings.display;
 
 import android.os.Bundle;
+import android.os.IBinder;
+import android.content.ServiceConnection;
+import android.content.Intent;
+import android.content.ComponentName;
+
+import org.lineageos.settings.doze.DozeService;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
 import com.android.settingslib.widget.R;
@@ -25,11 +31,33 @@ import com.android.settingslib.widget.R;
 public class DisplaySettingsActivity extends CollapsingToolbarBaseActivity {
 
     private static final String TAG_DCDIMMING = "dcdimming";
+    private ServiceConnection conn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(R.id.content_frame,
                 new DisplaySettingsFragment(), TAG_DCDIMMING).commit();
+    }
+
+    public void callOnDCSwitch(boolean value) {
+        conn = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder binder) {
+                ((DozeService.DCBinder) binder).onDCSwitch(value);
+            }
+    
+            @Override
+            public void onServiceDisconnected(ComponentName name) {}
+        };
+        Intent intent = new Intent(this, DozeService.class);
+        bindService(intent, conn, BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(conn != null)
+            unbindService(conn);
     }
 }

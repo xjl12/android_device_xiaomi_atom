@@ -111,7 +111,6 @@ Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
 Return<void> BiometricsFingerprint::onFingerDown(uint32_t, uint32_t, float, float) {
     acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_UDFPS);
-    set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_ON);
     LOG(ERROR) << "onFingerDown()";
     return Void();
 }
