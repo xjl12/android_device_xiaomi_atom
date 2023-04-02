@@ -1,4 +1,4 @@
-From 54a88fd4f4a486f76725881fdbb16b7b420aa91f Mon Sep 17 00:00:00 2001
+From cc04b8903f82e1f26971b4eaae24ffd02eb08abe Mon Sep 17 00:00:00 2001
 From: xjl12 <1062256455@qq.com>
 Date: Mon, 6 Mar 2023 13:47:41 +0800
 Subject: [PATCH] PE Fingerprint fix
@@ -6,19 +6,19 @@ Subject: [PATCH] PE Fingerprint fix
 Change-Id: I85fd44204b00ee45c36a78ec9e9e17c16a3f9c32
 ---
  .../SystemUI/res/values/custom_config.xml     | 35 ++++++++
- .../systemui/biometrics/UdfpsController.java  | 85 +++++++++++++++++++
- .../biometrics/UdfpsControllerOverlay.kt      | 11 ++-
+ .../systemui/biometrics/UdfpsController.java  | 86 +++++++++++++++++++
+ .../biometrics/UdfpsControllerOverlay.kt      | 12 ++-
  .../biometrics/sensors/SensorOverlays.java    | 45 ++++++++++
  .../hidl/FingerprintAuthenticationClient.java | 12 +--
  .../hidl/FingerprintDetectClient.java         |  6 +-
  .../sensors/fingerprint/hidl/TestHal.java     |  8 +-
- 7 files changed, 190 insertions(+), 12 deletions(-)
+ 7 files changed, 192 insertions(+), 12 deletions(-)
 
 diff --git a/packages/SystemUI/res/values/custom_config.xml b/packages/SystemUI/res/values/custom_config.xml
-index e708af58f225..33d5acb52f39 100644
+index 94760fbbecf3..12904775ec18 100644
 --- a/packages/SystemUI/res/values/custom_config.xml
 +++ b/packages/SystemUI/res/values/custom_config.xml
-@@ -20,7 +20,42 @@
+@@ -11,7 +11,42 @@
  
      <!-- Udfps vendor code -->
      <integer name="config_udfps_vendor_code">0</integer>
@@ -62,10 +62,10 @@ index e708af58f225..33d5acb52f39 100644
      <bool name="doze_double_tap_proximity_check">false</bool>
  
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
-index f7c74ac5a510..46a4f7afe80d 100644
+index 464b0283e6ac..f6d9808df384 100644
 --- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
 +++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
-@@ -46,6 +46,7 @@ import android.os.Process;
+@@ -47,6 +47,7 @@ import android.os.Process;
  import android.os.Trace;
  import android.os.VibrationAttributes;
  import android.os.VibrationEffect;
@@ -73,15 +73,15 @@ index f7c74ac5a510..46a4f7afe80d 100644
  import android.os.UserHandle;
  import android.provider.Settings;
  import android.util.Log;
-@@ -64,6 +65,7 @@ import com.android.keyguard.KeyguardUpdateMonitor;
- import com.android.systemui.R;
- import com.android.systemui.animation.ActivityLaunchAnimator;
- import com.android.systemui.biometrics.dagger.BiometricsBackground;
+@@ -74,6 +75,7 @@ import com.android.systemui.biometrics.udfps.NormalizedTouchData;
+ import com.android.systemui.biometrics.udfps.SinglePointerTouchProcessor;
+ import com.android.systemui.biometrics.udfps.TouchProcessor;
+ import com.android.systemui.biometrics.udfps.TouchProcessorResult;
 +import com.android.systemui.biometrics.UdfpsControllerOverlay;
  import com.android.systemui.dagger.SysUISingleton;
  import com.android.systemui.dagger.qualifiers.Main;
  import com.android.systemui.doze.DozeReceiver;
-@@ -176,6 +178,9 @@ public class UdfpsController implements DozeReceiver {
+@@ -195,6 +197,9 @@ public class UdfpsController implements DozeReceiver, Dumpable {
      private final Set<Callback> mCallbacks = new HashSet<>();
      private final int mUdfpsVendorCode;
  
@@ -91,7 +91,7 @@ index f7c74ac5a510..46a4f7afe80d 100644
      private final AmbientDisplayConfiguration mAmbientDisplayConfiguration;
      private final SecureSettings mSecureSettings;
      private boolean mScreenOffFod;
-@@ -745,6 +750,8 @@ public class UdfpsController implements DozeReceiver {
+@@ -873,6 +878,8 @@ public class UdfpsController implements DozeReceiver, Dumpable {
  
      private void showUdfpsOverlay(@NonNull UdfpsControllerOverlay overlay) {
          mExecution.assertIsMainThread();
@@ -100,10 +100,35 @@ index f7c74ac5a510..46a4f7afe80d 100644
  
          mOverlay = overlay;
          final int requestReason = overlay.getRequestReason();
-@@ -871,6 +878,63 @@ public class UdfpsController implements DozeReceiver {
+@@ -919,6 +926,24 @@ public class UdfpsController implements DozeReceiver, Dumpable {
+         if (view.isDisplayConfigured()) {
+             view.unconfigureDisplay();
          }
-         mIsAodInterruptActive = false;
++
++        // Add a delay to ensure that the dim amount is updated after the display
++        // has had chance to switch out of HBM mode.
++        // The delay, in ms is stored in config_udfpsDimmingDisableDelay.
++        // If the delay is 0, the dim amount will be updated immediately.
++        final int delay = mContext.getResources().getInteger(
++                R.integer.config_udfpsDimmingDisableDelay);
++        if (delay > 0) {
++            mFgExecutor.executeDelayed(() -> {
++                // A race condition exists where the overlay is destroyed before the the dim amount is updated.
++                // This check ensures that the overlay is still valid.
++                if (mOverlay != null && mOverlay.matchesRequestId(requestId)) {
++                    updateViewDimAmount(false);
++                }
++            }, delay);
++        } else {
++            updateViewDimAmount(false);
++        }
      }
+ 
+     /**
+@@ -1015,6 +1040,64 @@ public class UdfpsController implements DozeReceiver, Dumpable {
+         }
+     }
+ 
 +    
 +    private static int interpolate(int x, int xa, int xb, int ya, int yb) {
 +        return ya - (ya - yb) * (x - xa) / (xb - xa);
@@ -160,11 +185,12 @@ index f7c74ac5a510..46a4f7afe80d 100644
 +            }
 +        }
 +    }
++    
 +
- 
-     public boolean isFingerDown() {
-         return mOnFingerDown;
-@@ -883,6 +947,9 @@ public class UdfpsController implements DozeReceiver {
+     private boolean isOptical() {
+         return mSensorProps.sensorType == FingerprintSensorProperties.TYPE_UDFPS_OPTICAL;
+     }
+@@ -1059,6 +1142,9 @@ public class UdfpsController implements DozeReceiver, Dumpable {
              Log.w(TAG, "Null request in onFingerDown");
              return;
          }
@@ -174,47 +200,25 @@ index f7c74ac5a510..46a4f7afe80d 100644
          if (!mOverlay.matchesRequestId(requestId)) {
              Log.w(TAG, "Mismatched fingerDown: " + requestId
                      + " current: " + mOverlay.getRequestId());
-@@ -967,6 +1034,24 @@ public class UdfpsController implements DozeReceiver {
-             mCancelAodTimeoutAction = null;
-         }
-         mIsAodInterruptActive = false;
-+
-+        // Add a delay to ensure that the dim amount is updated after the display
-+        // has had chance to switch out of HBM mode.
-+        // The delay, in ms is stored in config_udfpsDimmingDisableDelay.
-+        // If the delay is 0, the dim amount will be updated immediately.
-+        final int delay = mContext.getResources().getInteger(
-+                R.integer.config_udfpsDimmingDisableDelay);
-+        if (delay > 0) {
-+            mFgExecutor.executeDelayed(() -> {
-+                // A race condition exists where the overlay is destroyed before the the dim amount is updated.
-+                // This check ensures that the overlay is still valid.
-+                if (mOverlay != null && mOverlay.matchesRequestId(requestId)) {
-+                    updateViewDimAmount(false);
-+                }
-+            }, delay);
-+        } else {
-+            updateViewDimAmount(false);
-+        }
-     }
- 
-     /**
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt
-index 1c62f8a4e508..69da6ec54dc1 100644
+index 8db4927ee059..0a52565368e7 100644
 --- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt
 +++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt
-@@ -101,13 +101,20 @@ class UdfpsControllerOverlay(
+@@ -117,9 +117,10 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
          fitInsetsTypes = 0
          gravity = android.view.Gravity.TOP or android.view.Gravity.LEFT
          layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
 -        flags = (Utils.FINGERPRINT_OVERLAY_LAYOUT_PARAM_FLAGS or
--          WindowManager.LayoutParams.FLAG_SPLIT_TOUCH)
+-                WindowManager.LayoutParams.FLAG_SPLIT_TOUCH)
 +        flags = (Utils.FINGERPRINT_OVERLAY_LAYOUT_PARAM_FLAGS or WindowManager.LayoutParams.FLAG_DIM_BEHIND
-+          or WindowManager.LayoutParams.FLAG_SPLIT_TOUCH)
++                or WindowManager.LayoutParams.FLAG_SPLIT_TOUCH)
          privateFlags = WindowManager.LayoutParams.PRIVATE_FLAG_TRUSTED_OVERLAY
 +        dimAmount = 0.0f
          // Avoid announcing window title.
          accessibilityTitle = " "
+ 
+@@ -128,6 +129,13 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
+         }
      }
  
 +    fun updateDimAmount(newDimAmount: Float): Float {
@@ -223,9 +227,10 @@ index 1c62f8a4e508..69da6ec54dc1 100644
 +        return newDimAmount
 +    }
 +
++
      /** A helper if the [requestReason] was due to enrollment. */
-     val enrollHelper: UdfpsEnrollHelper? = if (requestReason.isEnrollmentReason()) {
-         UdfpsEnrollHelper(context, fingerprintManager, requestReason)
+     val enrollHelper: UdfpsEnrollHelper? =
+         if (requestReason.isEnrollmentReason() && !shouldRemoveEnrollmentUi()) {
 diff --git a/services/core/java/com/android/server/biometrics/sensors/SensorOverlays.java b/services/core/java/com/android/server/biometrics/sensors/SensorOverlays.java
 index aeb6b6e2a907..19e0390aad9b 100644
 --- a/services/core/java/com/android/server/biometrics/sensors/SensorOverlays.java
@@ -311,7 +316,7 @@ index aeb6b6e2a907..19e0390aad9b 100644
                  mUdfpsOverlayController.get().hideUdfpsOverlay(sensorId);
              } catch (RemoteException e) {
 diff --git a/services/core/java/com/android/server/biometrics/sensors/fingerprint/hidl/FingerprintAuthenticationClient.java b/services/core/java/com/android/server/biometrics/sensors/fingerprint/hidl/FingerprintAuthenticationClient.java
-index c5a9295fa4c2..2a6f05b90104 100644
+index b588425a5382..d671df005474 100644
 --- a/services/core/java/com/android/server/biometrics/sensors/fingerprint/hidl/FingerprintAuthenticationClient.java
 +++ b/services/core/java/com/android/server/biometrics/sensors/fingerprint/hidl/FingerprintAuthenticationClient.java
 @@ -131,7 +131,7 @@ class FingerprintAuthenticationClient extends AuthenticationClient<IBiometricsFi
@@ -423,5 +428,5 @@ index 986e92e244f0..713e2b726c04 100644
 \ No newline at end of file
 +}
 -- 
-2.39.2
+2.40.0
 

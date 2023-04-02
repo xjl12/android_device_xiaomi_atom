@@ -197,12 +197,19 @@
              boolean flag = Settings.System.getInt(getContentResolver(), UDFPS_SWITCH, 0) == 0;
              if (DEBUG)
                  Log.d(TAG, "UdfpsView state changed. Change dc dimming status!");
-             try {
-                 mDisplayFeature = IDisplayFeature.getService();
-                 mDisplayFeature.setFeature(0, 20, flag ? 1 : 0, 255);
-             } catch (Exception e) {
-                 Log.e(TAG, "Error on call xiaomiDisplayFeature!",e);
-             }
+             new Thread(new Runnable() {
+                @Override
+                public void run()
+                 {
+                     try {
+                        Thread.sleep(200);
+                        mDisplayFeature = IDisplayFeature.getService();
+                        mDisplayFeature.setFeature(0, 20, flag ? 1 : 0, 255);
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error on call xiaomiDisplayFeature!",e);
+                    }
+                }
+             }).start();
          }
      }
      

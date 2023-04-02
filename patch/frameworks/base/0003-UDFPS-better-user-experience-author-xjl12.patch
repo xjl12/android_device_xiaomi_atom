@@ -1,7 +1,7 @@
-From 656be8857d529048de7cfd1ce9cd1a4bc990e88b Mon Sep 17 00:00:00 2001
+From f57241ef8a706ecb30b0715802475c1e0e1be1c1 Mon Sep 17 00:00:00 2001
 From: xjl12 <1062256455@qq.com>
 Date: Wed, 8 Mar 2023 14:45:08 +0800
-Subject: [PATCH 1/2] UDFPS better user experience @author:xjl12
+Subject: [PATCH] UDFPS better user experience @author:xjl12
 
 Change-Id: Idcb9a656c1d55fc238046049c1e96d0e00cfe1cd
 ---
@@ -10,18 +10,18 @@ Change-Id: Idcb9a656c1d55fc238046049c1e96d0e00cfe1cd
  2 files changed, 10 insertions(+), 26 deletions(-)
 
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
-index 46a4f7afe80d..878cbdbbd02e 100644
+index f6d9808df384..259d0d55b467 100644
 --- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
 +++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
-@@ -110,6 +110,7 @@ import kotlin.Unit;
+@@ -126,6 +126,7 @@ import kotlin.Unit;
  @SysUISingleton
- public class UdfpsController implements DozeReceiver {
+ public class UdfpsController implements DozeReceiver, Dumpable {
      private static final String TAG = "UdfpsController";
 +    private static final String HBM = "udfps_need_hbm";
-     private static final long AOD_INTERRUPT_TIMEOUT_MILLIS = 1000;
+     private static final long AOD_SEND_FINGER_UP_DELAY_MILLIS = 1000;
  
      // Minimum required delay between consecutive touch logs in milliseconds.
-@@ -492,7 +493,7 @@ public class UdfpsController implements DozeReceiver {
+@@ -609,7 +610,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
                  }
  
                  Trace.endSection();
@@ -30,7 +30,7 @@ index 46a4f7afe80d..878cbdbbd02e 100644
  
              case MotionEvent.ACTION_MOVE:
              case MotionEvent.ACTION_HOVER_MOVE:
-@@ -766,6 +767,8 @@ public class UdfpsController implements DozeReceiver {
+@@ -894,6 +895,8 @@ public class UdfpsController implements DozeReceiver, Dumpable {
              mOnFingerDown = false;
              mAttemptedToDismissKeyguard = false;
              mOrientationListener.enable();
@@ -39,27 +39,18 @@ index 46a4f7afe80d..878cbdbbd02e 100644
          } else {
              Log.v(TAG, "showUdfpsOverlay | the overlay is already showing");
          }
-@@ -791,6 +794,7 @@ public class UdfpsController implements DozeReceiver {
+@@ -919,6 +922,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
  
          mOverlay = null;
          mOrientationListener.disable();
 +        Settings.System.putInt(mContext.getContentResolver(), HBM, 0);
+ 
      }
  
-     /**
-@@ -948,8 +952,6 @@ public class UdfpsController implements DozeReceiver {
-             return;
+@@ -926,24 +930,6 @@ public class UdfpsController implements DozeReceiver, Dumpable {
+         if (view.isDisplayConfigured()) {
+             view.unconfigureDisplay();
          }
- 
--        updateViewDimAmount(true);
--
-         if (!mOverlay.matchesRequestId(requestId)) {
-             Log.w(TAG, "Mismatched fingerDown: " + requestId
-                     + " current: " + mOverlay.getRequestId());
-@@ -1034,24 +1036,6 @@ public class UdfpsController implements DozeReceiver {
-             mCancelAodTimeoutAction = null;
-         }
-         mIsAodInterruptActive = false;
 -
 -        // Add a delay to ensure that the dim amount is updated after the display
 -        // has had chance to switch out of HBM mode.
@@ -81,6 +72,15 @@ index 46a4f7afe80d..878cbdbbd02e 100644
      }
  
      /**
+@@ -1143,8 +1129,6 @@ public class UdfpsController implements DozeReceiver, Dumpable {
+             return;
+         }
+ 
+-        updateViewDimAmount(true);
+-
+         if (!mOverlay.matchesRequestId(requestId)) {
+             Log.w(TAG, "Mismatched fingerDown: " + requestId
+                     + " current: " + mOverlay.getRequestId());
 diff --git a/services/core/java/com/android/server/biometrics/sensors/fingerprint/hidl/FingerprintEnrollClient.java b/services/core/java/com/android/server/biometrics/sensors/fingerprint/hidl/FingerprintEnrollClient.java
 index 5d9af5322c2e..bffc6b337655 100644
 --- a/services/core/java/com/android/server/biometrics/sensors/fingerprint/hidl/FingerprintEnrollClient.java
@@ -130,5 +130,5 @@ index 5d9af5322c2e..bffc6b337655 100644
  
      @Override
 -- 
-2.39.2
+2.40.0
 

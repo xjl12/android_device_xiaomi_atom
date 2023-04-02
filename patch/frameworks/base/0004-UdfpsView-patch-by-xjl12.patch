@@ -1,17 +1,17 @@
-From fbf8069dd98557dc8040d205b7a46a4bcbf004d6 Mon Sep 17 00:00:00 2001
+From 57c018c12f87990be60b4ece14b629346719ef6a Mon Sep 17 00:00:00 2001
 From: xjl12 <1062256455@qq.com>
 Date: Sun, 12 Mar 2023 19:29:40 +0800
 Subject: [PATCH] UdfpsView patch by @xjl12
 
 Change-Id: I0d3ed69a7b15ba4d8e6be9c6840c6d9ac13f1a35
 ---
- packages/SystemUI/res/drawable/fingerprint_bg.xml  |  2 +-
- .../src/com/android/keyguard/LockIconView.java     |  2 +-
- .../systemui/biometrics/UdfpsController.java       |  7 +------
- .../systemui/biometrics/UdfpsControllerOverlay.kt  |  5 ++++-
- .../systemui/biometrics/UdfpsKeyguardView.java     |  4 ++--
- .../com/android/systemui/biometrics/UdfpsView.kt   | 14 ++++++++++++--
- 6 files changed, 21 insertions(+), 13 deletions(-)
+ packages/SystemUI/res/drawable/fingerprint_bg.xml    |  2 +-
+ .../src/com/android/keyguard/LockIconView.java       |  2 +-
+ .../android/systemui/biometrics/UdfpsController.java |  8 +-------
+ .../systemui/biometrics/UdfpsControllerOverlay.kt    |  3 ++-
+ .../systemui/biometrics/UdfpsKeyguardView.java       |  4 ++--
+ .../src/com/android/systemui/biometrics/UdfpsView.kt | 12 ++++++++++++
+ 6 files changed, 19 insertions(+), 12 deletions(-)
 
 diff --git a/packages/SystemUI/res/drawable/fingerprint_bg.xml b/packages/SystemUI/res/drawable/fingerprint_bg.xml
 index 558ec08b2ceb..440eb04d02aa 100644
@@ -27,7 +27,7 @@ index 558ec08b2ceb..440eb04d02aa 100644
      <size
          android:width="64dp"
 diff --git a/packages/SystemUI/src/com/android/keyguard/LockIconView.java b/packages/SystemUI/src/com/android/keyguard/LockIconView.java
-index 0a82968ae4cb..1ff8d37c1a78 100644
+index 34a5ef75f176..357766b93db2 100644
 --- a/packages/SystemUI/src/com/android/keyguard/LockIconView.java
 +++ b/packages/SystemUI/src/com/android/keyguard/LockIconView.java
 @@ -118,7 +118,7 @@ public class LockIconView extends FrameLayout implements Dumpable {
@@ -40,10 +40,10 @@ index 0a82968ae4cb..1ff8d37c1a78 100644
      }
  
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
-index 878cbdbbd02e..30e12ae0cb1e 100644
+index 259d0d55b467..a7e8be02331a 100644
 --- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
 +++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsController.java
-@@ -48,7 +48,6 @@ import android.os.VibrationAttributes;
+@@ -49,7 +49,6 @@ import android.os.VibrationAttributes;
  import android.os.VibrationEffect;
  import android.provider.Settings;
  import android.os.UserHandle;
@@ -51,23 +51,23 @@ index 878cbdbbd02e..30e12ae0cb1e 100644
  import android.util.Log;
  import android.util.RotationUtils;
  import android.view.LayoutInflater;
-@@ -65,7 +64,6 @@ import com.android.keyguard.KeyguardUpdateMonitor;
- import com.android.systemui.R;
- import com.android.systemui.animation.ActivityLaunchAnimator;
- import com.android.systemui.biometrics.dagger.BiometricsBackground;
+@@ -75,7 +74,6 @@ import com.android.systemui.biometrics.udfps.NormalizedTouchData;
+ import com.android.systemui.biometrics.udfps.SinglePointerTouchProcessor;
+ import com.android.systemui.biometrics.udfps.TouchProcessor;
+ import com.android.systemui.biometrics.udfps.TouchProcessorResult;
 -import com.android.systemui.biometrics.UdfpsControllerOverlay;
  import com.android.systemui.dagger.SysUISingleton;
  import com.android.systemui.dagger.qualifiers.Main;
  import com.android.systemui.doze.DozeReceiver;
-@@ -110,7 +108,6 @@ import kotlin.Unit;
+@@ -126,7 +124,6 @@ import kotlin.Unit;
  @SysUISingleton
- public class UdfpsController implements DozeReceiver {
+ public class UdfpsController implements DozeReceiver, Dumpable {
      private static final String TAG = "UdfpsController";
 -    private static final String HBM = "udfps_need_hbm";
-     private static final long AOD_INTERRUPT_TIMEOUT_MILLIS = 1000;
+     private static final long AOD_SEND_FINGER_UP_DELAY_MILLIS = 1000;
  
      // Minimum required delay between consecutive touch logs in milliseconds.
-@@ -768,7 +765,6 @@ public class UdfpsController implements DozeReceiver {
+@@ -896,7 +893,6 @@ public class UdfpsController implements DozeReceiver, Dumpable {
              mAttemptedToDismissKeyguard = false;
              mOrientationListener.enable();
              updateViewDimAmount(true);
@@ -75,15 +75,16 @@ index 878cbdbbd02e..30e12ae0cb1e 100644
          } else {
              Log.v(TAG, "showUdfpsOverlay | the overlay is already showing");
          }
-@@ -794,7 +790,6 @@ public class UdfpsController implements DozeReceiver {
+@@ -922,8 +918,6 @@ public class UdfpsController implements DozeReceiver, Dumpable {
  
          mOverlay = null;
          mOrientationListener.disable();
 -        Settings.System.putInt(mContext.getContentResolver(), HBM, 0);
+-
      }
  
-     /**
-@@ -902,7 +897,7 @@ public class UdfpsController implements DozeReceiver {
+     private void unconfigureDisplay(@NonNull UdfpsView view) {
+@@ -1046,7 +1040,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
      private void updateViewDimAmount(boolean pressed) {
          if (mFrameworkDimming) {
              if (pressed) {
@@ -93,25 +94,10 @@ index 878cbdbbd02e..30e12ae0cb1e 100644
                  for (i = 0; i < mBrightnessAlphaArray.length; i++) {
                      if (mBrightnessAlphaArray[i][0] >= curBrightness) break;
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt
-index 69da6ec54dc1..9d9d9d0ddb4a 100644
+index 0a52565368e7..974ba0c1e6f4 100644
 --- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt
 +++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsControllerOverlay.kt
-@@ -28,12 +28,14 @@ import android.hardware.biometrics.BiometricOverlayConstants.ShowReason
- import android.hardware.fingerprint.FingerprintManager
- import android.hardware.fingerprint.IUdfpsOverlayControllerCallback
- import android.os.RemoteException
-+import android.provider.Settings
- import android.util.Log
- import android.util.RotationUtils
- import android.view.LayoutInflater
- import android.view.MotionEvent
- import android.view.Surface
- import android.view.View
-+import android.view.WindowInsets
- import android.view.WindowManager
- import android.view.accessibility.AccessibilityManager
- import android.view.accessibility.AccessibilityManager.TouchExplorationStateChangeListener
-@@ -93,7 +95,7 @@ class UdfpsControllerOverlay(
+@@ -109,7 +109,7 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
      private var overlayTouchListener: TouchExplorationStateChangeListener? = null
  
      private val coreLayoutParams = WindowManager.LayoutParams(
@@ -120,7 +106,7 @@ index 69da6ec54dc1..9d9d9d0ddb4a 100644
          0 /* flags set in computeLayoutParams() */,
          PixelFormat.TRANSLUCENT
      ).apply {
-@@ -111,6 +113,7 @@ class UdfpsControllerOverlay(
+@@ -131,6 +131,7 @@ class UdfpsControllerOverlay @JvmOverloads constructor(
  
      fun updateDimAmount(newDimAmount: Float): Float {
          coreLayoutParams.dimAmount = newDimAmount
@@ -129,7 +115,7 @@ index 69da6ec54dc1..9d9d9d0ddb4a 100644
          return newDimAmount
      }
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsKeyguardView.java b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsKeyguardView.java
-index bc274a0af95f..617ee9537480 100644
+index 339b8cafd8dd..0876e6d41618 100644
 --- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsKeyguardView.java
 +++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsKeyguardView.java
 @@ -24,6 +24,7 @@ import android.animation.AnimatorListenerAdapter;
@@ -139,8 +125,8 @@ index bc274a0af95f..617ee9537480 100644
 +import android.graphics.Color;
  import android.graphics.PorterDuff;
  import android.graphics.PorterDuffColorFilter;
- import android.util.AttributeSet;
-@@ -173,8 +174,7 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
+ import android.graphics.RectF;
+@@ -176,8 +177,7 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
              return;
          }
  
@@ -151,19 +137,19 @@ index bc274a0af95f..617ee9537480 100644
          mLockScreenFp.invalidate(); // updated with a valueCallback
      }
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsView.kt b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsView.kt
-index 9dcd2db4d3b4..06b01e810bdc 100644
+index 97590822a3fb..1a1f91d7ef5a 100644
 --- a/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsView.kt
 +++ b/packages/SystemUI/src/com/android/systemui/biometrics/UdfpsView.kt
-@@ -21,15 +21,17 @@ import android.graphics.Color
- import android.graphics.Paint
+@@ -22,15 +22,19 @@ import android.graphics.Paint
  import android.graphics.PointF
+ import android.graphics.Rect
  import android.graphics.RectF
 +import android.provider.Settings
  import android.util.AttributeSet
  import android.util.Log
--import android.view.MotionEvent
--import android.view.Surface
-+import android.view.*
+ import android.view.MotionEvent
+ import android.view.Surface
++import android.view.View
  import android.widget.FrameLayout
  import com.android.systemui.R
  import com.android.systemui.doze.DozeReceiver
@@ -174,7 +160,7 @@ index 9dcd2db4d3b4..06b01e810bdc 100644
  
  /**
   * The main view group containing all UDFPS animations.
-@@ -115,11 +117,19 @@ class UdfpsView(
+@@ -125,11 +129,19 @@ class UdfpsView(
      override fun onAttachedToWindow() {
          super.onAttachedToWindow()
          Log.v(TAG, "onAttachedToWindow")
@@ -195,5 +181,5 @@ index 9dcd2db4d3b4..06b01e810bdc 100644
  
      override fun onDraw(canvas: Canvas) {
 -- 
-2.39.2
+2.40.0
 
