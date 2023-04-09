@@ -3,4 +3,6 @@
 **/*.apk
 **/*.so
 **/*.jar
+**/.idea
+**/*.iml
 prebuilt/bootimg
