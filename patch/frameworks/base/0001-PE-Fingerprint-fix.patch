@@ -89,8 +89,8 @@ index 464b0283e6ac..f6d9808df384 100644
 +    private int[][] mBrightnessAlphaArray;
 +
      private final AmbientDisplayConfiguration mAmbientDisplayConfiguration;
-     private final SecureSettings mSecureSettings;
      private boolean mScreenOffFod;
+
 @@ -873,6 +878,8 @@ public class UdfpsController implements DozeReceiver, Dumpable {
  
      private void showUdfpsOverlay(@NonNull UdfpsControllerOverlay overlay) {
