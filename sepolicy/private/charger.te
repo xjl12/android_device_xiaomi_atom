@@ -1,0 +1,5 @@
+allow init healthd:process { transition noatsecure rlimitinh siginh };
+allow healthd charger_prop:file { read open getattr map };
+allow healthd healthd:capability { dac_read_search };
+allow healthd healthd:capability2 { wake_alarm };
+allow healthd recovery_config_prop:file { read open map getattr };
