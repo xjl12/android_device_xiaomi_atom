@@ -9,12 +9,6 @@ vendor.audio.spkcal.copy.inhal=true
 Build.BRAND=MTK
 
 # Bluetooth
-ro.bluetooth.a2dp_offload.supported=false
-persist.bluetooth.a2dp_offload.disabled=true
-persist.sys.bt.unsupport.features=00000000
-persist.sys.bt.unsupport.states=00000000
-persist.sys.bt.unsupport.stdfeatures=000001
-persist.bluetooth.system_audio_hal.enabled=1
 bluetooth.device.class_of_device=90,2,12
 bluetooth.profile.a2dp.source.enabled=true
 bluetooth.profile.avrcp.target.enabled=true
