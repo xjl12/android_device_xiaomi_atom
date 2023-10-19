@@ -1,0 +1,5 @@
+dex_import {
+	name: "mediatek-gwsdv2",
+	owner: "xiaomi",
+	jars: ["mediatek-gwsdv2.jar"],
+}

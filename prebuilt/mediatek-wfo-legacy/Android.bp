@@ -1,0 +1,5 @@
+dex_import {
+	name: "mediatek-wfo-legacy",
+	owner: "xiaomi",
+	jars: ["mediatek-wfo-legacy.jar"],
+}

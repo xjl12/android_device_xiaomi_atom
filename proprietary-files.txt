@@ -1,21 +1,27 @@
-lib64/libaptXHD_encoder.so
-lib64/libaptX_encoder.so
-
 #etc/init/init.vtservice.rc
 lib/libsysenv_system.so
 lib/libvcodec_cap.so
 lib/libvcodec_capenc.so
+lib/libshim_vtservice.so
 system_ext/lib/vendor.mediatek.hardware.videotelephony@1.0.so
-
+bin/vtservice
 lib64/libmtk_vt_wrapper.so
+lib64/libmtk_vt_service.so
+lib64/libshim_vtservice.so
+lib64/libmtkperf_client.so
 lib64/libsysenv_system.so
 lib64/libvcodec_cap.so
 lib64/libvcodec_capenc.so
+lib64/libvt_avsync.so
+lib64/libimsma.so
+lib64/libimsma_adapt.so
+lib64/libimsma_rtp.so
+lib64/libimsma_socketwrapper.so
+lib64/libsource.so
+lib64/libsignal.so
+lib64/libcomutils.so
+lib64/libsink.so
 system_ext/lib64/vendor.mediatek.hardware.videotelephony@1.0.so
 
-framework/mediatek-gwsdv2.jar
-framework/mediatek-ims-extension-plugin.jar
-framework/mediatek-ims-legacy.jar
 framework/mediatek-services.jar
-framework/mediatek-wfo-legacy.jar
 

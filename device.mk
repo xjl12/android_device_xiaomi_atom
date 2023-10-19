@@ -279,16 +279,21 @@ PRODUCT_PACKAGES += \
     libem_aoltest_jni \
     libem_audio_jni \
     libem_wifi_jni \
+    mediatek-carrier-config-manager \
 	mediatek-common \
     mediatek-framework \
+    mediatek-gwsdv2 \
     mediatek-ims-base \
     mediatek-ims-common \
+    mediatek-ims-extension-plugin \
     mediatek-telecom-common \
     mediatek-telephony-base \
-    mediatek-telephony-common
+    mediatek-telephony-common \
+    mediatek-wfo-legacy
 
 	
 PRODUCT_BOOT_JARS += \
+    mediatek-carrier-config-manager \
     mediatek-common \
     mediatek-framework \
     mediatek-ims-base \
@@ -296,7 +301,13 @@ PRODUCT_BOOT_JARS += \
     mediatek-telecom-common \
     mediatek-telephony-base \
     mediatek-telephony-common
-    
+
+# INIT
+
+PRODUCT_PACKAGES += \
+    init.mtkincalladj.rc \
+    init.vtservice.rc
+
 # Keylayout
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/keylayout/mtk-kpd.kl:system/usr/keylayout/mtk-kpd.kl \

@@ -27,6 +27,8 @@ applications that come with the platform
         <permission name="android.permission.NETWORK_SIGNAL_STRENGTH_WAKEUP"/>
         <permission name="android.permission.UPDATE_DEVICE_STATS"/>
         <permission name="android.permission.MODIFY_PHONE_STATE"/>
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
+        <permission name="android.permission.LOCATION_BYPASS"/>
     </privapp-permissions>
 
     <privapp-permissions package="com.mediatek.simprocessor">

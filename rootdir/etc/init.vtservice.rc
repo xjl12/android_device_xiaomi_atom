@@ -1,0 +1,8 @@
+# VTService .rc configure
+
+service vtservice /system/bin/vtservice
+    class main
+    user system
+    group system camera graphics inet net_admin net_raw media sdcard_rw radio sdcard_r media_rw
+    capabilities NET_ADMIN NET_RAW
+    ioprio rt 4

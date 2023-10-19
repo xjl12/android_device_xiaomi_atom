@@ -1,0 +1,5 @@
+dex_import {
+	name: "mediatek-carrier-config-manager",
+	owner: "xiaomi",
+	jars: ["mediatek-carrier-config-manager.jar"],
+}
