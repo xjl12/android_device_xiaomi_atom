@@ -19,7 +19,7 @@
 #include "BiometricsFingerprint.h"
 
 #include <android-base/logging.h>
-#include <hardware_legacy/power.h>
+// #include <hardware_legacy/power.h>
 #include <fstream>
 #include <cmath>
 
@@ -109,7 +109,7 @@ Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
 }
 
 Return<void> BiometricsFingerprint::onFingerDown(uint32_t, uint32_t, float, float) {
-    acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
+    // acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_UDFPS);
     LOG(ERROR) << "onFingerDown()";
     return Void();
@@ -117,7 +117,7 @@ Return<void> BiometricsFingerprint::onFingerDown(uint32_t, uint32_t, float, floa
 
 Return<void> BiometricsFingerprint::onFingerUp() {
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
-    release_wake_lock(LOG_TAG);
+    // release_wake_lock(LOG_TAG);
     LOG(ERROR) << "onFingerUp()";
     return Void();
 }
