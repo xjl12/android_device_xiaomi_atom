@@ -19,6 +19,7 @@ EVO_BUILD_TYPE := UNOFFICIAL
 EXTRA_UDFPS_ANIMATIONS := true
 TARGET_BUILD_APERTURE_CAMERA := false
 TARGET_SUPPORTS_QUICK_TAP := true
+TARGET_USES_MINI_GAPPS := true
 
 # Device identifier. This must come after all inclusions.
 PRODUCT_NAME := evolution_atom

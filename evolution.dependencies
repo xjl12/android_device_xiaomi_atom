@@ -1,9 +1,9 @@
 [
  {
-   "repository"  : "PixelExperience/device_mediatek_sepolicy_vndr",
+   "repository"  : "LineageOS/android_device_mediatek_sepolicy_vndr",
    "target_path" : "device/mediatek/sepolicy_vndr",
    "remote"      : "github",
-   "branch"      : "thirteen"
+   "branch"      : "lineage-21"
  },
  {
    "repository"  : "xiaomi-mt6885-devs/android_kernel_xiaomi_mt6885",

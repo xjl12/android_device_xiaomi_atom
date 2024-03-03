@@ -4,7 +4,7 @@ lib/libvcodec_cap.so
 lib/libvcodec_capenc.so
 lib/libshim_vtservice.so
 system_ext/lib/vendor.mediatek.hardware.videotelephony@1.0.so
-bin/vtservice
+#bin/vtservice
 lib64/libmtk_vt_wrapper.so
 lib64/libmtk_vt_service.so
 lib64/libshim_vtservice.so

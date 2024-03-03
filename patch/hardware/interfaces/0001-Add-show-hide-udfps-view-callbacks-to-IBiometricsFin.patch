@@ -1,4 +1,4 @@
-From 36cbedb431b57a868b9a7efa7fd9b4f109d4985f Mon Sep 17 00:00:00 2001
+From c3c126c0800e78449135f49acd725a8d15771d7d Mon Sep 17 00:00:00 2001
 From: SagarMakhar <sagarmakhar@gmail.com>
 Date: Sat, 20 Aug 2022 00:12:00 +0800
 Subject: [PATCH] Add show|hide udfps view callbacks to
@@ -31,17 +31,17 @@ index 378b56453..3f44a1cdd 100644
 +    onHideUdfpsOverlay();
  };
 diff --git a/current.txt b/current.txt
-index afde7b17f..6a2b8e9e7 100644
+index 754093f2b..d2469ecd7 100644
 --- a/current.txt
 +++ b/current.txt
-@@ -929,4 +929,7 @@ b7ce2d87841585551b082fca6d099622e63b7099e0d8013f687ea1a1dc35c4dc android.hardwar
- 1bac6a7c8136dfb0414fe5639eec115aa2d12927e64a0642a43fb53225f099b2 android.hardware.wifi@1.6::IWifiStaIface
- 0a800e010e8eb6eecdfdc96f04fd2ae2f417a79a74a7c0eec3a9f539199bccd4 android.hardware.wifi@1.6::types
+@@ -939,4 +939,7 @@ db37a1c757e2e69b1ec9c75a981a6987bd87a131d92ab6acc00e04d19f374281 android.hardwar
+ 997017f581406fca1675d2f612f7ccd73f0d04eadd54bf6212e6cf5971d0872d android.hardware.automotive.vehicle@2.0::types
+ 06983ffe6d75e90a22503a6d9fd14417f983a36bb060a80ad5915240d69b8a40 android.hardware.automotive.vehicle@2.0::types
  
 +# Modified
 +34e9846b11f31baa5fdb0276ff6b5e22d256e65728ec5340fc57847619088294 android.hardware.biometrics.fingerprint@2.3::IBiometricsFingerprint
 +
  # There will be no more HIDL HALs. Use AIDL instead.
 -- 
-2.37.2
+2.43.2
 
