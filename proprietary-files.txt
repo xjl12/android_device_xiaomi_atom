@@ -43,6 +43,24 @@ system_ext/lib64/vendor.mediatek.hardware.videotelephony@1.0.so
 system_ext/lib/vendor.mediatek.hardware.videotelephony-V1-ndk.so
 system_ext/lib64/vendor.mediatek.hardware.videotelephony-V1-ndk.so
 
+system_ext/lib/vendor.mediatek.hardware.mtkpower-V1-ndk.so
+system_ext/lib64/vendor.mediatek.hardware.mtkpower-V1-ndk.so
+
+system_ext/lib/vendor.mediatek.hardware.apuware.utils-V1-ndk.so
+system_ext/lib64/vendor.mediatek.hardware.apuware.utils-V1-ndk.so
+
+system_ext/lib/vendor.mediatek.hardware.apuware.utils@2.0.so
+system_ext/lib64/vendor.mediatek.hardware.apuware.utils@2.0.so
+
+system_ext/lib/vendor.mediatek.hardware.apuware.apusys-V2-ndk.so
+system_ext/lib64/vendor.mediatek.hardware.apuware.apusys-V2-ndk.so
+
+system_ext/lib/vendor.mediatek.hardware.apuware.apusys@2.1.so
+system_ext/lib64/vendor.mediatek.hardware.apuware.apusys@2.1.so
+
+system_ext/lib/vendor.mediatek.hardware.apuware.apusys@2.0.so
+system_ext/lib64/vendor.mediatek.hardware.apuware.apusys@2.0.so
+
 system_ext/lib/libmtk_vt_wrapper.so
 system_ext/lib64/libmtk_vt_wrapper.so
 
@@ -89,4 +107,3 @@ product/media/audio/notifications/Radar.ogg
 product/media/audio/notifications/Spring.ogg
 product/media/audio/notifications/Swoosh.ogg
 product/media/audio/notifications/WindChime.ogg
-

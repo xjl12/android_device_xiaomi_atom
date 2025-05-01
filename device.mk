@@ -101,7 +101,6 @@ PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0.vendor \
     android.hardware.bluetooth@1.1.vendor \
     android.hardware.bluetooth.audio-impl \
-    android.hardware.bluetooth.a2dp@1.0.vendor \
     btremoted 
 
 # Sensors
@@ -152,7 +151,7 @@ PRODUCT_PACKAGES += \
   
 
 PRODUCT_COPY_FILES += \
-    hardware/interfaces/camera/provider/2.4/default/android.hardware.camera.provider@2.4-service_64.rc:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/init/android.hardware.camera.provider@2.4-service_64.rc
+    hardware/interfaces/camera/provider/2.4/default/android.hardware.camera.provider@2.4-service_64.rc:$(TARGET_COPY_OUT_PRODUCT)/etc/init/android.hardware.camera.provider@2.4-service_64.rc
 
 # Codec2
 PRODUCT_PACKAGES += \
